@@ -4,6 +4,6 @@
     {
         Fitness = 1,
         Food = 2,
-        LifeStyle = 3
+        LifeStyle = 3,
     }
 }
