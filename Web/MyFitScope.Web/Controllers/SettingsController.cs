@@ -3,12 +3,11 @@
     using System;
     using System.Threading.Tasks;
 
+    using Microsoft.AspNetCore.Mvc;
     using MyFitScope.Data.Common.Repositories;
     using MyFitScope.Data.Models;
     using MyFitScope.Services.Data;
     using MyFitScope.Web.ViewModels.Settings;
-
-    using Microsoft.AspNetCore.Mvc;
 
     public class SettingsController : BaseController
     {

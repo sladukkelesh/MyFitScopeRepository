@@ -2,9 +2,9 @@
 {
     using System.Diagnostics;
 
-    using MyFitScope.Web.ViewModels;
-
     using Microsoft.AspNetCore.Mvc;
+
+    using MyFitScope.Web.ViewModels;
 
     public class HomeController : BaseController
     {
