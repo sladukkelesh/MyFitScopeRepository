@@ -1,0 +1,28 @@
+﻿namespace MyFitScope.Data.Models.BlogModels
+{
+    using System;
+
+    using MyFitScope.Data.Common.Models;
+
+    public class Response : BaseDeletableModel<string>
+    {
+        public Response()
+        {
+            this.Id = Guid.NewGuid().ToString();
+        }
+
+        public string UserId { get; set; }
+
+        public virtual ApplicationUser User { get; set; }
+
+        public string Content { get; set; }
+
+        public int PositiveVotes { get; set; }
+
+        public int NegativeVotes { get; set; }
+
+        public int CommentId { get; set; }
+
+        public Comment Comment { get; set; }
+    }
+}
