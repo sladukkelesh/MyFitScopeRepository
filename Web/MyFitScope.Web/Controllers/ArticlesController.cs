@@ -1,39 +1,30 @@
 ﻿namespace MyFitScope.Web.Controllers
 {
-    using System.Linq;
-
     using Microsoft.AspNetCore.Mvc;
-    using MyFitScope.Data.Common.Repositories;
-    using MyFitScope.Data.Models.BlogModels;
-    using MyFitScope.Services.Mapping;
+    using MyFitScope.Services.Data;
     using MyFitScope.Web.ViewModels.Articles;
 
     public class ArticlesController : BaseController
     {
-        private readonly IDeletableEntityRepository<Article> articlesRepository;
+        private readonly IArticlesService articlesService;
 
-        public ArticlesController(IDeletableEntityRepository<Article> articlesRepository)
+        public ArticlesController(IArticlesService articlesService)
         {
-            this.articlesRepository = articlesRepository;
+            this.articlesService = articlesService;
         }
 
         public IActionResult All()
         {
             var model = new AllArticlesViewModel();
 
-            model.Articles = this.articlesRepository.All()
-                .To<ArticleViewModel>()
-                .ToList();
+            model.Articles = this.articlesService.GetAllArticles();
 
             return this.View(model);
         }
 
         public IActionResult Details(string articleId)
         {
-            var model = this.articlesRepository.All()
-                .Where(a => a.Id == articleId)
-                .To<DetailsArticleViewModel>()
-                .FirstOrDefault();
+            var model = this.articlesService.GetArticleById(articleId);
 
             return this.View(model);
         }

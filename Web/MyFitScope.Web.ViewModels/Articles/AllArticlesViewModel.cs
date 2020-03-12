@@ -6,6 +6,6 @@
 
     public class AllArticlesViewModel
     {
-        public ICollection<ArticleViewModel> Articles { get; set; }
+        public IEnumerable<ArticleViewModel> Articles { get; set; }
     }
 }
