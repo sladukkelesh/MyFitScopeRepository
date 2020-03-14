@@ -22,6 +22,15 @@
             return this.View(model);
         }
 
+        public IActionResult ArticlesByCategory(int articleCategory)
+        {
+            var model = new ArticlesByCategoryViewModel();
+
+            model.Articles = this.articlesService.GetArticlesByCategory(articleCategory);
+
+            return this.View(model);
+        }
+
         public IActionResult Details(string articleId)
         {
             var model = this.articlesService.GetArticleById(articleId);

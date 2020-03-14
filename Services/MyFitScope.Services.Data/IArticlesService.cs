@@ -8,6 +8,8 @@
     {
         IEnumerable<ArticleViewModel> GetAllArticles();
 
+        IEnumerable<ArticleViewModel> GetArticlesByCategory(int articleCategory);
+
         DetailsArticleViewModel GetArticleById(string articleId);
     }
 }

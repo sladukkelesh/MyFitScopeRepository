@@ -11,11 +11,17 @@
         {
             this.Id = Guid.NewGuid().ToString();
             this.Responses = new HashSet<Response>();
+            this.PositiveVotes = 0;
+            this.NegativeVotes = 0;
         }
 
         public string UserId { get; set; }
 
         public virtual ApplicationUser User { get; set; }
+
+        public string ArticleId { get; set; }
+
+        public virtual Article Article { get; set; }
 
         public string Content { get; set; }
 

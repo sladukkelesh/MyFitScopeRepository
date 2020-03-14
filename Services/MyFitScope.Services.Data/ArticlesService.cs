@@ -6,6 +6,7 @@
 
     using MyFitScope.Data.Common.Repositories;
     using MyFitScope.Data.Models.BlogModels;
+    using MyFitScope.Data.Models.BlogModels.Contracts;
     using MyFitScope.Services.Mapping;
     using MyFitScope.Web.ViewModels.Articles;
 
@@ -28,5 +29,11 @@
                             .Where(a => a.Id == articleId)
                             .To<DetailsArticleViewModel>()
                             .FirstOrDefault();
+
+        public IEnumerable<ArticleViewModel> GetArticlesByCategory(int articleCategory)
+                    => this.articlesRepository.All()
+                    .Where(a => a.ArticleCategory == (ArticleCategory)articleCategory)
+                    .To<ArticleViewModel>()
+                    .ToList();
     }
 }
