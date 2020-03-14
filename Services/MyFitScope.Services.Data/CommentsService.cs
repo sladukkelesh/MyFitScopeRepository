@@ -1,10 +1,8 @@
 ﻿namespace MyFitScope.Services.Data
 {
     using System;
-    using System.Collections.Generic;
-    using System.Security.Claims;
-    using System.Text;
     using System.Threading.Tasks;
+
     using MyFitScope.Data.Common.Repositories;
     using MyFitScope.Data.Models.BlogModels;
 
@@ -17,16 +15,18 @@
             this.commentsRepository = commentsRepository;
         }
 
-        public async Task Create(string commentContent, string articleId, string userId)
+        public async Task CreateComment(string commentContent, string articleId, string userId)
         {
             var comment = new Comment
             {
-                UserId = userId,
-                ArticleId = articleId,
                 Content = commentContent,
+                ArticleId = articleId,
+                UserId = userId,
+                CreatedOn = DateTime.UtcNow,
             };
 
             await this.commentsRepository.AddAsync(comment);
+            await this.commentsRepository.SaveChangesAsync();
         }
     }
 }
