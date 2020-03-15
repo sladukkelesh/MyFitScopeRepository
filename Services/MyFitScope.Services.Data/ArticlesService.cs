@@ -3,6 +3,7 @@
     using System;
     using System.Collections.Generic;
     using System.Linq;
+    using System.Threading.Tasks;
 
     using MyFitScope.Data.Common.Repositories;
     using MyFitScope.Data.Models.BlogModels;
@@ -17,6 +18,21 @@
         public ArticlesService(IDeletableEntityRepository<Article> articlesRepository)
         {
             this.articlesRepository = articlesRepository;
+        }
+
+        public async Task CreateArticle(string articleTitle, ArticleCategory articleCategory, string articleImageUrl, string articleContent, string userId)
+        {
+            var article = new Article
+            {
+                Title = articleTitle,
+                ArticleCategory = articleCategory,
+                ImageUrl = articleImageUrl,
+                Content = articleContent,
+                UserId = userId,
+            };
+
+            await this.articlesRepository.AddAsync(article);
+            await this.articlesRepository.SaveChangesAsync();
         }
 
         public IEnumerable<ArticleViewModel> GetAllArticles()

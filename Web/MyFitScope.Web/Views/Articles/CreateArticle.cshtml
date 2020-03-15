@@ -1,0 +1,30 @@
+﻿@using MyFitScope.Data.Models.BlogModels.Contracts
+@{
+    this.ViewData["Title"] = "Create Article";
+}
+
+<h1>Create your Article</h1>
+<p>You can use the form below to create your Article</p>
+
+<form method="post" action="/Articles/CreateArticle">
+    <div class="form-group">
+        <label for="articleTitle">Title:</label>
+        <input type="text" class="form-control" id="articleTitle" name="articleTitle" placeholder="Enter article title">
+    </div>
+    <div class="form-group">
+        <label for="ArticleCategory" class="control-label">Choose article category:</label>
+        <div class="col-md-10">
+            <select id="ArticleCategory" asp-items="@Html.GetEnumSelectList<ArticleCategory>()" name="articleCategory">
+            </select>
+        </div>
+    </div>
+    <div class="form-group">
+        <label for="exampleInputEmail1">Image Url:</label>
+        <input type="text" class="form-control" id="articImageUrl" name="articImageUrl" placeholder="https://...">
+    </div>
+    <div class="form-group">
+        <label for="exampleFormControlTextarea1">Content</label>
+        <textarea class="form-control" id="articleContent" name="articleContent" rows="3" placeholder="Enter article content"></textarea>
+    </div>
+    <button type="submit" class="btn btn-primary">Submit</button>
+</form>
