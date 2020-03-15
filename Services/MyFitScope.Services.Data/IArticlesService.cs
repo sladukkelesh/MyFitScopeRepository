@@ -8,7 +8,7 @@
     {
         IEnumerable<ArticleViewModel> GetAllArticles();
 
-        IEnumerable<ArticleViewModel> GetArticlesByCategory(int articleCategory);
+        IEnumerable<ArticleViewModel> GetArticlesByCategory(string articleCategory);
 
         DetailsArticleViewModel GetArticleById(string articleId);
     }

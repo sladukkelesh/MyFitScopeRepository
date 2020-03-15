@@ -15,18 +15,20 @@
 
         public IActionResult All()
         {
-            var model = new AllArticlesViewModel();
-
-            model.Articles = this.articlesService.GetAllArticles();
+            var model = new AllArticlesViewModel
+            {
+                Articles = this.articlesService.GetAllArticles(),
+            };
 
             return this.View(model);
         }
 
-        public IActionResult ArticlesByCategory(int articleCategory)
+        public IActionResult ArticlesByCategory(string articleCategory)
         {
-            var model = new ArticlesByCategoryViewModel();
-
-            model.Articles = this.articlesService.GetArticlesByCategory(articleCategory);
+            var model = new ArticlesByCategoryViewModel
+            {
+                Articles = this.articlesService.GetArticlesByCategory(articleCategory),
+            };
 
             return this.View(model);
         }

@@ -63,6 +63,7 @@
             // Blog services
             services.AddTransient<IArticlesService, ArticlesService>();
             services.AddTransient<ICommentsService, CommentsService>();
+            services.AddTransient<IBlogMenuCategoriesServices, BlogMenuCategoriesServices>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

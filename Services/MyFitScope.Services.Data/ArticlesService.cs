@@ -30,9 +30,9 @@
                             .To<DetailsArticleViewModel>()
                             .FirstOrDefault();
 
-        public IEnumerable<ArticleViewModel> GetArticlesByCategory(int articleCategory)
+        public IEnumerable<ArticleViewModel> GetArticlesByCategory(string articleCategoryInput)
                     => this.articlesRepository.All()
-                    .Where(a => a.ArticleCategory == (ArticleCategory)articleCategory)
+                    .Where(a => a.ArticleCategory == (ArticleCategory)Enum.Parse(typeof(ArticleCategory), articleCategoryInput))
                     .To<ArticleViewModel>()
                     .ToList();
     }

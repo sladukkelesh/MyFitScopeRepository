@@ -7,10 +7,12 @@
     <title>@this.ViewData["Title"] - @GlobalConstants.SystemName</title>
 
     <environment names="Development">
+        <link href="~/lib/fontawesome/css/all.css" rel="stylesheet" asp-append-version="true" />
         <link href="~/lib/bootstrap/dist/css/bootstrap.css" rel="stylesheet" asp-append-version="true" />
         <link href="~/css/site.css" rel="stylesheet" asp-append-version="true" />
     </environment>
     <environment names="Staging,Production">
+        <link href="~/lib/fontawesome/css/all.css" rel="stylesheet" asp-append-version="true" />
         <link href="~/lib/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet" asp-append-version="true" />
         <link href="~/css/site.min.css" rel="stylesheet" asp-append-version="true" />
     </environment>
@@ -36,21 +38,17 @@
                                 <span class="caret"></span>
                             </button>
                             <ul class="dropdown-menu">
-                                <li class="nav-item">
-                                    <a class="nav-link text-dark" href="/Articles/ArticlesByCategory?articleCategory=1">Fitness</a>
-                                </li>
-                                <li class="nav-item">
-                                    <a class="nav-link text-dark" href="/Articles/ArticlesByCategory?articleCategory=2">Food</a>
-                                </li>
-                                <li class="nav-item">
-                                    <a class="nav-link text-dark" href="/Articles/ArticlesByCategory?articleCategory=3">Life Style</a>
-                                </li>
+
+                                <vc:articles-categories></vc:articles-categories>
+
                                 <li class="nav-item">
                                     <a class="nav-link text-dark" asp-area="" asp-controller="Articles" asp-action="All">All</a>
                                 </li>
+                                <li class="nav-item">
+                                    <a class="nav-link text-dark" asp-area="" asp-controller="Articles" asp-action="CreateArticle">Create Article</a>
+                                </li>
                             </ul>
                         </li>
-                        
                     </ul>
                 </div>
             </div>
