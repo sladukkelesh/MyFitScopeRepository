@@ -5,13 +5,32 @@
     this.ViewData["Title"] = "All Articles";
 }
 
+
+<!-- Page Content -->
+
+<h1 class="my-4">
+    Blog Articles
+    <small>You can find every one of our articles here.</small>
+</h1>
+
 @foreach (var article in Model.Articles)
 {
-    <div class="media">
+    <div class="media mt-3">               
         <div class="media-body">
             <h5 class="mt-0 mb-1"><a href="Details?articleId=@article.Id">@article.Title</a></h5>
             @article.Content
         </div>
-        <img src="@article.ImageUrl" width="200" class="ml-3" alt="@article.Title">
+        <img src="@article.ImageUrl" class="ml-3 articles-listing-images" alt="@article.Title">
     </div>
 }
+
+<!-- Pagination -->
+<ul class="pagination justify-content-center mb-4">
+    <li class="page-item">
+        <a class="page-link" href="#">&larr; Older</a>
+    </li>
+    <li class="page-item disabled">
+        <a class="page-link" href="#">Newer &rarr;</a>
+    </li>
+</ul>    
+

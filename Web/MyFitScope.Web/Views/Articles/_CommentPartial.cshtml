@@ -1,0 +1,46 @@
+﻿@using MyFitScope.Web.ViewModels.Comments
+@model CommentViewModel
+
+
+<div class="media mb-4">
+    <img class="d-flex mr-3 rounded-circle" src="http://placehold.it/50x50" alt="">
+    <div class="media-body">
+        <h5 class="mt-0">@Model.UserUserName</h5>
+        @Model.Content
+        <ul class="list-inline d-sm-flex my-0">
+            <li class="list-inline-item g-mr-20">
+                <a class="u-link-v5 g-color-gray-dark-v4 g-color-primary--hover" href="#!">
+                    <i class="fa fa-thumbs-up g-pos-rel g-top-1 g-mr-3"></i>
+                    178
+                </a>
+            </li>
+            <li class="list-inline-item g-mr-20">
+                <a class="u-link-v5 g-color-gray-dark-v4 g-color-primary--hover" href="#!">
+                    <i class="fa fa-thumbs-down g-pos-rel g-top-1 g-mr-3"></i>
+                    34
+                </a>
+            </li>
+            <li class="list-inline-item ml-auto">
+                <a class="u-link-v5 g-color-gray-dark-v4 g-color-primary--hover replay-comment" onclick="AddResponseInputForm()" href="#!">
+                    <i class="fa fa-reply g-pos-rel g-top-1 g-mr-3"></i>
+                    Reply
+                </a>
+            </li>
+        </ul>
+
+        <div class="parent-div">
+
+            <input type="hidden" name="parentCommentId" value="@Model.Id" />
+
+            @if (Model.Responses.Count() != 0)
+            {
+                foreach (var response in Model.Responses)
+                {
+
+                    <partial name="_ResponsePartial" model="@response" />
+
+                }
+            }
+        </div>      
+    </div>
+</div>

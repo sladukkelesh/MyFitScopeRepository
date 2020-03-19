@@ -21,7 +21,7 @@
 
         public int NegativeVotes { get; set; }
 
-        public int CommentId { get; set; }
+        public string CommentId { get; set; }
 
         public Comment Comment { get; set; }
     }

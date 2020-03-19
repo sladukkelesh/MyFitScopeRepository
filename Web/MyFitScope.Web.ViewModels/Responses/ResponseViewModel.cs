@@ -1,16 +1,12 @@
-﻿namespace MyFitScope.Web.ViewModels.Comments
+﻿namespace MyFitScope.Web.ViewModels
 {
     using System;
-    using System.Collections.Generic;
-    using System.Text;
 
     using MyFitScope.Data.Models.BlogModels;
     using MyFitScope.Services.Mapping;
 
-    public class CommentViewModel : IMapFrom<Comment>
+    public class ResponseViewModel : IMapFrom<Response>
     {
-        public string Id { get; set; }
-
         public string UserUserName { get; set; }
 
         public string Content { get; set; }
@@ -23,8 +19,5 @@
 
         public string OutputDate
             => this.CreatedOn.Year + "-" + this.CreatedOn.Month + "-" + this.CreatedOn.Day;
-
-
-        public IEnumerable<ResponseViewModel> Responses { get; set; }
     }
 }

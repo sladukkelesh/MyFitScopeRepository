@@ -20,6 +20,9 @@
 
         public string ImageUrl { get; set; }
 
+        public string CommentUrl
+            => "/Comments/AddComment";
+
         public IEnumerable<CommentViewModel> Comments { get; set; }
     }
 }

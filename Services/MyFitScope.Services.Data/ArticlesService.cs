@@ -35,6 +35,13 @@
             await this.articlesRepository.SaveChangesAsync();
         }
 
+        public async Task DeleteArticleAsync(string articleId)
+        {
+            var articleToDelete = await this.articlesRepository.GetByIdWithDeletedAsync(articleId);
+
+            this.articlesRepository.HardDelete(articleToDelete);
+        }
+
         public IEnumerable<ArticleViewModel> GetAllArticles()
                     => this.articlesRepository.All()
                         .To<ArticleViewModel>()

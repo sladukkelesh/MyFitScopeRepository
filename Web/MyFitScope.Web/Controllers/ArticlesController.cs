@@ -12,7 +12,6 @@
     public class ArticlesController : BaseController
     {
         private readonly IArticlesService articlesService;
-        private readonly UserManager<ApplicationUser> userManager;
 
         public ArticlesController(IArticlesService articlesService)
         {
@@ -59,6 +58,13 @@
             await this.articlesService.CreateArticle(articleTitle, articleCategory, articleImageUrl, articleContent, userId);
 
             return this.Redirect("/");
+        }
+
+        public async Task<IActionResult> DeleteArticle(string articleId)
+        {
+            await this.articlesService.DeleteArticleAsync(articleId);
+
+            return this.RedirectToAction("All");
         }
     }
 }
