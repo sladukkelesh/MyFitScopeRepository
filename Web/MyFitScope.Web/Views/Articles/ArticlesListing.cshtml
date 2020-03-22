@@ -1,5 +1,5 @@
 ﻿@using MyFitScope.Web.ViewModels.Articles
-@model AllArticlesViewModel
+@model ArticlesLIstingViewModel
 
 @{
     this.ViewData["Title"] = "All Articles";
@@ -18,7 +18,7 @@
     <div class="media mt-3">               
         <div class="media-body">
             <h5 class="mt-0 mb-1"><a href="Details?articleId=@article.Id">@article.Title</a></h5>
-            @article.Content
+            @article.ShortContent
         </div>
         <img src="@article.ImageUrl" class="ml-3 articles-listing-images" alt="@article.Title">
     </div>

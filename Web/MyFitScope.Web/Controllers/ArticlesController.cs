@@ -1,36 +1,28 @@
 ﻿namespace MyFitScope.Web.Controllers
 {
+    using System.Linq;
     using System.Threading.Tasks;
 
     using Microsoft.AspNetCore.Identity;
     using Microsoft.AspNetCore.Mvc;
     using MyFitScope.Data.Models;
-    using MyFitScope.Data.Models.BlogModels.Contracts;
     using MyFitScope.Services.Data;
     using MyFitScope.Web.ViewModels.Articles;
 
     public class ArticlesController : BaseController
     {
         private readonly IArticlesService articlesService;
+        private readonly UserManager<ApplicationUser> userManager;
 
-        public ArticlesController(IArticlesService articlesService)
+        public ArticlesController(IArticlesService articlesService, UserManager<ApplicationUser> userManager)
         {
             this.articlesService = articlesService;
+            this.userManager = userManager;
         }
 
-        public IActionResult All()
+        public IActionResult ArticlesListing(string articleCategory)
         {
-            var model = new AllArticlesViewModel
-            {
-                Articles = this.articlesService.GetAllArticles(),
-            };
-
-            return this.View(model);
-        }
-
-        public IActionResult ArticlesByCategory(string articleCategory)
-        {
-            var model = new ArticlesByCategoryViewModel
+            var model = new ArticlesLIstingViewModel
             {
                 Articles = this.articlesService.GetArticlesByCategory(articleCategory),
             };
@@ -51,11 +43,10 @@
         }
 
         [HttpPost]
-        public async Task<IActionResult> CreateArticle(string articleTitle, ArticleCategory articleCategory, string articleImageUrl, string articleContent)
+        public async Task<IActionResult> CreateArticle(CreateArticleInputViewModel input)
         {
-            // Find a way to get the real Id of the User who is logged in!!!!!!!!!!!!!!!!!1
-            var userId = "949c08e0-2ac8-4b37-882c-65c9a38b64f2";
-            await this.articlesService.CreateArticle(articleTitle, articleCategory, articleImageUrl, articleContent, userId);
+            var userId = this.userManager.GetUserId(this.User);
+            await this.articlesService.CreateArticle(input.ArticleTitle, input.ArticleCategory, input.ArticleImageUrl, input.ArticleContent, userId);
 
             return this.Redirect("/");
         }

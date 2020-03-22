@@ -4,7 +4,7 @@
     using System.Collections.Generic;
     using System.Text;
 
-    public class AllArticlesViewModel
+    public class ArticlesLIstingViewModel
     {
         public IEnumerable<ArticleViewModel> Articles { get; set; }
     }

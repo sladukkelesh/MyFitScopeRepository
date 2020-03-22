@@ -1,28 +1,28 @@
 ﻿namespace MyFitScope.Web.Controllers
 {
-    using System;
-    using System.Linq;
-    using System.Security.Claims;
     using System.Threading.Tasks;
 
+    using Microsoft.AspNetCore.Identity;
     using Microsoft.AspNetCore.Mvc;
-    using MyFitScope.Data;
-    using MyFitScope.Data.Common.Repositories;
-    using MyFitScope.Data.Models.BlogModels;
+    using MyFitScope.Data.Models;
     using MyFitScope.Services.Data;
 
     public class CommentsController : BaseController
     {
         private readonly ICommentsService commentsService;
+        private readonly UserManager<ApplicationUser> userManager;
 
-        public CommentsController(ICommentsService commentsService)
+        public CommentsController(ICommentsService commentsService, UserManager<ApplicationUser> userManager)
         {
             this.commentsService = commentsService;
+            this.userManager = userManager;
         }
 
         [HttpPost]
-        public async Task<IActionResult> AddComment(string commentContent, string articleId, string userId)
+        public async Task<IActionResult> AddComment(string commentContent, string articleId)
         {
+            string userId = this.userManager.GetUserId(this.User);
+
             await this.commentsService.CreateComment(commentContent, articleId, userId);
 
             return this.Redirect("/");

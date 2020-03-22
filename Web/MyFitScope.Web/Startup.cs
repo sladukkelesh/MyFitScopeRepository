@@ -63,7 +63,7 @@
             // Blog services
             services.AddTransient<IArticlesService, ArticlesService>();
             services.AddTransient<ICommentsService, CommentsService>();
-            services.AddTransient<IBlogMenuCategoriesServices, BlogMenuCategoriesServices>();
+            services.AddTransient<INavbarDropdownLinksServices, NavBarDropdownLinksServices>();
             services.AddTransient<IResponsesService, ResponsesService>();
         }
 

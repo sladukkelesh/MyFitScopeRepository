@@ -1,0 +1,9 @@
+﻿@using MyFitScope.Web.ViewModels.NavBarDropdownLinks
+@model DropdownLinksViewModel
+
+@foreach (var category in Model.Categories)
+{
+    <li class="nav-item">
+        <a class="nav-link text-dark" href="/Articles/ArticlesListing?articleCategory=@category.CategoryType">@category.CategoryTitle</a>
+    </li>
+}

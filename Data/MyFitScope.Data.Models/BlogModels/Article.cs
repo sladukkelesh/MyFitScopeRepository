@@ -4,7 +4,7 @@
     using System.Collections.Generic;
 
     using MyFitScope.Data.Common.Models;
-    using MyFitScope.Data.Models.BlogModels.Contracts;
+    using MyFitScope.Data.Models.BlogModels.Enums;
 
     public class Article : BaseDeletableModel<string>
     {

@@ -1,6 +1,6 @@
-﻿namespace MyFitScope.Web.ViewModels.BlogMenuArticlesCategories
+﻿namespace MyFitScope.Web.ViewModels.NavBarDropdownLinks
 {
-    public class ArticleCategoryViewModel
+    public class LinkViewModel
     {
         public string CategoryType { get; set; }
 

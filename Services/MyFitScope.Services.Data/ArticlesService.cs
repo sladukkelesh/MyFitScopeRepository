@@ -7,7 +7,7 @@
 
     using MyFitScope.Data.Common.Repositories;
     using MyFitScope.Data.Models.BlogModels;
-    using MyFitScope.Data.Models.BlogModels.Contracts;
+    using MyFitScope.Data.Models.BlogModels.Enums;
     using MyFitScope.Services.Mapping;
     using MyFitScope.Web.ViewModels.Articles;
 
@@ -42,21 +42,22 @@
             this.articlesRepository.HardDelete(articleToDelete);
         }
 
-        public IEnumerable<ArticleViewModel> GetAllArticles()
-                    => this.articlesRepository.All()
-                        .To<ArticleViewModel>()
-                        .ToList();
-
         public DetailsArticleViewModel GetArticleById(string articleId)
                     => this.articlesRepository.All()
                             .Where(a => a.Id == articleId)
                             .To<DetailsArticleViewModel>()
                             .FirstOrDefault();
 
-        public IEnumerable<ArticleViewModel> GetArticlesByCategory(string articleCategoryInput)
-                    => this.articlesRepository.All()
-                    .Where(a => a.ArticleCategory == (ArticleCategory)Enum.Parse(typeof(ArticleCategory), articleCategoryInput))
-                    .To<ArticleViewModel>()
-                    .ToList();
+        public IEnumerable<ArticleViewModel> GetArticlesByCategory(string articleCategoryInput = null)
+        {
+            var result = this.articlesRepository.All();
+
+            if (articleCategoryInput != null)
+            {
+                result = result.Where(a => a.ArticleCategory == (ArticleCategory)Enum.Parse(typeof(ArticleCategory), articleCategoryInput));
+            }
+
+            return result.To<ArticleViewModel>().ToList();
+        }
     }
 }

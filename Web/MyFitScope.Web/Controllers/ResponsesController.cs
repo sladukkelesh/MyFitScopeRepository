@@ -2,22 +2,26 @@
 {
     using System.Threading.Tasks;
 
+    using Microsoft.AspNetCore.Identity;
     using Microsoft.AspNetCore.Mvc;
+    using MyFitScope.Data.Models;
     using MyFitScope.Services.Data;
 
     public class ResponsesController : BaseController
     {
         private readonly IResponsesService responsesService;
+        private readonly UserManager<ApplicationUser> userManager;
 
-        public ResponsesController(IResponsesService responsesService)
+        public ResponsesController(IResponsesService responsesService, UserManager<ApplicationUser> userManager)
         {
             this.responsesService = responsesService;
+            this.userManager = userManager;
         }
 
         [HttpPost]
         public async Task<IActionResult> AddResponse(string responseContent, string parentCommentId)
         {
-            var userId = "949c08e0-2ac8-4b37-882c-65c9a38b64f2";
+            var userId = this.userManager.GetUserId(this.User);
 
             await this.responsesService.CreateResponseAsync(responseContent, parentCommentId, userId);
 

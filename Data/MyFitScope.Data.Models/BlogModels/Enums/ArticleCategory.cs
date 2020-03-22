@@ -1,4 +1,4 @@
-﻿namespace MyFitScope.Data.Models.BlogModels.Contracts
+﻿namespace MyFitScope.Data.Models.BlogModels.Enums
 {
     public enum ArticleCategory
     {

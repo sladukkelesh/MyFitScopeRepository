@@ -34,7 +34,7 @@
                 <hr>
 
                 <!-- Post Content -->
-                <p>@Model.Content</p>
+                <p>@Html.Raw(Model.SanitizedContent)</p>
                 
                 <!-- Edit/Delete buttons-->
                 <div>
@@ -48,9 +48,10 @@
                 <div class="card my-4">
                     <h5 class="card-header">Leave a Comment:</h5>
                     <div class="card-body">
-                        <form>
+                        <form method="post" asp-controller="Comments" asp-action="AddComment">
+                            <input type="hidden" name="articleId" value="@Model.Id" />
                             <div class="form-group">
-                                <textarea class="form-control" rows="3"></textarea>
+                                <textarea class="form-control" rows="3" name="commentContent"></textarea>
                             </div>
                             <button type="submit" class="btn btn-primary">Submit</button>
                         </form>

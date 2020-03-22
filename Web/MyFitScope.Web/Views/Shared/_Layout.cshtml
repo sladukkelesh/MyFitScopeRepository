@@ -39,10 +39,10 @@
                             </button>
                             <ul class="dropdown-menu">
 
-                                <vc:articles-categories></vc:articles-categories>
+                                <vc:dropdown-links enum-name=@GlobalConstants.ArticleCategoryTypeName></vc:dropdown-links>
 
                                 <li class="nav-item">
-                                    <a class="nav-link text-dark" asp-area="" asp-controller="Articles" asp-action="All">All</a>
+                                    <a class="nav-link text-dark" asp-area="" asp-controller="Articles" asp-action="ArticlesListing">All</a>
                                 </li>
                                 <li class="dropdown-divider"></li>
                                 <li class="nav-item">
