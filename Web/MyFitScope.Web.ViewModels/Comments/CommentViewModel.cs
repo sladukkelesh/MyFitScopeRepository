@@ -2,10 +2,12 @@
 {
     using System;
     using System.Collections.Generic;
+    using System.Linq;
     using System.Text;
-
+    using MyFitScope.Data.Models;
     using MyFitScope.Data.Models.BlogModels;
     using MyFitScope.Services.Mapping;
+    using MyFitScope.Web.ViewModels.Votes;
 
     public class CommentViewModel : IMapFrom<Comment>
     {
@@ -24,6 +26,13 @@
         public string OutputDate
             => this.CreatedOn.Year + "-" + this.CreatedOn.Month + "-" + this.CreatedOn.Day;
 
+        public IEnumerable<CommentVotesViewModel> Votes { get; set; }
+
+        public int UpVotes
+                    => this.Votes.Count(v => v.VoteType == VoteType.UpVote);
+
+        public int DownVotes
+                    => this.Votes.Count(v => v.VoteType == VoteType.DownVote);
 
         public IEnumerable<ResponseViewModel> Responses { get; set; }
     }

@@ -1,6 +1,7 @@
 ﻿namespace MyFitScope.Data.Models.BlogModels
 {
     using System;
+    using System.Collections.Generic;
 
     using MyFitScope.Data.Common.Models;
 
@@ -9,6 +10,7 @@
         public Response()
         {
             this.Id = Guid.NewGuid().ToString();
+            this.Votes = new HashSet<Vote>();
         }
 
         public string UserId { get; set; }
@@ -24,5 +26,7 @@
         public string CommentId { get; set; }
 
         public Comment Comment { get; set; }
+
+        public ICollection<Vote> Votes { get; set; }
     }
 }

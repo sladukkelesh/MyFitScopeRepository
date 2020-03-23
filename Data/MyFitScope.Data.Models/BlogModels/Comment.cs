@@ -11,6 +11,7 @@
         {
             this.Id = Guid.NewGuid().ToString();
             this.Responses = new HashSet<Response>();
+            this.Votes = new HashSet<Vote>();
             this.PositiveVotes = 0;
             this.NegativeVotes = 0;
         }
@@ -30,5 +31,7 @@
         public int NegativeVotes { get; set; }
 
         public ICollection<Response> Responses { get; set; }
+
+        public ICollection<Vote> Votes { get; set; }
     }
 }

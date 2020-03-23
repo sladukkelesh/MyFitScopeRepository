@@ -10,8 +10,8 @@ using MyFitScope.Data;
 namespace MyFitScope.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20200311164710_AddBlogInitialModels")]
-    partial class AddBlogInitialModels
+    [Migration("20200323153610_AddVoteEntity")]
+    partial class AddVoteEntity
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -334,10 +334,7 @@ namespace MyFitScope.Data.Migrations
                     b.Property<string>("Id")
                         .HasColumnType("nvarchar(450)");
 
-                    b.Property<int>("CommentId")
-                        .HasColumnType("int");
-
-                    b.Property<string>("CommentId1")
+                    b.Property<string>("CommentId")
                         .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("Content")
@@ -366,7 +363,7 @@ namespace MyFitScope.Data.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("CommentId1");
+                    b.HasIndex("CommentId");
 
                     b.HasIndex("IsDeleted");
 
@@ -405,6 +402,40 @@ namespace MyFitScope.Data.Migrations
                     b.HasIndex("IsDeleted");
 
                     b.ToTable("Settings");
+                });
+
+            modelBuilder.Entity("MyFitScope.Data.Models.Vote", b =>
+                {
+                    b.Property<string>("Id")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("CommentId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<DateTime>("CreatedOn")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime?>("ModifiedOn")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("ResponseId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("UserId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<int>("VoteType")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("CommentId");
+
+                    b.HasIndex("ResponseId");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("Votes");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
@@ -467,7 +498,7 @@ namespace MyFitScope.Data.Migrations
 
             modelBuilder.Entity("MyFitScope.Data.Models.BlogModels.Comment", b =>
                 {
-                    b.HasOne("MyFitScope.Data.Models.BlogModels.Article", null)
+                    b.HasOne("MyFitScope.Data.Models.BlogModels.Article", "Article")
                         .WithMany("Comments")
                         .HasForeignKey("ArticleId");
 
@@ -480,7 +511,22 @@ namespace MyFitScope.Data.Migrations
                 {
                     b.HasOne("MyFitScope.Data.Models.BlogModels.Comment", "Comment")
                         .WithMany("Responses")
-                        .HasForeignKey("CommentId1");
+                        .HasForeignKey("CommentId");
+
+                    b.HasOne("MyFitScope.Data.Models.ApplicationUser", "User")
+                        .WithMany()
+                        .HasForeignKey("UserId");
+                });
+
+            modelBuilder.Entity("MyFitScope.Data.Models.Vote", b =>
+                {
+                    b.HasOne("MyFitScope.Data.Models.BlogModels.Comment", "Comment")
+                        .WithMany("Votes")
+                        .HasForeignKey("CommentId");
+
+                    b.HasOne("MyFitScope.Data.Models.BlogModels.Response", "Response")
+                        .WithMany("Votes")
+                        .HasForeignKey("ResponseId");
 
                     b.HasOne("MyFitScope.Data.Models.ApplicationUser", "User")
                         .WithMany()

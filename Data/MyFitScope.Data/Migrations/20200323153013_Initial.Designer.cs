@@ -10,8 +10,8 @@ using MyFitScope.Data;
 namespace MyFitScope.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20200316210233_ChangeResponseCommentIdType")]
-    partial class ChangeResponseCommentIdType
+    [Migration("20200323153013_Initial")]
+    partial class Initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {

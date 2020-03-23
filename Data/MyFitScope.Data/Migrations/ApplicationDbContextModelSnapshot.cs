@@ -402,6 +402,40 @@ namespace MyFitScope.Data.Migrations
                     b.ToTable("Settings");
                 });
 
+            modelBuilder.Entity("MyFitScope.Data.Models.Vote", b =>
+                {
+                    b.Property<string>("Id")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("CommentId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<DateTime>("CreatedOn")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime?>("ModifiedOn")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("ResponseId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("UserId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<int>("VoteType")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("CommentId");
+
+                    b.HasIndex("ResponseId");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("Votes");
+                });
+
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
                 {
                     b.HasOne("MyFitScope.Data.Models.ApplicationRole", null)
@@ -476,6 +510,21 @@ namespace MyFitScope.Data.Migrations
                     b.HasOne("MyFitScope.Data.Models.BlogModels.Comment", "Comment")
                         .WithMany("Responses")
                         .HasForeignKey("CommentId");
+
+                    b.HasOne("MyFitScope.Data.Models.ApplicationUser", "User")
+                        .WithMany()
+                        .HasForeignKey("UserId");
+                });
+
+            modelBuilder.Entity("MyFitScope.Data.Models.Vote", b =>
+                {
+                    b.HasOne("MyFitScope.Data.Models.BlogModels.Comment", "Comment")
+                        .WithMany("Votes")
+                        .HasForeignKey("CommentId");
+
+                    b.HasOne("MyFitScope.Data.Models.BlogModels.Response", "Response")
+                        .WithMany("Votes")
+                        .HasForeignKey("ResponseId");
 
                     b.HasOne("MyFitScope.Data.Models.ApplicationUser", "User")
                         .WithMany()
