@@ -6,8 +6,8 @@
 
     public interface IVotesService
     {
-        Task CreateCommentVoteAsync(string commentId, bool isUpvote, string userId);
+        Task CreateVoteAsync(string votedObjectName, string commentId, bool isUpvote, string userId);
 
-        VoteOutputModel GetCommentVotesCount(string commentId);
+        VoteOutputModel GetVotesCount(string votedObjectName, string commentId);
     }
 }

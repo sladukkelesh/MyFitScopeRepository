@@ -152,34 +152,24 @@
             }
         }
 
-        function AddUpVote(element, commentId) {
-            let myJSObject = { commentId: commentId, isUpVote: true };
+        
+        function SendVote(votedObject, commentId, isUpVote) {
+            let targetElement = event.target;
+
+            let myJSObject = { VotedObject: votedObject, votedObjectId: commentId, isUpVote: isUpVote };
 
             $.ajax("/api/votes", {
                 data: JSON.stringify(myJSObject),
                 contentType: 'application/json',
                 type: 'POST',
                 success: function (data) {
-                    let parentUlElement = (element.parentNode).parentNode;
+                    let parentUlElement = targetElement.parentNode;
 
-                    let upVoteSpan = parentUlElement.getElementsByClassName('vote-span')[0];
-                    let downVoteSpan = parentUlElement.getElementsByClassName('vote-span')[1];
+                    while (!parentUlElement.classList.contains('parent-vote-element')) {
+                        parentUlElement = parentUlElement.parentNode;
+                    }
 
-                    upVoteSpan.textContent = data.upVotes;
-                    downVoteSpan.textContent = data.downVotes;
-                }
-            });                      
-        }
-
-        function AddDownVote(element, commentId) {
-            let myJSObject = { commentId: commentId, isUpVote: false };
-
-            $.ajax("/api/votes", {
-                data: JSON.stringify(myJSObject),
-                contentType: 'application/json',
-                type: 'POST',
-                success: function (data) {
-                    let parentUlElement = (element.parentNode).parentNode;
+                    console.log(parentUlElement);
 
                     let upVoteSpan = parentUlElement.getElementsByClassName('vote-span')[0];
                     let downVoteSpan = parentUlElement.getElementsByClassName('vote-span')[1];

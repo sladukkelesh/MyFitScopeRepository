@@ -29,15 +29,15 @@
         // body
         // {"commentId" : "175377a9-5ceb-4542-aac3-8d2bed88b709", "isUpVote": true}
         // response {"UpVotes" : 1, "DownVotes": 0}
-        [Authorize]
+        //[Authorize]
         [HttpPost]
         public async Task<ActionResult<VoteOutputModel>> Post(VoteInputModel input)
         {
             var userId = this.userManager.GetUserId(this.User);
 
-            await this.votesService.CreateCommentVoteAsync(input.CommentId, input.IsUpVote, userId);
+            await this.votesService.CreateVoteAsync(input.VotedObject, input.VotedObjectId, input.IsUpVote, userId);
 
-            var result = this.votesService.GetCommentVotesCount(input.CommentId);
+            var result = this.votesService.GetVotesCount(input.VotedObject, input.VotedObjectId);
 
             return result;
         }

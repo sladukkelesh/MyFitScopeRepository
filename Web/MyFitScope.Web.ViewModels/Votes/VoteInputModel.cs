@@ -6,7 +6,9 @@
 
     public class VoteInputModel
     {
-        public string CommentId { get; set; }
+        public string VotedObject { get; set; }
+
+        public string VotedObjectId { get; set; }
 
         public bool IsUpVote { get; set; }
     }
