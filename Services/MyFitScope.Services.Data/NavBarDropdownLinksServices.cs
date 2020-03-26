@@ -27,7 +27,7 @@
             return null;
         }
 
-        public IEnumerable<LinkViewModel> GetLinksCategories(string enumName)
+        public IEnumerable<LinkViewModel> GetLinksCategories(string url, string enumName)
         {
             var enumType = GetEnumType(enumName);
 
@@ -35,6 +35,7 @@
                         .Select(ac => new LinkViewModel
                         {
                             CategoryType = ac,
+                            Url = url,
                         })
                         .ToList();
         }

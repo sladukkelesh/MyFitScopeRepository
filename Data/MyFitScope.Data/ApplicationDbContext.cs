@@ -12,6 +12,7 @@
     using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
     using Microsoft.EntityFrameworkCore;
     using MyFitScope.Data.Models.BlogModels;
+    using MyFitScope.Data.Models.FitnessModels;
 
     public class ApplicationDbContext : IdentityDbContext<ApplicationUser, ApplicationRole, string>
     {
@@ -35,6 +36,10 @@
         public DbSet<Response> Responses { get; set; }
 
         public DbSet<Vote> Votes { get; set; }
+
+
+        // Fitness Entities:
+        public DbSet<Exercise> Exercises { get; set; }
 
 
         public override int SaveChanges() => this.SaveChanges(true);

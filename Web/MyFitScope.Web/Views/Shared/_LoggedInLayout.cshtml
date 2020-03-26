@@ -1,0 +1,27 @@
+﻿@{
+    this.Layout = "_Layout";
+}
+
+
+<div class="container">
+    <main role="main" class="pb-3">
+        <div>
+            <div class="row">
+                <div class="col-md-3">
+                    <ul class="nav nav-pills flex-column">
+                        <!--add class "active" to select a link-->
+                        <li class="nav-item"><a class="nav-link" id="profile" href="#">Current Workout</a></li>
+                        <li class="nav-item"><a class="nav-link" id="two-factor" href="#">Progress</a></li>
+                        <li class="nav-item"><a class="nav-link" id="create-exercise" asp-controller="Exercises" asp-action="CreateExercise">Create Exercise</a></li>
+                        <li class="nav-item"><a class="nav-link" id="change-password" href="#">Create Workout</a></li>
+                    </ul>
+                </div>
+                <div class="col-md-9">  
+                    
+                    @this.RenderBody()
+
+                </div>
+            </div>
+        </div>
+    </main>
+</div>

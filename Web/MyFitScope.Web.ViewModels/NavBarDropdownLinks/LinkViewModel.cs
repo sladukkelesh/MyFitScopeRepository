@@ -6,5 +6,10 @@
 
         public string CategoryTitle
             => this.CategoryType.Replace("_", " ");
+
+        public string Url { get; set; }
+
+        public string FullUrl
+            => this.Url + this.CategoryType;
     }
 }

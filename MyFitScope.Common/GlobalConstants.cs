@@ -7,5 +7,7 @@
         public const string AdministratorRoleName = "Administrator";
 
         public const string ArticleCategoryTypeName = "MyFitScope.Data.Models.BlogModels.Enums.ArticleCategory";
+
+        public const string ExerciseCategoryTypeName = "MyFitScope.Data.Models.FitnessModels.Enums.MuscleGroup";
     }
 }

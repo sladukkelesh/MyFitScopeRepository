@@ -52,6 +52,10 @@ body {
     height: 300px;
 }
 
+.exercise-listing-image {
+    width: 200px;
+}
+
 .articles-listing-images {
     object-fit: contain;
     width: 200px;

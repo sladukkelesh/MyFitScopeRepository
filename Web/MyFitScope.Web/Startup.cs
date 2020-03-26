@@ -70,6 +70,9 @@
             services.AddTransient<INavbarDropdownLinksServices, NavBarDropdownLinksServices>();
             services.AddTransient<IResponsesService, ResponsesService>();
             services.AddTransient<IVotesService, VotesService>();
+
+            // Fitness services
+            services.AddTransient<IExercisesService, ExercisesService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

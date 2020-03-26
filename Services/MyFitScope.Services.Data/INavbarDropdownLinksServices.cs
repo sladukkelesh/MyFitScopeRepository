@@ -6,6 +6,6 @@
 
     public interface INavbarDropdownLinksServices
     {
-        IEnumerable<LinkViewModel> GetLinksCategories(string enumName);
+        IEnumerable<LinkViewModel> GetLinksCategories(string url, string enumName);
     }
 }

@@ -1,0 +1,36 @@
+﻿@using MyFitScope.Data.Models.FitnessModels.Enums
+@using MyFitScope.Web.ViewModels.Exercises
+@model CreateExerciseInputModel
+
+@{ 
+    this.Layout = "_LoggedInLayout";
+}
+
+
+
+<section class="container">
+    <h2>In this section you can create your own Exercise</h2>
+    <hr />
+    <form method="post" class="form-group col-md-6" asp-controller="Exercises" asp-action="CreateExercise">
+        <div class="mb-3">
+            <label asp-for="Name">Exercise Name:</label>
+            <input type="text" asp-for="Name" class="form-control" placeholder="Enter Exercise Name..." />
+            <span asp-validation-for="Name" class="text-danger"></span>
+        </div>
+        <div class="mb-3">
+            <label asp-for="MuscleGroup">Choose muscle group:</label>
+            <select asp-for="MuscleGroup" asp-items="@Html.GetEnumSelectList<MuscleGroup>()" class="form-control"></select>
+        </div>
+        <div class="mb-3">
+            <label asp-for="VideoUrl">Video Url:</label>
+            <input type="text" asp-for="VideoUrl" class="form-control" placeholder="Enter link to Video File..." />
+            <span asp-validation-for="VideoUrl" class="text-danger"></span>
+        </div>
+        <div class="mb-3">
+            <label asp-for="Description">Exercise Description:</label>
+            <textarea asp-for="Description" class="form-control" placeholder="Enter exercise description"></textarea>
+            <span asp-validation-for="Description" class="text-danger"></span>
+        </div>
+        <button type="submit" class="btn btn-primary">Create Exercise</button>
+    </form>
+</section>

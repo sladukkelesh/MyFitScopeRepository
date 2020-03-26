@@ -29,7 +29,7 @@
         // body
         // {"commentId" : "175377a9-5ceb-4542-aac3-8d2bed88b709", "isUpVote": true}
         // response {"UpVotes" : 1, "DownVotes": 0}
-        //[Authorize]
+        [Authorize]
         [HttpPost]
         public async Task<ActionResult<VoteOutputModel>> Post(VoteInputModel input)
         {

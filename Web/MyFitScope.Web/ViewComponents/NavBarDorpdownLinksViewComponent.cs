@@ -19,11 +19,11 @@
             this.dropdownLinksServices = dropdownLinksServices;
         }
 
-        public IViewComponentResult Invoke(string enumName)
+        public IViewComponentResult Invoke(string url, string enumName)
         {
             var model = new DropdownLinksViewModel
             {
-                Categories = this.dropdownLinksServices.GetLinksCategories(enumName),
+                Categories = this.dropdownLinksServices.GetLinksCategories(url, enumName),
             };
 
             return this.View(model);

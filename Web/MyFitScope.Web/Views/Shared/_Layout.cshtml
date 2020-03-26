@@ -33,13 +33,30 @@
                             <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
                         </li>
                         <li class="nav-item dropdown">
-                            <button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown">
+                            <button class="btn dropdown-toggle" type="button" data-toggle="dropdown">
+                                Exercises
+                                <span class="caret"></span>
+                            </button>
+                            <ul class="dropdown-menu">
+
+                                <vc:dropdown-links url="/Exercises/ExercisesListing?exerciseCategory=" enum-name=@GlobalConstants.ExerciseCategoryTypeName></vc:dropdown-links>
+
+                                <li class="dropdown-divider"></li>
+                                <li class="nav-item">
+                                    <a class="nav-link text-dark" asp-area="" asp-controller="Exercises" asp-action="ExercisesListing">All</a>
+                                </li>
+
+                            </ul>
+                        </li>
+
+                        <li class="nav-item dropdown">
+                            <button class="btn dropdown-toggle" type="button" data-toggle="dropdown">
                                 Blog
                                 <span class="caret"></span>
                             </button>
                             <ul class="dropdown-menu">
 
-                                <vc:dropdown-links enum-name=@GlobalConstants.ArticleCategoryTypeName></vc:dropdown-links>
+                                <vc:dropdown-links url="/Articles/ArticlesListing?articleCategory=" enum-name=@GlobalConstants.ArticleCategoryTypeName></vc:dropdown-links>
 
                                 <li class="nav-item">
                                     <a class="nav-link text-dark" asp-area="" asp-controller="Articles" asp-action="ArticlesListing">All</a>
