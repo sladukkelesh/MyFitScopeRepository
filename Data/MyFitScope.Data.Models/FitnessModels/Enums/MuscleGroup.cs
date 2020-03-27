@@ -14,6 +14,6 @@
         Upper_Legs = 9,
         Lower_Legs = 10,
         Cardio = 11,
-        None = 12,
+        Custom = 12,
     }
 }

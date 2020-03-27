@@ -7,6 +7,7 @@ namespace MyFitScope.Data.Models
     using MyFitScope.Data.Common.Models;
 
     using Microsoft.AspNetCore.Identity;
+    using MyFitScope.Data.Models.FitnessModels;
 
     public class ApplicationUser : IdentityUser, IAuditInfo, IDeletableEntity
     {
@@ -27,6 +28,10 @@ namespace MyFitScope.Data.Models
         public bool IsDeleted { get; set; }
 
         public DateTime? DeletedOn { get; set; }
+
+        public string WorkoutId { get; set; }
+
+        public virtual Workout Workout { get; set; }
 
         public virtual ICollection<IdentityUserRole<string>> Roles { get; set; }
 

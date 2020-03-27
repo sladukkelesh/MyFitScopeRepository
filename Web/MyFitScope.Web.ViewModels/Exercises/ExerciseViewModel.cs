@@ -1,9 +1,10 @@
 ﻿namespace MyFitScope.Web.ViewModels.Exercises
 {
+    using System;
+
     using MyFitScope.Data.Models.FitnessModels;
     using MyFitScope.Data.Models.FitnessModels.Enums;
     using MyFitScope.Services.Mapping;
-    using System;
 
     public class ExerciseViewModel : IMapFrom<Exercise>
     {
@@ -24,6 +25,6 @@
         public string Description { get; set; }
 
         public string ShortDescription
-            => this.Description.Substring(0, 200) + "...";
+            => this.Description.Length > 200 ? this.Description.Substring(0, 200) + "..." : this.Description;
     }
 }

@@ -42,7 +42,6 @@
                     .To<DetailsExerciseViewModel>()
                     .FirstOrDefault();
 
-
         public ICollection<ExerciseViewModel> GetExercisesByCategory(string userName, string exerciseCategoryInput = null)
         {
             var result = this.exercisesRepository.All();
@@ -51,7 +50,7 @@
             {
                 if (exerciseCategoryInput == "Custom")
                 {
-                    result.Where(e => e.CreatorName == userName);
+                    result = result.Where(e => e.CreatorName == userName);
                 }
                 else
                 {
