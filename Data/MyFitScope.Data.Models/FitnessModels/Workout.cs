@@ -1,6 +1,7 @@
 ﻿namespace MyFitScope.Data.Models.FitnessModels
 {
     using System;
+    using System.Collections.Generic;
     using System.ComponentModel.DataAnnotations;
 
     using MyFitScope.Data.Common.Models;
@@ -13,6 +14,7 @@
             this.Id = Guid.NewGuid().ToString();
             this.CreatedOn = DateTime.UtcNow;
             this.IsCustom = false;
+            this.Users = new HashSet<ApplicationUser>();
         }
 
         [Required]
@@ -31,5 +33,7 @@
         [Required]
         [MaxLength(2000)]
         public string Description { get; set; }
+
+        public virtual ICollection<ApplicationUser> Users { get; set; }
     }
 }

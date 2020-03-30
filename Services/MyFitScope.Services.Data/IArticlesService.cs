@@ -8,7 +8,7 @@
 
     public interface IArticlesService
     {
-        Task CreateArticle(string articleTitle, ArticleCategory articleCategory, string articleImageUrl, string articleContent, string userId);
+        Task<string> CreateArticle(string articleTitle, ArticleCategory articleCategory, string articleImageUrl, string articleContent, string userId);
 
         IEnumerable<ArticleViewModel> GetArticlesByCategory(string articleCategory);
 

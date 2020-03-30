@@ -3,9 +3,8 @@ namespace MyFitScope.Data.Models
 {
     using System;
 
-    using MyFitScope.Data.Common.Models;
-
     using Microsoft.AspNetCore.Identity;
+    using MyFitScope.Data.Common.Models;
 
     public class ApplicationRole : IdentityRole, IAuditInfo, IDeletableEntity
     {

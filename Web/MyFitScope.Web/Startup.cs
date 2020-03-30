@@ -2,6 +2,15 @@
 {
     using System.Reflection;
 
+    using Microsoft.AspNetCore.Builder;
+    using Microsoft.AspNetCore.Hosting;
+    using Microsoft.AspNetCore.Http;
+    using Microsoft.AspNetCore.Identity;
+    using Microsoft.AspNetCore.Mvc;
+    using Microsoft.EntityFrameworkCore;
+    using Microsoft.Extensions.Configuration;
+    using Microsoft.Extensions.DependencyInjection;
+    using Microsoft.Extensions.Hosting;
     using MyFitScope.Data;
     using MyFitScope.Data.Common;
     using MyFitScope.Data.Common.Repositories;
@@ -12,15 +21,6 @@
     using MyFitScope.Services.Mapping;
     using MyFitScope.Services.Messaging;
     using MyFitScope.Web.ViewModels;
-
-    using Microsoft.AspNetCore.Builder;
-    using Microsoft.AspNetCore.Hosting;
-    using Microsoft.AspNetCore.Http;
-    using Microsoft.EntityFrameworkCore;
-    using Microsoft.Extensions.Configuration;
-    using Microsoft.Extensions.DependencyInjection;
-    using Microsoft.Extensions.Hosting;
-    using Microsoft.AspNetCore.Mvc;
 
     public class Startup
     {
@@ -38,7 +38,8 @@
                 options => options.UseSqlServer(this.configuration.GetConnectionString("DefaultConnection")));
 
             services.AddDefaultIdentity<ApplicationUser>(IdentityOptionsProvider.GetIdentityOptions)
-                .AddRoles<ApplicationRole>().AddEntityFrameworkStores<ApplicationDbContext>();
+                .AddRoles<ApplicationRole>()
+                .AddEntityFrameworkStores<ApplicationDbContext>();
 
             services.Configure<CookiePolicyOptions>(
                 options =>
@@ -73,6 +74,10 @@
 
             // Fitness services
             services.AddTransient<IExercisesService, ExercisesService>();
+            services.AddTransient<IWorkoutsService, WorkoutsService>();
+
+            // Administration services
+            services.AddTransient<IAdministrationService, AdministrationService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

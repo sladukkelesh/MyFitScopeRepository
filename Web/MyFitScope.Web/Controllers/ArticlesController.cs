@@ -39,6 +39,7 @@
 
         public IActionResult CreateArticle()
         {
+            var currentUserWorkout = this.User.Claims.FirstOrDefault(c => c.Type == "WorkoutId").Value;
             return this.View();
         }
 
@@ -46,9 +47,9 @@
         public async Task<IActionResult> CreateArticle(CreateArticleInputViewModel input)
         {
             var userId = this.userManager.GetUserId(this.User);
-            await this.articlesService.CreateArticle(input.ArticleTitle, input.ArticleCategory, input.ArticleImageUrl, input.ArticleContent, userId);
+            var articleId = await this.articlesService.CreateArticle(input.ArticleTitle, input.ArticleCategory, input.ArticleImageUrl, input.ArticleContent, userId);
 
-            return this.Redirect("/");
+            return this.RedirectToAction(nameof(this.Details), new { articleId = articleId });
         }
 
         public async Task<IActionResult> DeleteArticle(string articleId)

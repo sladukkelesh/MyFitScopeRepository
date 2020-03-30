@@ -1,11 +1,11 @@
 ﻿namespace MyFitScope.Web.Areas.Administration.Controllers
 {
+    using Microsoft.AspNetCore.Mvc;
     using MyFitScope.Services.Data;
+    using MyFitScope.Web.Controllers;
     using MyFitScope.Web.ViewModels.Administration.Dashboard;
 
-    using Microsoft.AspNetCore.Mvc;
-
-    public class DashboardController : AdministrationController
+    public class DashboardController : BaseController
     {
         private readonly ISettingsService settingsService;
 

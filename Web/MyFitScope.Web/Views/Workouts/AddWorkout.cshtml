@@ -1,0 +1,32 @@
+﻿@using MyFitScope.Data.Models.FitnessModels.Enums
+@using MyFitScope.Web.ViewModels.Workouts
+@model CreateWorkoutInputModel
+
+@{ 
+    this.Layout = "_LoggedInLayout";
+}
+
+<h1>Create your workout plan with the form bellow:</h1>
+<section class="container col-md-8">
+    <form method="post" asp-controller="Workouts" asp-action="AddWorkout">
+        <div class="form-group">
+            <label asp-for="Name">Workout name:</label>
+            <input type="text" asp-for="Name" class="form-control" placeholder="Enter workout name..." />
+            <span asp-validation-for="Name" class="text-danger"></span>
+        </div>
+        <div class="form-group">
+            <label asp-for="Difficulty">Choose workout difficulty:</label>
+            <select asp-for="Difficulty" asp-items="@Html.GetEnumSelectList<Difficulty>()" class="form-control"></select>
+        </div>
+        <div class="form-group">
+            <label asp-for="WorkoutType">Choose workout category:</label>
+            <select asp-for="WorkoutType" asp-items="@Html.GetEnumSelectList<WorkoutType>()" class="form-control"></select>
+        </div>
+        <div class="form-group">
+            <label asp-for="Description"></label>
+            <textarea asp-for="Description" class="form-control" placeholder="Enter workout name..."></textarea>
+            <span asp-validation-for="Description" class="text-danger"></span>
+        </div>
+            <button type="submit" class="btn btn-primary">Create Workout</button>      
+    </form>
+</section>

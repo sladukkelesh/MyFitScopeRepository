@@ -20,7 +20,7 @@
             this.articlesRepository = articlesRepository;
         }
 
-        public async Task CreateArticle(string articleTitle, ArticleCategory articleCategory, string articleImageUrl, string articleContent, string userId)
+        public async Task<string> CreateArticle(string articleTitle, ArticleCategory articleCategory, string articleImageUrl, string articleContent, string userId)
         {
             var article = new Article
             {
@@ -33,6 +33,8 @@
 
             await this.articlesRepository.AddAsync(article);
             await this.articlesRepository.SaveChangesAsync();
+
+            return article.Id;
         }
 
         public async Task DeleteArticleAsync(string articleId)
