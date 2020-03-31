@@ -6,5 +6,35 @@
 }
 
 <section>
-    <h1>Your current workout(Finally!)</h1>
+    @if (Model == null)
+    {
+        <h1>No current workout found</h1>
+        <p>You still don't have a current workout! Press the "Create Workout" button bellow to create one:</p>
+        <div>
+            <a class="btn btn-primary" asp-controller="Workouts" asp-action="AddWorkout">Create Workout</a>
+        </div>
+    }
+    else
+    {
+        <div>
+            <h1>Your current workout:</h1>
+            <p><span class="font-weight-bold">Name:</span> @Model.</p>
+            <p><span class="font-weight-bold">Creator:</span> @Model.CreatorName</p>
+            <p><span class="font-weight-bold">Difficulty:</span> @Model.DifficultyTitle</p>
+            <p><span class="font-weight-bold">Workout Category:</span> @Model.WorkoutTypeTitle</p>
+            <p><span class="font-weight-bold">Description:</span> @Model.Description</p>
+        </div>
+            
+
+        @if (Model.IsCustom == true || this.User.IsInRole("Admin"))
+        {
+            <div>
+                <button type="button">Add Workout Day</button>
+            </div>
+            <div>
+                <button type="button">Add Exercise to Workout Day</button>
+            </div>
+        }
+    }
+
 </section>

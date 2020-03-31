@@ -17,11 +17,14 @@
         private readonly IWorkoutsService workoutsService;
         private readonly UserManager<ApplicationUser> userManager;
 
-        public WorkoutsController(IWorkoutsService workoutsService, UserManager<ApplicationUser> userManager)
+        public WorkoutsController(SignInManager<ApplicationUser> signInManager, IWorkoutsService workoutsService, UserManager<ApplicationUser> userManager)
         {
             this.workoutsService = workoutsService;
             this.userManager = userManager;
         }
+
+        public ApplicationUser LoggedInUser
+            => this.userManager.FindByIdAsync(this.userManager.GetUserId(this.User)).Result;
 
         [Authorize]
         public IActionResult AddWorkout()
@@ -40,17 +43,22 @@
                 return this.View(input);
             }
 
-            var userName = this.User.Identity.Name;
-            var userId = this.userManager.GetUserId(this.User);
+            if (await this.userManager.IsInRoleAsync(this.LoggedInUser, "Admin"))
+            {
 
-            var workoutId = await this.workoutsService.CreateWorkoutAsync(input.Name, input.Difficulty, input.WorkoutType, input.Description, userName, userId);
+            }
 
-            return this.RedirectToAction(nameof(this.CurrentWorkout), new { workoutId = workoutId });
+            var workoutId = await this.workoutsService.CreateWorkoutAsync(input.Name, input.Difficulty, input.WorkoutType, input.Description, this.LoggedInUser.UserName, this.LoggedInUser.Id);
+
+            return this.Redirect("/");
         }
 
-        public IActionResult CurrentWorkout(string workoutId)
+        public async Task<IActionResult> CurrentWorkout()
         {
-            var model = this.workoutsService.GetCurrentWorkout(workoutId);
+            var loggInUserId = this.userManager.GetUserId(this.User);
+            var loggedInUser = await this.userManager.FindByIdAsync(loggInUserId);
+
+            var model = this.workoutsService.GetCurrentWorkout(loggedInUser.WorkoutId);
 
             return this.View(model);
         }

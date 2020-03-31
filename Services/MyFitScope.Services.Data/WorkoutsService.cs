@@ -2,7 +2,7 @@
 {
     using System.Linq;
     using System.Threading.Tasks;
-
+    using Microsoft.AspNetCore.Identity;
     using MyFitScope.Data.Common.Repositories;
     using MyFitScope.Data.Models;
     using MyFitScope.Data.Models.FitnessModels;
@@ -12,16 +12,18 @@
 
     public class WorkoutsService : IWorkoutsService
     {
+        private readonly UserManager<ApplicationUser> userManager;
         private readonly IDeletableEntityRepository<Workout> workoutsRepository;
         private readonly IDeletableEntityRepository<ApplicationUser> usersRepository;
 
-        public WorkoutsService(IDeletableEntityRepository<Workout> workoutsRepository, IDeletableEntityRepository<ApplicationUser> usersRepository)
+        public WorkoutsService(UserManager<ApplicationUser> userManager, IDeletableEntityRepository<Workout> workoutsRepository, IDeletableEntityRepository<ApplicationUser> usersRepository)
         {
+            this.userManager = userManager;
             this.workoutsRepository = workoutsRepository;
             this.usersRepository = usersRepository;
         }
 
-        public async Task<string> CreateWorkoutAsync(string name, Difficulty difficulty, WorkoutType workoutType, string description, string creatorName, string userId)
+        public async Task<string> CreateWorkoutAsync(string name, Difficulty difficulty, WorkoutType workoutType, string description, ApplicationUser user)
         {
             var workout = new Workout
             {
@@ -29,10 +31,19 @@
                 Difficulty = difficulty,
                 WorkoutType = workoutType,
                 Description = description,
-                CreatorName = creatorName,
+                CreatorName = user.UserName,
             };
 
-            workout.Users.Add(await this.usersRepository.GetByIdWithDeletedAsync(userId));
+            if (await this.userManager.IsInRoleAsync(user, "Admin"))
+            {
+                workout.IsCustom = false;
+            }
+            else
+            {
+                workout.IsCustom = true;
+            }
+
+            workout.Users.Add(await this.usersRepository.GetByIdWithDeletedAsync(user.Id));
 
             await this.workoutsRepository.AddAsync(workout);
             await this.workoutsRepository.SaveChangesAsync();

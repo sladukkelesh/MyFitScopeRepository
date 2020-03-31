@@ -17,6 +17,8 @@
 
         public WorkoutType WorkoutType { get; set; }
 
+        public bool IsCustom { get; set; }
+
         [Required]
         [MaxLength(2000)]
         [MinLength(10)]
