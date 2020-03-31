@@ -1,0 +1,22 @@
+﻿@using MyFitScope.Web.ViewModels.Administration.Administration
+@model AllRolesViewModel
+
+@{ 
+    this.ViewData["Title"] = "All Roles";
+}
+
+<section>
+    <h1>All Roles:</h1>
+
+    <div class="row">
+        @foreach (var role in Model.Roles)
+        {
+            <div class="card col-md-3 m-3">
+                <h5 class="card-header">@role.Name</h5>
+                <div class="card-body">
+                    <a asp-area="Administration" asp-controller="Administration" asp-action="EditUsersInRole" asp-route-roleId="@role.Id" class="btn btn-primary">Add / Remove User</a>
+                </div>
+            </div>
+        }
+    </div>       
+</section>

@@ -1,0 +1,32 @@
+﻿@using MyFitScope.Web.ViewModels.Administration.Administration
+@model List<UsersInRoleViewModel>
+
+@{ 
+    this.ViewData["Title"] = "Edit Users In Role";
+}
+
+<section>
+    <form method="post" >
+        <div class="card">
+            <div class="card-header">
+                <h1>Add or Remove Users from this role</h1>
+            </div>
+            <div class="card-body">
+                
+                @for(int i = 0; i < Model.Count; i++)
+                {
+                    <div class="form-check m1">
+                        <input type="hidden" asp-for="@Model[i].UserId"/>
+                        <input type="hidden" asp-for="@Model[i].UserName" />
+                        <input asp-for="@Model[i].IsSelected" class="form-check-input" />
+                        <label asp-for="@Model[i].IsSelected" class="form-check-label">@Model[i].UserName</label>
+                    </div>
+                }
+            </div>
+            <div class="card-footer">
+                <button type="submit" asp-route-roleId="@Model[0].RoleId" class="btn btn-primary">Update</button>
+                <a class="btn btn-danger" asp-area="Administration" asp-controller="Administration" asp-action="AllRoles">Cancel</a>
+            </div>
+        </div>
+    </form>  
+</section>
