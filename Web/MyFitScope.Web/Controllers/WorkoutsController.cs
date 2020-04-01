@@ -43,12 +43,7 @@
                 return this.View(input);
             }
 
-            if (await this.userManager.IsInRoleAsync(this.LoggedInUser, "Admin"))
-            {
-
-            }
-
-            var workoutId = await this.workoutsService.CreateWorkoutAsync(input.Name, input.Difficulty, input.WorkoutType, input.Description, this.LoggedInUser.UserName, this.LoggedInUser.Id);
+            var workoutId = await this.workoutsService.CreateWorkoutAsync(input.Name, input.Difficulty, input.WorkoutType, input.Description, this.LoggedInUser);
 
             return this.Redirect("/");
         }

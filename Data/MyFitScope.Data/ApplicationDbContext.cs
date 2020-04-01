@@ -37,12 +37,12 @@
 
         public DbSet<Vote> Votes { get; set; }
 
-
         // Fitness Entities:
         public DbSet<Exercise> Exercises { get; set; }
 
         public DbSet<Workout> Workouts { get; set; }
 
+        public DbSet<WorkoutDay> WorkoutDays { get; set; }
 
         public override int SaveChanges() => this.SaveChanges(true);
 
