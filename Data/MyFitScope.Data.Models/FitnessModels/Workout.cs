@@ -15,6 +15,7 @@
             this.CreatedOn = DateTime.UtcNow;
             this.IsCustom = false;
             this.Users = new HashSet<ApplicationUser>();
+            this.WorkoutDays = new HashSet<WorkoutDay>();
         }
 
         [Required]
@@ -35,5 +36,7 @@
         public string Description { get; set; }
 
         public virtual ICollection<ApplicationUser> Users { get; set; }
+
+        public virtual ICollection<WorkoutDay> WorkoutDays { get; set; }
     }
 }

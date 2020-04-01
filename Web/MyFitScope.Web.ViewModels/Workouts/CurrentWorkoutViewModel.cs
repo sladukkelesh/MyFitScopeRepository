@@ -7,9 +7,12 @@
     using MyFitScope.Data.Models.FitnessModels;
     using MyFitScope.Data.Models.FitnessModels.Enums;
     using MyFitScope.Services.Mapping;
+    using MyFitScope.Web.ViewModels.WorkoutDays;
 
     public class CurrentWorkoutViewModel : IMapFrom<Workout>
     {
+        public string Id { get; set; }
+
         public string Name { get; set; }
 
         public string CreatorName { get; set; }
@@ -27,5 +30,7 @@
             => this.WorkoutType.ToString().Replace("_", " ");
 
         public string Description { get; set; }
+
+        public ICollection<WorkoutDayViewModel> WorkoutDays { get; set; }
     }
 }

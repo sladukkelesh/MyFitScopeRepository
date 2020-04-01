@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using MyFitScope.Data;
 
 namespace MyFitScope.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20200401164648_ChangeDayOfWeekEnumtoWeekDayEnum")]
+    partial class ChangeDayOfWeekEnumtoWeekDayEnum
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -490,15 +492,17 @@ namespace MyFitScope.Data.Migrations
                     b.Property<int>("WeekDay")
                         .HasColumnType("int");
 
-                    b.Property<string>("WorkoutId")
-                        .IsRequired()
+                    b.Property<int>("WorkoutId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("WorkoutId1")
                         .HasColumnType("nvarchar(450)");
 
                     b.HasKey("Id");
 
                     b.HasIndex("IsDeleted");
 
-                    b.HasIndex("WorkoutId");
+                    b.HasIndex("WorkoutId1");
 
                     b.ToTable("WorkoutDays");
                 });
@@ -660,9 +664,7 @@ namespace MyFitScope.Data.Migrations
                 {
                     b.HasOne("MyFitScope.Data.Models.FitnessModels.Workout", "Workout")
                         .WithMany()
-                        .HasForeignKey("WorkoutId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
+                        .HasForeignKey("WorkoutId1");
                 });
 
             modelBuilder.Entity("MyFitScope.Data.Models.Vote", b =>

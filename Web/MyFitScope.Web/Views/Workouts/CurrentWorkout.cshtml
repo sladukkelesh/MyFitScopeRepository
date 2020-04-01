@@ -1,40 +1,75 @@
-﻿@using MyFitScope.Web.ViewModels.Workouts
+﻿@using MyFitScope.Data.Models.FitnessModels.Enums
+@using MyFitScope.Web.ViewModels.Workouts
 @model CurrentWorkoutViewModel
 
 @{ 
     this.Layout = "_LoggedInLayout";
 }
 
-<section>
-    @if (Model == null)
-    {
-        <h1>No current workout found</h1>
-        <p>You still don't have a current workout! Press the "Create Workout" button bellow to create one:</p>
-        <div>
-            <a class="btn btn-primary" asp-controller="Workouts" asp-action="AddWorkout">Create Workout</a>
-        </div>
-    }
-    else
-    {
-        <div>
-            <h1>Your current workout:</h1>
-            <p><span class="font-weight-bold">Name:</span> @Model.</p>
-            <p><span class="font-weight-bold">Creator:</span> @Model.CreatorName</p>
-            <p><span class="font-weight-bold">Difficulty:</span> @Model.DifficultyTitle</p>
-            <p><span class="font-weight-bold">Workout Category:</span> @Model.WorkoutTypeTitle</p>
-            <p><span class="font-weight-bold">Description:</span> @Model.Description</p>
-        </div>
-            
-
-        @if (Model.IsCustom == true || this.User.IsInRole("Admin"))
+    <section>
+        @if (Model == null)
         {
+            <h1>No current workout found</h1>
+            <p>You still don't have a current workout! Press the "Create Workout" button bellow to create one:</p>
             <div>
-                <button type="button">Add Workout Day</button>
-            </div>
-            <div>
-                <button type="button">Add Exercise to Workout Day</button>
+                <a class="btn btn-primary" asp-controller="Workouts" asp-action="AddWorkout">Create Workout</a>
             </div>
         }
-    }
+        else
+        {
+            <div>
+                <h1>Your current workout:</h1>
+                <p><span class="font-weight-bold">Name:</span> @Model.</p>
+                <p><span class="font-weight-bold">Creator:</span> @Model.CreatorName</p>
+                <p><span class="font-weight-bold">Difficulty:</span> @Model.DifficultyTitle</p>
+                <p><span class="font-weight-bold">Workout Category:</span> @Model.WorkoutTypeTitle</p>
+                <p><span class="font-weight-bold">Description:</span> @Model.Description</p>
+            </div>
 
-</section>
+
+            @if (Model.IsCustom == true || this.User.IsInRole("Admin"))
+            {
+                @if (Model.WorkoutDays.Count == 0)
+                {
+                    <p>
+                        Your current workout has no workout days in it! Press "Add Workout Day" button
+                        to add a workout day.
+                    </p>
+                }
+                <div>
+                    <button type="button" class="btn btn-primary btn-block">Add Workout Day</button>
+                    <form id="workoutDayForm" method="post" asp-controller="WorkoutDays" asp-action="AddWorkoutDay">
+                        <div class="form-group">
+                            <input type="hidden" name="WorkoutId" value="@Model.Id" />
+
+                            <label for="weekday-select-dropdown">Choose a day of week for your workout day:</label>
+                            <select id="weekday-select-dropdown" name="WeekDay" asp-items="@Html.GetEnumSelectList<WeekDay>()" class="form-control"></select>
+                        </div>
+                        <div class="form-group">
+                            <button type="submit" class="btn btn-primary">Add</button>
+                        </div>
+                    </form>
+                </div>
+                <div>
+                    <button type="button">Add Exercise to Workout Day</button>
+                </div>
+            }
+
+            @if (Model.WorkoutDays.Count != 0)
+            {
+                <div id="workoutDays">
+                    @foreach (var day in Model.WorkoutDays)
+                    {
+                        <div>
+                            <h3>Workout Day</h3>
+                            <p>
+                                <span class="font-weight-bold">Name:</span> The name will be automaticly created when you add
+                                some exercise in this day!
+                            </p>
+                        </div>
+                    }
+                </div> 
+            }
+        }
+
+    </section>

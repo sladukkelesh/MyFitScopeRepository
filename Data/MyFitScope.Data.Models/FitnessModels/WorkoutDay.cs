@@ -4,6 +4,7 @@
     using System.ComponentModel.DataAnnotations;
 
     using MyFitScope.Data.Common.Models;
+    using MyFitScope.Data.Models.FitnessModels.Enums;
 
     public class WorkoutDay : BaseDeletableModel<string>
     {
@@ -15,10 +16,10 @@
         public string Name { get; set; } // Auto generated!
 
         [Required]
-        public DayOfWeek DayOfWeek { get; set; }
+        public WeekDay WeekDay { get; set; }
 
         [Required]
-        public int WorkoutId { get; set; }
+        public string WorkoutId { get; set; }
 
         public Workout Workout { get; set; }
     }
