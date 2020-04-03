@@ -1,6 +1,7 @@
 ﻿namespace MyFitScope.Data.Models.FitnessModels
 {
     using System;
+    using System.Collections.Generic;
 
     using MyFitScope.Data.Common.Models;
     using MyFitScope.Data.Models.FitnessModels.Enums;
@@ -11,6 +12,7 @@
         {
             this.Id = Guid.NewGuid().ToString();
             this.IsCustom = false;
+            this.WorkoutDays = new HashSet<WorkoutDayExercise>();
         }
 
         public ExerciseSettings ExerciseSettings { get; set; }
@@ -26,5 +28,7 @@
         public MuscleGroup MuscleGroup { get; set; }
 
         public string Description { get; set; } //--------> Required!
+
+        public ICollection<WorkoutDayExercise> WorkoutDays { get; set; }
     }
 }

@@ -62,7 +62,7 @@ body {
 -------------------------------------------------- */
 #workoutDayForm {
     border: 1px solid gray;
-    margin-top: 10px;
+    margin: 10px 0 10px 0;
     padding: 10px;
 }
 
@@ -92,4 +92,17 @@ body {
     width: 200px;
 }
 
+
+/* Exercise Manager styles
+-------------------------------------------------- */
+.exercise-menu-main-div {
+    border: 1px solid black;
+    margin: 10px 0 10px 0;
+    padding: 5px;
+
+}
+
+.exercise-manager-menu {
+    display: inline-block;
+}
 

@@ -1,6 +1,7 @@
 ﻿namespace MyFitScope.Data.Models.FitnessModels
 {
     using System;
+    using System.Collections.Generic;
     using System.ComponentModel.DataAnnotations;
 
     using MyFitScope.Data.Common.Models;
@@ -11,6 +12,7 @@
         public WorkoutDay()
         {
             this.Id = Guid.NewGuid().ToString();
+            this.Exercises = new HashSet<WorkoutDayExercise>();
         }
 
         public string Name { get; set; } // Auto generated!
@@ -22,5 +24,7 @@
         public string WorkoutId { get; set; }
 
         public Workout Workout { get; set; }
+
+        public ICollection<WorkoutDayExercise> Exercises { get; set; }
     }
 }

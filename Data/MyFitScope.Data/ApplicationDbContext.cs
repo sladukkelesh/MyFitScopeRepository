@@ -44,6 +44,8 @@
 
         public DbSet<WorkoutDay> WorkoutDays { get; set; }
 
+        public DbSet<WorkoutDayExercise> WorkoutDaysExercises { get; set; }
+
         public override int SaveChanges() => this.SaveChanges(true);
 
         public override int SaveChanges(bool acceptAllChangesOnSuccess)
@@ -65,6 +67,11 @@
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
+            builder.Entity<WorkoutDayExercise>(e =>
+            {
+                e.HasKey(e => new { e.WorkoutDayId, e.ExerciseId });
+            });
+
             // Needed for Identity models configuration
             base.OnModelCreating(builder);
 
