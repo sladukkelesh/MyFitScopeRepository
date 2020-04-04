@@ -19,7 +19,7 @@
         {
             <div>
                 <h1>Your current workout:</h1>
-                <p><span class="font-weight-bold">Name:</span> @Model.</p>
+                <p><span class="font-weight-bold">Name:</span> @Model.Name</p>
                 <p><span class="font-weight-bold">Creator:</span> @Model.CreatorName</p>
                 <p><span class="font-weight-bold">Difficulty:</span> @Model.DifficultyTitle</p>
                 <p><span class="font-weight-bold">Workout Category:</span> @Model.WorkoutTypeTitle</p>
@@ -27,55 +27,7 @@
             </div>
 
 
-            @if (Model.IsCustom == true || this.User.IsInRole("Admin"))
-            {
-                @if (Model.WorkoutDays.Count == 0)
-                {
-                    <p>
-                        Your current workout has no workout days in it! Press "Add Workout Day" button
-                        to add a workout day.
-                    </p>
-                }
-                <div>
-                    <button type="button" class="btn btn-primary btn-block">Add Workout Day</button>
-                    <form id="workoutDayForm" method="post" asp-controller="WorkoutDays" asp-action="AddWorkoutDay">
-                        <div class="form-group">
-                            <input type="hidden" name="WorkoutId" value="@Model.Id" />
-
-                            <label for="weekday-select-dropdown">Choose a day of week for your workout day:</label>
-                            <select id="weekday-select-dropdown" name="WeekDay" asp-items="@Html.GetEnumSelectList<WeekDay>()" class="form-control"></select>
-                        </div>
-                        <div class="form-group">
-                            <button type="submit" class="btn btn-primary">Add</button>
-                        </div>
-                    </form>
-                </div>
-                <div>
-                    <button type="button" class="btn btn-info btn-block">Add Exercise to Workout Day</button>
-                    <div class="exercise-menu-main-div">
-                        <div>
-                            <p>radio buttons for workout days</p>
-                        </div>
-                        <div class="exercise-manager-menu">
-                            <p>Vegetables</p>
-                            <ul>
-                                <li>Cucumber</li>
-                                <li>Totmato</li>
-                                <li>Letuce</li>
-                            </ul>
-                        </div>
-                        <div class="exercise-manager-menu">
-                            <p>Fruits</p>
-                            <ul>
-                                <li>Banana</li>
-                                <li>Apple</li>
-                                <li>Strawberry</li>
-                                <li>Pineapple</li>
-                            </ul>
-                        </div>
-                    </div>
-                </div>
-            }
+          
 
             @if (Model.WorkoutDays.Count != 0)
             {
@@ -83,16 +35,44 @@
                     @foreach (var day in Model.WorkoutDays)
                     {
                         <div>
-                            <h3>Workout Day</h3>
-                            <p>
-                                <span class="font-weight-bold">Name:</span> The name will be automaticly created when you add
-                                some exercise in this day!
-                            </p>
+                            <h3>@day.WeekDayTitle /@(day.Name != string.Empty ? day.Name : "Add execises to see muscle groups!")/</h3>
+                            
+                            @if (this.User.IsInRole("Admin") || Model.IsCustom == true)
+                            {
+                                <div>
+                                    <a class="btn btn-info" asp-controller="WorkoutDays" asp-action="Edit" asp-route-workoutDayId="@day.Id">Edit</a>
+                                </div>
+                            }
+
+                            @if (day.Exercises.Count != 0)
+                            {
+                                <table class="table table-striped">
+
+                                    <thead>
+                                        <tr>
+                                            <th scope="col">#</th>
+                                            <th scope="col">Muscle</th>
+                                            <th scope="col">Exercise</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+
+                                        @for (var i = 0; i < day.Exercises.Count; i++)
+                                        {
+                                            <tr>
+                                                <th scope="row">@(i + 1)</th>
+                                                <td>@day.Exercises[i].MuscleGroupTitle</td>
+                                                <td><a asp-controller="Exercises" asp-action="Details" asp-route-id="@day.Exercises[i].ExerciseId">@day.Exercises[i].ExerciseName</a></td>
+                                            </tr>
+                                        }
+                                    </tbody>
+                                </table>
+                            }
                         </div>
                     }
                 </div> 
             }
         }
-
     </section>
+
 

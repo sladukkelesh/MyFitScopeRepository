@@ -8,6 +8,7 @@
     using Microsoft.AspNetCore.Identity;
     using Microsoft.AspNetCore.Mvc;
     using MyFitScope.Data.Models;
+    using MyFitScope.Data.Models.FitnessModels.Enums;
     using MyFitScope.Services.Data;
     using MyFitScope.Web.ViewModels.Exercises;
 
@@ -60,6 +61,33 @@
             var model = this.exercisesService.GetExerciseById(id);
 
             return this.View(model);
+        }
+
+        public IActionResult GetMuscleGroups()
+        {
+            var result = Enum.GetNames(typeof(MuscleGroup))
+                        .Select(ac => new ExerciseMuscleGroupOutputModel
+                        {
+                            GroupName = ac,
+                        })
+                        .ToList();
+
+            return this.Ok(result);
+        }
+
+        public IActionResult GetExercisesByMuscleGroup(string muscleGroup)
+        {
+            var userName = this.User.Identity.Name;
+
+            var exercises = this.exercisesService.GetExercisesByCategory(userName, muscleGroup);
+
+            var result = exercises.Select(e => new ExerciseOutputModel
+            {
+                Id = e.Id,
+                Name = e.Name,
+            });
+
+            return this.Ok(result);
         }
     }
 }

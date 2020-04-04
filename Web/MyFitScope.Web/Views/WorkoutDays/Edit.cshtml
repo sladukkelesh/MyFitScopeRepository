@@ -1,0 +1,159 @@
+﻿@using MyFitScope.Web.ViewModels.WorkoutDays
+@model EditWorkoutDayViewModel
+
+@{
+    this.Layout = "_LoggedInLayout";
+}
+
+<section>
+    <article>
+        <header>
+            <h1>Edit Workout Day</h1>
+        </header>
+        <div>
+
+            @if (Model.Exercises.Count == 0)
+            {
+                <div>
+                    <p>
+                        You currently don't have any execises in this workout day. <br />
+                        Use "Exercise Manager" and add exercise to this day.
+                    </p>
+                </div>
+            }
+            else
+            {
+                <table class="table table-striped">
+
+                    <thead>
+                        <tr>
+                            <th scope="col">#</th>
+                            <th scope="col">Muscle</th>
+                            <th scope="col">Exercise</th>
+                            <th scope="col">Remove</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+
+                        @for (var i = 0; i < Model.Exercises.Count; i++)
+                        {
+                            <tr>
+                                <th scope="row">@(i + 1)</th>
+                                <td>@Model.Exercises[i].MuscleGroupTitle</td>
+                                <td><a asp-controller="Exercises" asp-action="Details" asp-route-id="@Model.Exercises[i].Id">@Model.Exercises[i].Name</a></td>
+                                <td><a class="btn btn-danger btn-sm" asp-controller="WorkoutDaysExercises" asp-action="RemoveExercise" asp-route-exerciseId="@Model.Exercises[i].Id">Remove</a></td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            }        
+            
+            <div id="exerciseManager" class="exercise-menu-main-div">
+                <h3 class="text-center">Exercise Manager</h3>
+                <hr />
+                <div class="row">
+                    <div class="col-4">
+                        <div class="list-group" id="list-tab" role="tablist">
+                        </div>
+                    </div>
+                    <div class="col-8">
+                        <div class="tab-content" id="nav-tabContent">
+
+                        </div>
+                    </div>
+                </div>
+            </div>           
+        </div>
+    </article>
+</section>
+
+
+@section Scripts {
+    <script>
+        function GetMuscleGroups() {
+            $.ajax("/Exercises/GetMuscleGroups", {
+                type: 'GET',
+                success: function (data) {
+                    let parentDivElement = document.getElementById("list-tab");
+
+                    parentDivElement.innerHTML = "";
+
+                    for (let i = 0; i < data.length; i++) {
+                        let attributeValue = data[i].groupName.toLowerCase().replace("_", "-");
+                        let contentValue = data[i].groupName.replace("_", " ");
+
+                        let child = document.createElement("a");
+
+                        child.classList.add("list-group-item");
+                        child.classList.add("list-group-item-action");
+
+                        child.setAttribute("id", "list-" + attributeValue + "-list");
+                        child.setAttribute("data-toggle", "list");
+                        child.setAttribute("href", "#list-" + attributeValue);
+                        child.setAttribute("role", "tab");
+                        child.setAttribute("aria-controls", attributeValue);
+
+                        child.textContent = contentValue;
+
+                        child.addEventListener("click", function () {
+                            let activeElement = document.getElementsByClassName("active")[0];
+
+                            if (activeElement) {
+                                activeElement.classList.remove("active");
+                            }
+
+                            let eventElement = event.target;
+
+                            eventElement.classList.add("active");
+
+
+                            CreateExerciseLinks(data[i].groupName);
+                        });
+
+                        parentDivElement.appendChild(child);
+                    }
+                }
+            });
+        }
+
+        function CreateExerciseLinks(muscleGroup) {
+            $.ajax("/Exercises/GetExercisesByMuscleGroup?muscleGroup=" + muscleGroup, {
+                type: 'GET',
+                success: function (data) {
+                    let attributeValue = muscleGroup.toLowerCase().replace("_", "-");
+
+                    let parentDivElement = document.getElementById("nav-tabContent");
+
+                    parentDivElement.innerHTML = "";
+
+                    let child = document.createElement("UL");
+
+                    child.classList.add("tab-pane");
+                    child.classList.add("fade");
+                    child.classList.add("show");
+                    child.classList.add("active");
+
+                    child.setAttribute("id", "list-" + attributeValue);
+                    child.setAttribute("role", "tabpanel");
+                    child.setAttribute("aria-labelledby", "list-" + attributeValue + "-list");
+
+                    for (let i = 0; i < data.length; i++) {
+                        let innerChild = document.createElement("LI");
+                        let anchorElement = document.createElement("A");
+
+                        anchorElement.setAttribute("href", "/WorkoutDaysExercises/AddExerciseToWorkoutDay?exerciseId=" + data[i].id + "&workoutDayId=" + "@Model.Id");
+                        anchorElement.textContent = data[i].name;
+
+                        innerChild.appendChild(anchorElement);
+
+                        child.appendChild(innerChild);
+                    }
+
+                    parentDivElement.appendChild(child);
+                }
+            });
+        }
+
+        window.onload = GetMuscleGroups;
+    </script>
+}

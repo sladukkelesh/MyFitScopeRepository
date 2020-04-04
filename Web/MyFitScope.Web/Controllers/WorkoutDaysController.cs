@@ -25,5 +25,12 @@
 
             return this.RedirectToAction("CurrentWorkout", "Workouts");
         }
+
+        public IActionResult Edit(string workoutDayId)
+        {
+            var model = this.workoutDaysService.GetWorkoutDayById(workoutDayId);
+
+            return this.View(model);
+        }
     }
 }

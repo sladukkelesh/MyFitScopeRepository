@@ -16,8 +16,8 @@
                         <li class="nav-item"><a class="nav-link" id="create-workout" asp-controller="Workouts" asp-action="AddWorkout">Create Workout</a></li>
                     </ul>
                 </div>
-                <div class="col-md-9">  
-                    
+                <div class="col-md-9">
+
                     @this.RenderBody()
 
                 </div>
@@ -25,3 +25,5 @@
         </div>
     </main>
 </div>
+
+@this.RenderSection("Scripts", required: false)
