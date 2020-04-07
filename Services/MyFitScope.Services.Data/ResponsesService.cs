@@ -15,7 +15,7 @@
             this.responsesRepository = responsesRepository;
         }
 
-        public async Task CreateResponseAsync(string responseContent, string parentCommentId, string userId)
+        public async Task CreateResponseAsync(string responseContent, string parentCommentId, string articleId, string userId)
         {
             var response = new Response
             {
@@ -23,6 +23,7 @@
                 CommentId = parentCommentId,
                 UserId = userId,
                 CreatedOn = DateTime.UtcNow,
+                ArticleId = articleId,
             };
 
             await this.responsesRepository.AddAsync(response);

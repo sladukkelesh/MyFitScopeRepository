@@ -21,7 +21,7 @@
             <hr />
             <div class="">
                 <p><span class="font-weight-bold">Targeted Muscle Group:</span> @Model.MuscleGroupTitle</p>
-                <p><span class="font-weight-bold">Exercise Description:</span> @Model.Description</p>
+                <p><span class="font-weight-bold">Exercise Description:</span> @Html.Raw(Model.SanitizedDescription)</p>
             </div>
             <div class="text-center">
                 <div class="button-holder">

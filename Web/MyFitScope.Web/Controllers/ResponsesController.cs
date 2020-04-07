@@ -19,13 +19,13 @@
         }
 
         [HttpPost]
-        public async Task<IActionResult> AddResponse(string responseContent, string parentCommentId)
+        public async Task<IActionResult> AddResponse(string responseContent, string parentCommentId, string articleId)
         {
             var userId = this.userManager.GetUserId(this.User);
 
-            await this.responsesService.CreateResponseAsync(responseContent, parentCommentId, userId);
+            await this.responsesService.CreateResponseAsync(responseContent, parentCommentId, articleId, userId);
 
-            return this.Redirect("/");
+            return this.RedirectToAction("Details", "Articles", new { articleId });
         }
     }
 }

@@ -4,6 +4,6 @@
 
     public interface IResponsesService
     {
-        Task CreateResponseAsync(string responseContent, string parentCommentId, string userId);
+        Task CreateResponseAsync(string responseContent, string parentCommentId, string articleId, string userId);
     }
 }

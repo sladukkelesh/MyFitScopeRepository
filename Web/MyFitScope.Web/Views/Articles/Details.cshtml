@@ -48,7 +48,7 @@
                 <div class="card my-4">
                     <h5 class="card-header">Leave a Comment:</h5>
                     <div class="card-body">
-                        <form method="post" asp-controller="Comments" asp-action="AddComment">
+                        <form id="commentInputForm" method="post" asp-controller="Comments" asp-action="AddComment">
                             <input type="hidden" name="articleId" value="@Model.Id" />
                             <div class="form-group">
                                 <textarea class="form-control" rows="3" name="commentContent"></textarea>
@@ -120,6 +120,21 @@
             hiddenInput.setAttribute("name", "parentCommentId");
             hiddenInput.setAttribute("value", parentCommentId);
 
+            //create hidden input element that holds the articleId:
+            let secondHiddenInput = document.createElement("input");
+            secondHiddenInput.setAttribute("type", "hidden");
+            secondHiddenInput.setAttribute("name", "articleId");
+            secondHiddenInput.setAttribute("value", "@Model.Id");
+
+            //create hidden input element that holds the RequestVerificationToken:
+            let verificationToken = $("input[name='__RequestVerificationToken']").attr('value');
+
+            let tokenHiddenInput = document.createElement("input");
+            tokenHiddenInput.setAttribute("type", "hidden");
+            tokenHiddenInput.setAttribute("name", "__RequestVerificationToken");
+            tokenHiddenInput.setAttribute("value", verificationToken);
+
+
 
             // create submit button
             let submitButton = document.createElement("button");
@@ -133,8 +148,10 @@
             formDiv.appendChild(responseLabel);
             formDiv.appendChild(responseContentArea);
 
-            // append hidden input with parent comment Id
+            // append hidden inputs with parent commentId and articleId
             formDiv.appendChild(hiddenInput);
+            formDiv.appendChild(secondHiddenInput);
+            formDiv.appendChild(tokenHiddenInput);
 
             // append form div to responseForm
             responseForm.appendChild(formDiv);
@@ -157,11 +174,13 @@
             let targetElement = event.target;
 
             let myJSObject = { VotedObject: votedObject, votedObjectId: commentId, isUpVote: isUpVote };
+            let token = $("input[name='__RequestVerificationToken']").attr('value');
 
             $.ajax("/api/votes", {
                 data: JSON.stringify(myJSObject),
                 contentType: 'application/json',
                 type: 'POST',
+                headers: { 'X-CSRF-TOKEN': token },
                 success: function (data) {
                     let parentUlElement = targetElement.parentNode;
 

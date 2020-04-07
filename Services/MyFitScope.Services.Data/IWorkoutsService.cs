@@ -1,5 +1,6 @@
 ﻿namespace MyFitScope.Services.Data
 {
+    using System.Collections.Generic;
     using System.Threading.Tasks;
 
     using MyFitScope.Data.Models;
@@ -10,6 +11,8 @@
     {
         Task<string> CreateWorkoutAsync(string name, Difficulty difficulty, WorkoutType workoutType, string description, ApplicationUser user);
 
-        CurrentWorkoutViewModel GetCurrentWorkout(string workoutId);
+        ICollection<WorkoutViewModel> GetWorkoutsByCategory(string userName, string workoutCategory);
+
+        T GetWorkoutById<T>(string workoutId);
     }
 }

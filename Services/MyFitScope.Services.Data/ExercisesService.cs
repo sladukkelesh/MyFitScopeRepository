@@ -54,8 +54,12 @@
                 }
                 else
                 {
-                    result = result.Where(e => e.MuscleGroup == (MuscleGroup)Enum.Parse(typeof(MuscleGroup), exerciseCategoryInput));
+                    result = result.Where(e => e.MuscleGroup == (MuscleGroup)Enum.Parse(typeof(MuscleGroup), exerciseCategoryInput) && e.IsCustom == false);
                 }
+            }
+            else
+            {
+                result = result.Where(e => e.IsCustom == false);
             }
 
             return result.To<ExerciseViewModel>().ToList();

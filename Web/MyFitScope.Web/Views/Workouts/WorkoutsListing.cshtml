@@ -1,0 +1,44 @@
+﻿@using MyFitScope.Web.ViewModels.Workouts
+@model WorkoutsListingViewModel
+
+@{
+    this.ViewData["Title"] = "Workouts";
+}
+
+<section>
+    @if (Model.ListedGroupType == "All")
+    {
+        <h1>All Workouts</h1>
+    }
+    else if (Model.ListedGroupType == "Custom")
+    {
+        <h1>Your custom created Workouts</h1>
+    }
+    else
+    {
+        <h1>Workouts of category "@Model.ListedGroupType"</h1>
+    }
+    <div class="container row">
+        @if (Model.Workouts.Count != 0)
+        {
+            foreach (var workout in Model.Workouts)
+            {
+                <ul class="list-unstyled col-md-10">
+                    <li class="media">
+                        <div class="media-body">
+                            <a asp-controller="Workouts" asp-action="Details" asp-route-id="@workout.Id"><h5 class="mt-0 mb-1">@workout.Name</h5></a>
+                            <p>Workout Type: @workout.WorkoutTypeTitle</p>
+                            <p>Difficulty: @workout.DifficultyTitle</p>
+                            <p>Description: @workout.ShortDescription</p>
+                        </div>
+                    </li>
+                </ul>
+            }
+        }
+        else
+        {
+            <p>Sorry, we don't have any workouts in this category at this moment...</p>
+        }
+
+    </div>
+</section>

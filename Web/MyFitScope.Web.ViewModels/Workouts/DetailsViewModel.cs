@@ -8,7 +8,7 @@
     using MyFitScope.Services.Mapping;
     using MyFitScope.Web.ViewModels.WorkoutDays;
 
-    public class CurrentWorkoutViewModel : IMapFrom<Workout>
+    public class DetailsViewModel : IMapFrom<Workout>
     {
         public string Id { get; set; }
 

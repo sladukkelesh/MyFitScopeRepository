@@ -34,6 +34,21 @@
                         </li>
                         <li class="nav-item dropdown">
                             <button class="btn dropdown-toggle" type="button" data-toggle="dropdown">
+                                Workouts
+                                <span class="caret"></span>
+                            </button>
+                            <ul class="dropdown-menu">
+
+                                <vc:dropdown-links url="/Workouts/WorkoutsListing?workoutCategory=" enum-name=@GlobalConstants.WorkoutCategoryTypeName></vc:dropdown-links>
+
+                                <li class="dropdown-divider"></li>
+                                <li class="nav-item">
+                                    <a class="nav-link text-dark" asp-area="" asp-controller="Workouts" asp-action="WorkoutsListing">All</a>
+                                </li>
+                            </ul>
+                        </li>
+                        <li class="nav-item dropdown">
+                            <button class="btn dropdown-toggle" type="button" data-toggle="dropdown">
                                 Exercises
                                 <span class="caret"></span>
                             </button>

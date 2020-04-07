@@ -53,7 +53,40 @@
             var loggInUserId = this.userManager.GetUserId(this.User);
             var loggedInUser = await this.userManager.FindByIdAsync(loggInUserId);
 
-            var model = this.workoutsService.GetCurrentWorkout(loggedInUser.WorkoutId);
+            var model = this.workoutsService.GetWorkoutById<CurrentWorkoutViewModel>(loggedInUser.WorkoutId);
+
+            return this.View(model);
+        }
+
+        public IActionResult WorkoutsListing(string workoutCategory)
+        {
+            var userName = this.User.Identity.Name;
+
+            var model = new WorkoutsListingViewModel
+            {
+                Workouts = this.workoutsService.GetWorkoutsByCategory(userName, workoutCategory),
+            };
+
+            if (workoutCategory != null)
+            {
+                model.ListedGroupType = workoutCategory.Replace("_", " ");
+            }
+            else
+            {
+                model.ListedGroupType = "All";
+            }
+
+            return this.View(model);
+        }
+
+        public IActionResult Details(string id)
+        {
+            var model = this.workoutsService.GetWorkoutById<DetailsViewModel>(id);
+
+            if (model == null)
+            {
+                return this.NotFound();
+            }
 
             return this.View(model);
         }

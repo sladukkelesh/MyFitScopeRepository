@@ -25,7 +25,7 @@
 
             await this.commentsService.CreateComment(commentContent, articleId, userId);
 
-            return this.Redirect("/");
+            return this.RedirectToAction("Details", "Articles", new { articleId });
         }
     }
 }

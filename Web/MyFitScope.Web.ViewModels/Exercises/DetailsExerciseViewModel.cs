@@ -3,7 +3,7 @@
     using System;
     using System.Collections.Generic;
     using System.Text;
-
+    using Ganss.XSS;
     using MyFitScope.Data.Models.FitnessModels;
     using MyFitScope.Data.Models.FitnessModels.Enums;
     using MyFitScope.Services.Mapping;
@@ -25,5 +25,8 @@
             => this.MuscleGroup.ToString().Replace("_", " ");
 
         public string Description { get; set; }
+
+        public string SanitizedDescription
+            => new HtmlSanitizer().Sanitize(this.Description);
     }
 }

@@ -8,6 +8,16 @@
 
 <h1>Create your workout plan with the form bellow:</h1>
 <section class="container col-md-8">
+    <script src="/lib/tinymce/tinymce.min.js" type="text/javascript"></script>
+    <script type="text/javascript">
+    tinymce.init({
+        selector: "textarea",
+        plugins: [
+            "image paste table link code media"
+        ]
+    });
+    </script>
+
     <form method="post" asp-controller="Workouts" asp-action="AddWorkout">
         <div class="form-group">
             <label asp-for="Name">Workout name:</label>
@@ -27,6 +37,6 @@
             <textarea asp-for="Description" class="form-control" placeholder="Enter workout name..."></textarea>
             <span asp-validation-for="Description" class="text-danger"></span>
         </div>
-            <button type="submit" class="btn btn-primary">Create Workout</button>      
+        <button type="submit" class="btn btn-primary">Create Workout</button>
     </form>
 </section>

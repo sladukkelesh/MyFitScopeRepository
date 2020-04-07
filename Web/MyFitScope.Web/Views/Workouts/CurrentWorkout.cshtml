@@ -23,11 +23,26 @@
                 <p><span class="font-weight-bold">Creator:</span> @Model.CreatorName</p>
                 <p><span class="font-weight-bold">Difficulty:</span> @Model.DifficultyTitle</p>
                 <p><span class="font-weight-bold">Workout Category:</span> @Model.WorkoutTypeTitle</p>
-                <p><span class="font-weight-bold">Description:</span> @Model.Description</p>
+                <p><span class="font-weight-bold">Description:</span> @Html.Raw(Model.SanitizedDescription)</p>
             </div>
 
+            @if (this.User.IsInRole("Admin") || Model.IsCustom == true)
+            {
+                <div>
+                    <button class="btn btn-info btn-block" onclick="ToggleAddWorkoutDayInputForm()">Add Workout Day</button>
+                    <form id="workoutDayForm" method="post" asp-controller="WorkoutDays" asp-action="AddWorkoutDay">
+                        <div class="form-group text-center">
+                            <input type="hidden" name="workoutId" value="@Model.Id" />
+                            <label for="dayOfWeek">Choose a day of the week:</label>
+                            <select id="dayOfWeek" name="weekDay" asp-items="@Html.GetEnumSelectList<WeekDay>()" class="form-control"></select>
+                        </div>
+                        <div class="text-center">
+                            <input type="submit" class="btn btn-primary" value="Add" />
+                        </div>                       
+                    </form>
+                </div>               
+            }
 
-          
 
             @if (Model.WorkoutDays.Count != 0)
             {
@@ -36,7 +51,7 @@
                     {
                         <div>
                             <h3>@day.WeekDayTitle /@(day.Name != string.Empty ? day.Name : "Add execises to see muscle groups!")/</h3>
-                            
+
                             @if (this.User.IsInRole("Admin") || Model.IsCustom == true)
                             {
                                 <div>
@@ -70,9 +85,18 @@
                             }
                         </div>
                     }
-                </div> 
+                </div>
             }
         }
+    
     </section>
+
+@section Scripts {
+    <script>
+        function ToggleAddWorkoutDayInputForm() {
+            $("#workoutDayForm").toggle();
+        }
+    </script>
+}
 
 

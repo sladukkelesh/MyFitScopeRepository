@@ -1,7 +1,10 @@
 ﻿namespace MyFitScope.Services.Data
 {
+    using System;
+    using System.Collections.Generic;
     using System.Linq;
     using System.Threading.Tasks;
+
     using Microsoft.AspNetCore.Identity;
     using MyFitScope.Data.Common.Repositories;
     using MyFitScope.Data.Models;
@@ -51,10 +54,33 @@
             return workout.Id;
         }
 
-        public CurrentWorkoutViewModel GetCurrentWorkout(string workoutId)
+        public T GetWorkoutById<T>(string workoutId)
             => this.workoutsRepository.All()
                 .Where(w => w.Id == workoutId)
-                .To<CurrentWorkoutViewModel>()
+                .To<T>()
                 .FirstOrDefault();
+
+        public ICollection<WorkoutViewModel> GetWorkoutsByCategory(string userName, string workoutCategory)
+        {
+            var workouts = this.workoutsRepository.All();
+
+            if (workoutCategory != null)
+            {
+                if (workoutCategory == "Custom")
+                {
+                    workouts = workouts.Where(w => w.IsCustom == true && w.CreatorName == userName);
+                }
+                else
+                {
+                    workouts = workouts.Where(w => w.WorkoutType == (WorkoutType)Enum.Parse(typeof(WorkoutType), workoutCategory) && w.IsCustom == false);
+                }
+            }
+            else
+            {
+                workouts = workouts.Where(w => w.IsCustom == false);
+            }
+
+            return workouts.OrderByDescending(w => w.CreatedOn).To<WorkoutViewModel>().ToList();
+        }
     }
 }

@@ -23,6 +23,10 @@
 
         public int NegativeVotes { get; set; }
 
+        public string ArticleId { get; set; }
+
+        public virtual Article Article { get; set; }
+
         public string CommentId { get; set; }
 
         public Comment Comment { get; set; }
