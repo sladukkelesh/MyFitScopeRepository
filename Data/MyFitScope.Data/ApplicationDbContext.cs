@@ -46,6 +46,8 @@
 
         public DbSet<WorkoutDayExercise> WorkoutDaysExercises { get; set; }
 
+        public DbSet<Progress> Progresses { get; set; }
+
         public override int SaveChanges() => this.SaveChanges(true);
 
         public override int SaveChanges(bool acceptAllChangesOnSuccess)
