@@ -82,5 +82,12 @@
 
             return workouts.OrderByDescending(w => w.CreatedOn).To<WorkoutViewModel>().ToList();
         }
+
+        public async Task SetCurrentWorkoutAsync(string workoutId, ApplicationUser user)
+        {
+            user.WorkoutId = workoutId;
+
+            await this.usersRepository.SaveChangesAsync();
+        }
     }
 }

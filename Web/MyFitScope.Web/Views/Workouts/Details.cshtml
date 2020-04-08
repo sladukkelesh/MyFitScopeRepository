@@ -13,6 +13,12 @@
         <p><span class="font-weight-bold">Difficulty:</span> @Model.DifficultyTitle</p>
         <p><span class="font-weight-bold">Workout Category:</span> @Model.WorkoutTypeTitle</p>
         <p><span class="font-weight-bold">Description:</span> @Html.Raw(Model.SanitizedDescription)</p>
+        @if(User.Identity.IsAuthenticated)
+        {
+            <div>
+                <a class="btn btn-primary btn-block" asp-controller="Workouts" asp-action="SetAsCurrentWorkout" asp-route-workoutId="@Model.Id">Set As Current Workout</a>
+            </div>
+        }       
     </div>
 
 

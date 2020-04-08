@@ -14,5 +14,7 @@
         ICollection<WorkoutViewModel> GetWorkoutsByCategory(string userName, string workoutCategory);
 
         T GetWorkoutById<T>(string workoutId);
+
+        Task SetCurrentWorkoutAsync(string workoutId, ApplicationUser user);
     }
 }

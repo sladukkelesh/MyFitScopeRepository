@@ -1,8 +1,5 @@
 ﻿namespace MyFitScope.Web.Controllers
 {
-    using System;
-    using System.Collections.Generic;
-    using System.Linq;
     using System.Threading.Tasks;
 
     using Microsoft.AspNetCore.Authorization;
@@ -17,14 +14,11 @@
         private readonly IWorkoutsService workoutsService;
         private readonly UserManager<ApplicationUser> userManager;
 
-        public WorkoutsController(SignInManager<ApplicationUser> signInManager, IWorkoutsService workoutsService, UserManager<ApplicationUser> userManager)
+        public WorkoutsController(IWorkoutsService workoutsService, UserManager<ApplicationUser> userManager)
         {
             this.workoutsService = workoutsService;
             this.userManager = userManager;
         }
-
-        public ApplicationUser LoggedInUser
-            => this.userManager.FindByIdAsync(this.userManager.GetUserId(this.User)).Result;
 
         [Authorize]
         public IActionResult AddWorkout()
@@ -43,15 +37,16 @@
                 return this.View(input);
             }
 
-            var workoutId = await this.workoutsService.CreateWorkoutAsync(input.Name, input.Difficulty, input.WorkoutType, input.Description, this.LoggedInUser);
+            var loggedInUser = await this.GetLoggedInUserAsync();
+
+            var workoutId = await this.workoutsService.CreateWorkoutAsync(input.Name, input.Difficulty, input.WorkoutType, input.Description, loggedInUser);
 
             return this.Redirect("/");
         }
 
         public async Task<IActionResult> CurrentWorkout()
         {
-            var loggInUserId = this.userManager.GetUserId(this.User);
-            var loggedInUser = await this.userManager.FindByIdAsync(loggInUserId);
+            var loggedInUser = await this.GetLoggedInUserAsync();
 
             var model = this.workoutsService.GetWorkoutById<CurrentWorkoutViewModel>(loggedInUser.WorkoutId);
 
@@ -89,6 +84,20 @@
             }
 
             return this.View(model);
+        }
+
+        public async Task<IActionResult> SetAsCurrentWorkout(string workoutId)
+        {
+            var loggedInUser = await this.GetLoggedInUserAsync();
+
+            await this.workoutsService.SetCurrentWorkoutAsync(workoutId, loggedInUser);
+
+            return this.RedirectToAction("CurrentWorkout");
+        }
+
+        private async Task<ApplicationUser> GetLoggedInUserAsync()
+        {
+            return await this.userManager.FindByIdAsync(this.userManager.GetUserId(this.User));
         }
     }
 }
