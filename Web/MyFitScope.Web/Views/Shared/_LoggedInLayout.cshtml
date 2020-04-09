@@ -11,7 +11,7 @@
                     <ul class="nav nav-pills flex-column">
                         <!--add class "active" to select a link-->
                         <li class="nav-item"><a class="nav-link" id="curent-workout" asp-controller="Workouts" asp-action="CurrentWorkout">Current Workout</a></li>
-                        <li class="nav-item"><a class="nav-link" id="progress" href="#">Progress</a></li>
+                        <li class="nav-item"><a class="nav-link" id="progress" asp-controller="Progresses" asp-action="Statistics">Progress</a></li>
                         <li class="nav-item"><a class="nav-link" id="create-exercise" asp-controller="Exercises" asp-action="CreateExercise">Create Exercise</a></li>
                         <li class="nav-item"><a class="nav-link" id="create-workout" asp-controller="Workouts" asp-action="AddWorkout">Create Workout</a></li>
                     </ul>

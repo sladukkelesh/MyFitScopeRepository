@@ -1,0 +1,50 @@
+﻿@using MyFitScope.Web.ViewModels.Progresses
+@model CreateStatisticInputViewModel
+
+@{
+    this.ViewData["Title"] = "Create Statistics";
+}
+
+<section>
+    <article>
+        <header class="text-center">
+            <h1>Create Body Statistic</h1>
+        </header>
+        <section class="container col-md-8">
+            <form method="post" class="form-group" asp-controller="Progresses" asp-action="AddStatistic">
+                <div class="form-row">
+                    <div class="form-group col-md-6">
+                        <label asp-for="Weight">Weight:</label>
+                        <input type="number" asp-for="Weight" class="form-control" step="any" min="0"/>
+                        <span asp-validation-for="Weight" class="text-danger"></span>
+                    </div>
+                    <div class="form-group col-md-6">
+                        <label asp-for="Biceps">Biceps:</label>
+                        <input type="number" asp-for="Biceps" class="form-control" step="any" min="0"/>
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group col-md-6">
+                        <label asp-for="Chest">Chest:</label>
+                        <input type="number" asp-for="Chest" class="form-control" step="any" min="0"/>
+                    </div>
+                    <div class="form-group col-md-6">
+                        <label asp-for="Hips  ">Hips:</label>
+                        <input type="number" asp-for="Hips" class="form-control" step="any" min="0"/>
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group col-md-6">
+                        <label asp-for="Thigh ">Thigh:</label>
+                        <input type="number" asp-for="Thigh" class="form-control" step="any" min="0"/>
+                    </div>
+                    <div class="form-group col-md-6">
+                        <label asp-for="Calf  ">Calf:</label>
+                        <input type="number" asp-for="Calf" class="form-control" step="any" min="0"/>
+                    </div>
+                </div>               
+                <input type="submit" class="btn btn-info btn-block" value="Add Statistic" />
+            </form>
+        </section>
+    </article>
+</section>

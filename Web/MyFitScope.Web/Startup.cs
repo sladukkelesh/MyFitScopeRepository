@@ -83,6 +83,7 @@
             services.AddTransient<IWorkoutsService, WorkoutsService>();
             services.AddTransient<IWorkoutDaysService, WorkoutDaysService>();
             services.AddTransient<IWorkoutDaysExercisesService, WorkoutDaysExercisesService>();
+            services.AddTransient<IProgressesService, ProgressesService>();
 
             // Administration services
             services.AddTransient<IAdministrationService, AdministrationService>();

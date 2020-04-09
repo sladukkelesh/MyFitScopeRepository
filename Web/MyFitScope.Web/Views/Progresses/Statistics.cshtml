@@ -1,0 +1,180 @@
+﻿@using MyFitScope.Web.ViewModels.Progresses
+@model StatisticsListingViewModel
+
+@{
+    this.ViewData["Title"] = "User Statistics";
+    this.Layout = "_LoggedInLayout";
+}
+
+<section>
+    <h1>Physique Progress</h1>
+    <hr />
+    <article>
+        <a class="btn btn-primary btn-block" asp-controller="Progresses" asp-action="AddStatistic">Add Statistic</a>
+    </article>
+    @if (Model.Statistics.Count == 0)
+    {
+        <p>You don't have any statistics! Please add one using the "Add Statistic" button!</p>
+    }
+    else
+    {
+        <article>
+            <header>
+                <h2>Body Meassurments</h2>
+            </header>
+            <hr />
+            <section>
+                <table class="table table-striped">
+
+                    <thead>
+                        <tr>
+                            <th scope="col">#</th>
+                            <!--This loop creates the Date headers of the table-->
+                            @for (var i = 0; i < Model.Statistics.Count; i++)
+                            {
+                                <th scope="col">@Model.Statistics[i].CreatedOn.ToShortDateString()</th>
+                            }
+                        </tr>
+
+                    </thead>
+                    <tbody>
+                        <!--This loop creates the rows of the Progress table-->
+                        @for (var i = 0; i < 8; i++)
+                        {
+                            <tr>
+                                <!--this switch adds the first "header cell" (first column) of each row-->
+                                @switch (i)
+                                {
+                                    case 0:
+                                        <th scope="row">Weight</th>
+                                        break;
+                                    case 1:
+                                        <th scope="row">Biceps</th>
+                                        break;
+                                    case 2:
+                                        <th scope="row">Chest</th>
+                                        break;
+                                    case 3:
+                                        <th scope="row">Stomach</th>
+                                        break;
+                                    case 4:
+                                        <th scope="row">Hips</th>
+                                        break;
+                                    case 5:
+                                        <th scope="row">Thigh</th>
+                                        break;
+                                    case 6:
+                                        <th scope="row">Calf</th>
+                                        break;
+                                    case 7:
+                                        <th scope="row">Delete Statistic</th>
+                                        break;
+                                    default:
+                                        <th scope="row">Error!</th>
+                                        break;
+                                }
+                                <!--This loop adds the rest of the table row cells-->
+                                @for (int j = 0; j < Model.Statistics.Count; j++)
+                                {
+                                    @switch (i)
+                                    {
+                                        case 0:
+                                            @if (j > 0 && Model.Statistics[j - 1].Weight < Model.Statistics[j].Weight)
+                                            {
+                                                <td style="background-color:red">@Model.Statistics[j].Weight</td>
+                                            }
+                                            else if (j > 0 && Model.Statistics[j - 1].Weight > Model.Statistics[j].Weight)
+                                            {
+                                                <td style="background-color:green">@Model.Statistics[j].Weight</td>
+                                            }
+                                            else
+                                            {
+                                                <td>@Model.Statistics[j].Weight</td>
+                                            }
+                                            break;
+                                        case 1:
+                                            <td>@Model.Statistics[j].Biceps</td>
+                                            break;
+                                        case 2:
+                                            <td>@Model.Statistics[j].Chest</td>
+                                            break;
+                                        case 3:
+                                            <td>@Model.Statistics[j].Stomach</td>
+                                            break;
+                                        case 4:
+                                            <td>@Model.Statistics[j].Hips</td>
+                                            break;
+                                        case 5:
+                                            <td>@Model.Statistics[j].Thigh</td>
+                                            break;
+                                        case 6:
+                                            <td>@Model.Statistics[j].Calf</td>
+                                            break;
+                                        case 7:
+                                            <td><a asp-controller="Progresses" asp-action="DeleteStatistic" asp-route-statisticId="@Model.Statistics[j].Id" class="btn btn-danger" onclick="ConfirmDelete('@Model.Statistics[j].CreatedOn.ToShortDateString()')">Delete</a></td>
+                                            break;
+                                        default:
+                                            <th scope="row">Error!</th>
+                                            break;
+                                    }
+                                }
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </section>
+        </article>
+        <hr />
+        <article>
+            <header>
+                <h2>Image Tracking</h2>
+            </header>
+            <section>
+                <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
+                    <ol class="carousel-indicators">
+                        <li data-target="#carouselExampleIndicators" data-slide-to="0" class="active"></li>
+                        <li data-target="#carouselExampleIndicators" data-slide-to="1"></li>
+                        <li data-target="#carouselExampleIndicators" data-slide-to="2"></li>
+                        <li data-target="#carouselExampleIndicators" data-slide-to="3"></li>
+                        <li data-target="#carouselExampleIndicators" data-slide-to="4"></li>
+                    </ol>
+                    <div class="carousel-inner text-center">
+                        <div class="carousel-item active">
+                            <img style="height:60%" src="https://i.dailymail.co.uk/i/newpix/2018/04/16/17/4B3719A500000578-5621493-Efforts_For_three_months_Hunter_24_strove_to_remain_consistent_m-m-82_1523894415257.jpg" alt="First slide">
+                        </div>
+                        <div class="carousel-item">
+                            <img style="height:60%" src="https://i.dailymail.co.uk/i/newpix/2018/04/16/17/4B37199600000578-5621493-Transformation_During_his_experiment_Hunter_pictured_on_day_12_t-m-83_1523894432342.jpg" alt="Second slide">
+                        </div>
+                        <div class="carousel-item">
+                            <img style="height:60%" src="https://i.dailymail.co.uk/i/newpix/2018/04/16/17/4B37196500000578-5621493-Sweat_Hunter_pictured_on_day_31_incorporated_weight_lifting_and_-m-86_1523894472653.jpg" alt="Third slide">
+                        </div>
+                        <div class="carousel-item">
+                            <img style="height:60%" src="https://i.dailymail.co.uk/i/newpix/2018/04/16/17/4B37193D00000578-5621493-Changes_The_time_lapse_video_of_Hunter_s_transformation_shows_hi-m-87_1523894486480.jpg" alt="Third slide">
+                        </div>
+                        <div class="carousel-item">
+                            <img style="height:60%" src="https://i.dailymail.co.uk/i/newpix/2018/04/16/17/4B37190400000578-5621493-A_bit_of_everything_Hunter_who_has_a_desk_job_at_an_oil_and_gas_-m-90_1523894538757.jpg" alt="Third slide">
+                        </div>
+                    </div>
+                    <a class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-slide="prev">
+                        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                        <span class="sr-only">Previous</span>
+                    </a>
+                    <a class="carousel-control-next" href="#carouselExampleIndicators" role="button" data-slide="next">
+                        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                        <span class="sr-only">Next</span>
+                    </a>
+                </div>
+            </section>
+        </article>
+    }
+</section>
+
+@section Scripts {
+    <script>
+        function ConfirmDelete(date) {
+            if (!confirm(`Confirm that you want to delete statistic with date "${date}"?`)) {
+                event.preventDefault();
+            }
+        }
+    </script>
+}
