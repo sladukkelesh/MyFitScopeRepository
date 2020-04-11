@@ -49,7 +49,7 @@
             var userId = this.userManager.GetUserId(this.User);
             var articleId = await this.articlesService.CreateArticle(input.ArticleTitle, input.ArticleCategory, input.ArticleImageUrl, input.ArticleContent, userId);
 
-            return this.RedirectToAction(nameof(this.Details), new { articleId = articleId });
+            return this.RedirectToAction(nameof(this.Details), new { articleId });
         }
 
         public async Task<IActionResult> DeleteArticle(string articleId)
