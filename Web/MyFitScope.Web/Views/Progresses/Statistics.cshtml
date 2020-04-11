@@ -32,9 +32,9 @@
                             <!--This loop creates the Date headers of the table-->
                             @for (var i = 0; i < Model.Statistics.Count; i++)
                             {
-                                <th scope="col">@Model.Statistics[i].CreatedOn.ToShortDateString()</th>
+                                <th class="text-center">@Model.Statistics[i].CreatedOn.ToShortDateString()</th>
                             }
-                            <th></th>
+                            <th scope="col" class="text-left"></th>
                         </tr>
 
                     </thead>
@@ -80,39 +80,28 @@
                                     @switch (i)
                                     {
                                         case 0:
-                                            @if (j > 0 && Model.Statistics[j - 1].Weight < Model.Statistics[j].Weight)
-                                            {
-                                                <td style="background-color:red">@Model.Statistics[j].Weight kg</td>
-                                            }
-                                            else if (j > 0 && Model.Statistics[j - 1].Weight > Model.Statistics[j].Weight)
-                                            {
-                                                <td style="background-color:green">@Model.Statistics[j].Weight kg</td>
-                                            }
-                                            else
-                                            {
-                                                <td>@Model.Statistics[j].Weight kg</td>
-                                            }
+                                            <td class="text-center">@(Model.Statistics[j].Weight.ToString() == string.Empty ? "-" : Model.Statistics[j].Weight.ToString() + " kg")</td>
                                             break;
                                         case 1:
-                                            <td>@(Model.Statistics[j].Biceps.ToString() == string.Empty ? "-" : Model.Statistics[j].Biceps.ToString() + " cm")</td>
+                                            <td class="text-center">@(Model.Statistics[j].Biceps.ToString() == string.Empty ? "-" : Model.Statistics[j].Biceps.ToString() + " cm")</td>
                                             break;
                                         case 2:
-                                            <td>@(Model.Statistics[j].Chest.ToString() == string.Empty ? "-" : Model.Statistics[j].Chest.ToString() + " cm")</td>
+                                            <td class="text-center">@(Model.Statistics[j].Chest.ToString() == string.Empty ? "-" : Model.Statistics[j].Chest.ToString() + " cm")</td>
                                             break;
                                         case 3:
-                                            <td>@(Model.Statistics[j].Stomach.ToString() == string.Empty ? "-" : Model.Statistics[j].Stomach.ToString() + " cm")</td>
+                                            <td class="text-center">@(Model.Statistics[j].Stomach.ToString() == string.Empty ? "-" : Model.Statistics[j].Stomach.ToString() + " cm")</td>
                                             break;
                                         case 4:
-                                           <td>@(Model.Statistics[j].Hips.ToString() == string.Empty ? "-" : Model.Statistics[j].Hips.ToString() + " cm")</td>
+                                            <td class="text-center">@(Model.Statistics[j].Hips.ToString() == string.Empty ? "-" : Model.Statistics[j].Hips.ToString() + " cm")</td>
                                             break;
                                         case 5:
-                                            <td>@(Model.Statistics[j].Thigh.ToString() == string.Empty ? "-" : Model.Statistics[j].Thigh.ToString() + " cm")</td>
+                                            <td class="text-center">@(Model.Statistics[j].Thigh.ToString() == string.Empty ? "-" : Model.Statistics[j].Thigh.ToString() + " cm")</td>
                                             break;
                                         case 6:
-                                            <td>@(Model.Statistics[j].Calf.ToString() == string.Empty ? "-" : Model.Statistics[j].Calf.ToString() + " cm")</td>
+                                            <td class="text-center">@(Model.Statistics[j].Calf.ToString() == string.Empty ? "-" : Model.Statistics[j].Calf.ToString() + " cm")</td>
                                             break;
                                         case 7:
-                                            <td><a asp-controller="Progresses" asp-action="DeleteStatistic" asp-route-statisticId="@Model.Statistics[j].Id" class="btn btn-danger" onclick="ConfirmDelete('@Model.Statistics[j].CreatedOn.ToShortDateString()')">Delete</a></td>
+                                            <td class="text-center"><a asp-controller="Progresses" asp-action="DeleteStatistic" asp-route-statisticId="@Model.Statistics[j].Id" class="btn btn-danger" onclick="ConfirmDelete('@Model.Statistics[j].CreatedOn.ToShortDateString()')">Delete</a></td>
                                             break;
                                         default:
                                             <td scope="row">Error!</td>
@@ -180,12 +169,12 @@
         }
 
         function GenerateProgressTableLastCells() {
-            FillLastHeaderCell();
+            FillLastTHeaderCell();
 
-            FillLastBodyCells();
+            FillLastTBodyCells();
         }
 
-        function FillLastHeaderCell() {
+        function FillLastTHeaderCell() {
             let tHeadElement = document.getElementById("tableHead");
 
             let tHeadChildren = ((tHeadElement.children)[0]).children;
@@ -195,7 +184,7 @@
             lastTHCell.innerHTML = "From " + tHeadChildren[1].textContent + "<br> to " + tHeadChildren[tHeadChildren.length - 2].textContent;
         }
 
-        function FillLastBodyCells() {
+        function FillLastTBodyCells() {
             let bodyRows = document.getElementsByTagName("tbody")[0].children;
 
             for (let i = 0; i < bodyRows.length - 1; i++) {
@@ -205,6 +194,7 @@
 
                 let result = 0;
 
+                // calculate the result:
                 if (currentRowCells[1].textContent !== "-" && currentRowCells[currentRowCells.length - 2].textContent !== "-") {
                     let first = (currentRowCells[1].textContent.split(" "))[0];
                     let last = (currentRowCells[currentRowCells.length - 2].textContent.split(" "))[0];
@@ -225,16 +215,34 @@
                     }
                 }
 
+                //add up or down arrow depending by the result value:
                 if (result > 0) {
-                    lastCell.innerHTML = "<i class=\"fas fa-caret-square-down text-success\"></i> " + result.toFixed(2) + " less";
+                    lastCell.innerHTML = "<i class=\"fas fa-caret-square-down text-success\"></i> " + result.toFixed(1);
+
+                    if (i == 0) {
+                        lastCell.innerHTML += " kg";
+                    } else {
+                        lastCell.innerHTML += " cm";
+                    }
+
+                    lastCell.innerHTML += " less";
                 } else if (result < 0) {
                     result *= (-1);
-                    lastCell.innerHTML = "<i class=\"fas fa-caret-square-up text-danger\"></i> " + result.toFixed(2) + " more";
+                    lastCell.innerHTML = "<i class=\"fas fa-caret-square-up text-danger\"></i> " + result.toFixed(1);
+
+                    if (i == 0) {
+                        lastCell.innerHTML += " kg";
+                    } else {
+                        lastCell.innerHTML += " cm";
+                    }
+
+                    lastCell.innerHTML += " more";
                 } else {
                     lastCell.innerHTML = "no change";
                 }
 
-                lastCell.style.textAlign = "center";
+                //put the result value at the center of the cell:
+                //lastCell.style.textAlign = "center";
             }           
         }
 
