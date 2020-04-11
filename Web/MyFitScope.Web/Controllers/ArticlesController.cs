@@ -56,7 +56,7 @@
         {
             await this.articlesService.DeleteArticleAsync(articleId);
 
-            return this.RedirectToAction("All");
+            return this.RedirectToAction("ArticlesListing");
         }
     }
 }

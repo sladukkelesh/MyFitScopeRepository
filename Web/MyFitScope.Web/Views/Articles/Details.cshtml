@@ -35,13 +35,16 @@
 
                 <!-- Post Content -->
                 <p>@Html.Raw(Model.SanitizedContent)</p>
-                
+
                 <!-- Edit/Delete buttons-->
-                <div>
-                    <a class="btn btn-info" href="#">Edit</a>
-                    <a class="btn btn-danger" href="/Articles/DeleteArticle?articleId=@Model.Id" onclick="ConfirmDelete()">Delete</a>
-                </div>
-                
+                @if (this.User.IsInRole("Admin"))
+                {
+                    <div class="text-center mt-4 mb-4">
+                        <a class="btn btn-info" href="#">Edit</a>
+                        <a class="btn btn-danger ml-lg-5" asp-controller="Articles" asp-action="DeleteArticle" asp-route-articleId ="@Model.Id" onclick="ConfirmDelete('@Model.Title')">Delete</a>
+                    </div>
+                }
+
                 <hr>
 
                 <!-- Comments Input Form -->
@@ -163,8 +166,8 @@
             parentDivElement.insertBefore(responseForm, parentDivElement.firstChild);
         }
 
-        function ConfirmDelete() {
-            if (!confirm("What are you doing?")) {
+        function ConfirmDelete(articleTitle) {
+            if (!confirm(`Confirm that you want to delete "${articleTitle}"?`)) {
                 event.preventDefault();
             }
         }

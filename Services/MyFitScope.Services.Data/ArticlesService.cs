@@ -41,7 +41,9 @@
         {
             var articleToDelete = await this.articlesRepository.GetByIdWithDeletedAsync(articleId);
 
-            this.articlesRepository.HardDelete(articleToDelete);
+            articleToDelete.IsDeleted = true;
+
+            await this.articlesRepository.SaveChangesAsync();
         }
 
         public DetailsArticleViewModel GetArticleById(string articleId)
