@@ -3,7 +3,7 @@
     using System;
     using System.Collections.Generic;
     using System.Linq;
-    using System.Text;
+
     using MyFitScope.Data.Models;
     using MyFitScope.Data.Models.BlogModels;
     using MyFitScope.Services.Mapping;
@@ -12,6 +12,8 @@
     public class CommentViewModel : IMapFrom<Comment>
     {
         public string Id { get; set; }
+
+        public string ArticleId { get; set; }
 
         public string UserUserName { get; set; }
 

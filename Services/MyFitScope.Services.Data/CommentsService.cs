@@ -31,5 +31,14 @@
             await this.commentsRepository.AddAsync(comment);
             await this.commentsRepository.SaveChangesAsync();
         }
+
+        public async Task DeleteCommentAsync(string commentId)
+        {
+            var commentToDelete = await this.commentsRepository.GetByIdWithDeletedAsync(commentId);
+
+            commentToDelete.IsDeleted = true;
+
+            await this.commentsRepository.SaveChangesAsync();
+        }
     }
 }

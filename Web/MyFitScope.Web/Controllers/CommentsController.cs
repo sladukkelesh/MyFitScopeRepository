@@ -27,5 +27,12 @@
 
             return this.RedirectToAction("Details", "Articles", new { articleId });
         }
+
+        public async Task<IActionResult> DeleteComment(string commentId, string articleId)
+        {
+            await this.commentsService.DeleteCommentAsync(commentId);
+
+            return this.RedirectToAction("Details", "Articles", new { articleId });
+        }
     }
 }
