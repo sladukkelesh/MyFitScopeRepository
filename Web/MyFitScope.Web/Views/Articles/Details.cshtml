@@ -41,25 +41,28 @@
                 {
                     <div class="text-center mt-4 mb-4">
                         <a class="btn btn-info" href="#">Edit</a>
-                        <a class="btn btn-danger ml-lg-5" asp-controller="Articles" asp-action="DeleteArticle" asp-route-articleId ="@Model.Id" onclick="ConfirmDelete('@Model.Title')">Delete</a>
+                        <a class="btn btn-danger ml-lg-5" asp-controller="Articles" asp-action="DeleteArticle" asp-route-articleId="@Model.Id" onclick="ConfirmDelete('@Model.Title')">Delete</a>
                     </div>
                 }
 
                 <hr>
 
                 <!-- Comments Input Form -->
-                <div class="card my-4">
-                    <h5 class="card-header">Leave a Comment:</h5>
-                    <div class="card-body">
-                        <form id="commentInputForm" method="post" asp-controller="Comments" asp-action="AddComment">
-                            <input type="hidden" name="articleId" value="@Model.Id" />
-                            <div class="form-group">
-                                <textarea class="form-control" rows="3" name="commentContent"></textarea>
-                            </div>
-                            <button type="submit" class="btn btn-primary">Submit</button>
-                        </form>
+                @if (this.User.Identity.IsAuthenticated)
+                {
+                    <div class="card my-4">
+                        <h5 class="card-header">Leave a Comment:</h5>
+                        <div class="card-body">
+                            <form id="commentInputForm" method="post" asp-controller="Comments" asp-action="AddComment">
+                                <input type="hidden" name="articleId" value="@Model.Id" />
+                                <div class="form-group">
+                                    <textarea class="form-control" rows="3" name="commentContent"></textarea>
+                                </div>
+                                <button type="submit" class="btn btn-primary">Submit</button>
+                            </form>
+                        </div>
                     </div>
-                </div>
+                }
 
                 <!-- Comments and Responses Section -->
                 @foreach (var comment in Model.Comments)

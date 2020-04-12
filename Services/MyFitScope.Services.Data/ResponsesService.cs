@@ -29,5 +29,14 @@
             await this.responsesRepository.AddAsync(response);
             await this.responsesRepository.SaveChangesAsync();
         }
+
+        public async Task DeleteResponseAsync(string responseId)
+        {
+            var responseToDelete = await this.responsesRepository.GetByIdWithDeletedAsync(responseId);
+
+            responseToDelete.IsDeleted = true;
+
+            await this.responsesRepository.SaveChangesAsync();
+        }
     }
 }
