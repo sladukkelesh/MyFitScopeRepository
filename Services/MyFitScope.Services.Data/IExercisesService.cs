@@ -13,5 +13,7 @@
         ICollection<ExerciseViewModel> GetExercisesByCategory(string userName, string exerciseCategory);
 
         DetailsExerciseViewModel GetExerciseById(string exerciseId);
+
+        Task DeleteExerciseAsync(string exerciseId);
     }
 }

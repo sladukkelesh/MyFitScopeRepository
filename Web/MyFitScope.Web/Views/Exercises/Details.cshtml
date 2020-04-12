@@ -23,12 +23,23 @@
                 <p><span class="font-weight-bold">Targeted Muscle Group:</span> @Model.MuscleGroupTitle</p>
                 <p><span class="font-weight-bold">Exercise Description:</span> @Html.Raw(Model.SanitizedDescription)</p>
             </div>
-            <div class="text-center">
-                <div class="button-holder">
-                    <a href="#" class="btn btn-primary text-uppercase">Edit</a>
-                    <a href="#" class="btn btn-danger text-uppercase">Delete</a>
+            @if (this.User.IsInRole("Admin") || Model.CreatorName == this.User.Identity.Name)
+            {
+                <div class="text-center mt-4 mb-4">
+                    <a class="btn btn-info" href="#">Edit</a>
+                    <a class="btn btn-danger ml-lg-5" asp-controller="Exercises" asp-action="DeleteExercise" asp-route-exerciseId="@Model.Id" onclick="ConfirmDelete('@Model.Name')">Delete</a>
                 </div>
-            </div>
+            }
         </div>
     </div>
 </section>
+
+@section Scripts {
+    <script>
+        function ConfirmDelete(exerciseName) {
+            if (!confirm(`Confirm that you want to delete "${exerciseName}"?`)) {
+                event.preventDefault();
+            }
+        }
+    </script>
+}

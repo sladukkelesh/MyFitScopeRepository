@@ -89,5 +89,12 @@
 
             return this.Ok(result);
         }
+
+        public async Task<IActionResult> DeleteExercise(string exerciseId)
+        {
+            await this.exercisesService.DeleteExerciseAsync(exerciseId);
+
+            return this.RedirectToAction("ExercisesListing");
+        }
     }
 }

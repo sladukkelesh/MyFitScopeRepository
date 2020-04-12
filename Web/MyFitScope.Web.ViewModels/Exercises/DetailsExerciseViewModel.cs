@@ -14,6 +14,8 @@
 
         public string Name { get; set; }
 
+        public string CreatorName { get; set; }
+
         public string VideoUrl { get; set; }
 
         public string EmbededVideoUrl

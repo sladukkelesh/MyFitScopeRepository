@@ -36,6 +36,15 @@
             await this.exercisesRepository.SaveChangesAsync();
         }
 
+        public async Task DeleteExerciseAsync(string exerciseId)
+        {
+            var exerciseToDelete = await this.exercisesRepository.GetByIdWithDeletedAsync(exerciseId);
+
+            exerciseToDelete.IsDeleted = true;
+
+            await this.exercisesRepository.SaveChangesAsync();
+        }
+
         public DetailsExerciseViewModel GetExerciseById(string exerciseId)
              => this.exercisesRepository.All()
                     .Where(e => e.Id == exerciseId)
