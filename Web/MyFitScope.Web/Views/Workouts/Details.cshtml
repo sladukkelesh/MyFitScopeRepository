@@ -13,12 +13,21 @@
         <p><span class="font-weight-bold">Difficulty:</span> @Model.DifficultyTitle</p>
         <p><span class="font-weight-bold">Workout Category:</span> @Model.WorkoutTypeTitle</p>
         <p><span class="font-weight-bold">Description:</span> @Html.Raw(Model.SanitizedDescription)</p>
-        @if(User.Identity.IsAuthenticated)
+
+        @if (this.User.IsInRole("Admin") || Model.CreatorName == this.User.Identity.Name)
+        {
+            <div class="text-center mt-4 mb-4">
+                <a class="btn btn-info" href="#">Edit</a>
+                <a class="btn btn-danger ml-lg-5" asp-controller="Workouts" asp-action="DeleteWorkout" asp-route-workoutId="@Model.Id" onclick="ConfirmDelete('@Model.Name')">Delete</a>
+            </div>
+        }
+
+        @if (User.Identity.IsAuthenticated)
         {
             <div>
                 <a class="btn btn-primary btn-block" asp-controller="Workouts" asp-action="SetAsCurrentWorkout" asp-route-workoutId="@Model.Id">Set As Current Workout</a>
             </div>
-        }       
+        }
     </div>
 
 
@@ -72,3 +81,13 @@
         <p>There are no workout days in this workout program!</p>
     }
 </section>
+
+@section Scripts {
+    <script>
+        function ConfirmDelete(workoutName) {
+            if (!confirm(`Confirm that you want to delete "${workoutName}"?`)) {
+                event.preventDefault();
+            }
+        }
+    </script>
+}

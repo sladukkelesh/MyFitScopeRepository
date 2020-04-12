@@ -16,5 +16,7 @@
         T GetWorkoutById<T>(string workoutId);
 
         Task SetCurrentWorkoutAsync(string workoutId, ApplicationUser user);
+
+        Task DeleteWorkoutAsync(string workoutId);
     }
 }

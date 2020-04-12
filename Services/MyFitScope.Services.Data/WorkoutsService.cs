@@ -54,6 +54,15 @@
             return workout.Id;
         }
 
+        public async Task DeleteWorkoutAsync(string workoutId)
+        {
+            var workoutToDelete = await this.workoutsRepository.GetByIdWithDeletedAsync(workoutId);
+
+            workoutToDelete.IsDeleted = true;
+
+            await this.workoutsRepository.SaveChangesAsync();
+        }
+
         public T GetWorkoutById<T>(string workoutId)
             => this.workoutsRepository.All()
                 .Where(w => w.Id == workoutId)

@@ -95,6 +95,13 @@
             return this.RedirectToAction("CurrentWorkout");
         }
 
+        public async Task<IActionResult> DeleteWorkout(string workoutId)
+        {
+            await this.workoutsService.DeleteWorkoutAsync(workoutId);
+
+            return this.RedirectToAction("WorkoutsListing");
+        }
+
         private async Task<ApplicationUser> GetLoggedInUserAsync()
         {
             return await this.userManager.FindByIdAsync(this.userManager.GetUserId(this.User));
