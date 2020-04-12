@@ -31,7 +31,7 @@
                 </a>
                 @if (this.User.IsInRole("Admin"))
                 {
-                    <a class="btn btn-sm btn-danger ml-3 text-white" asp-controller="Comments" asp-action="DeleteComment" asp-route-commentId="@Model.Id" asp-route-articleId="@Model.ArticleId" onclick="ConfirmDelete('@Model.UserUserName')">Delete</a>
+                    <a class="btn btn-sm btn-danger ml-3 text-white" asp-controller="Comments" asp-action="DeleteComment" asp-route-commentId="@Model.Id" asp-route-articleId="@Model.ArticleId" onclick="ConfirmDelete('Confirm that you want to delete a comment by ' + '@Model.UserUserName' + '?')">Delete</a>
                 }
             </li>
         }
@@ -53,16 +53,6 @@
         </div>      
     </div>
 </div>
-
-@section Scripts {
-    <script>
-        function ConfirmDelete(commentCreatorName) {
-            if (!confirm(`Confirm that you want to delete a comment from "${commentCreatorName}"?`)) {
-                event.preventDefault();
-            }
-        }
-    </script>
-}
 
 
 

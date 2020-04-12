@@ -24,20 +24,11 @@
             @if (this.User.IsInRole("Admin"))
             {
                 <li class="list-inline-item ml-auto">
-                    <a class="btn btn-sm btn-danger ml-lg-5" asp-controller="Responses" asp-action="DeleteResponse" asp-route-responseId="@Model.Id" asp-route-articleId="@Model.ArticleId" onclick="ConfirmDelete('@Model.UserUserName')">Delete</a>
+                    <a class="btn btn-sm btn-danger ml-lg-5" asp-controller="Responses" asp-action="DeleteResponse" asp-route-responseId="@Model.Id" asp-route-articleId="@Model.ArticleId" onclick="ConfirmDelete('Confirm that you want to delete a response by ' + '@Model.UserUserName' + '?')">Delete</a>
                 </li>
             }
 
         </ul>
         </div>      
     </div>
-
-@section Scripts {
-    <script>
-        function ConfirmDelete(responseCreatorName) {
-            if (!confirm(`Confirm that you want to delete a response from "${responseCreatorName}"?`)) {
-                event.preventDefault();
-            }
-        }
-    </script>
 }

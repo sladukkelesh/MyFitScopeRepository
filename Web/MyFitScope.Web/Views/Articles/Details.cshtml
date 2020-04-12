@@ -41,7 +41,7 @@
                 {
                     <div class="text-center mt-4 mb-4">
                         <a class="btn btn-info" href="#">Edit</a>
-                        <a class="btn btn-danger ml-lg-5" asp-controller="Articles" asp-action="DeleteArticle" asp-route-articleId="@Model.Id" onclick="ConfirmDelete('@Model.Title')">Delete</a>
+                        <a class="btn btn-danger ml-lg-5" asp-controller="Articles" asp-action="DeleteArticle" asp-route-articleId="@Model.Id" onclick="ConfirmDelete('Confirm that you want to delete ' + '@Model.Title' + '?')">Delete</a>
                     </div>
                 }
 
@@ -168,13 +168,6 @@
             // apend form to main parrent div element
             parentDivElement.insertBefore(responseForm, parentDivElement.firstChild);
         }
-
-        function ConfirmDelete(articleTitle) {
-            if (!confirm(`Confirm that you want to delete "${articleTitle}"?`)) {
-                event.preventDefault();
-            }
-        }
-
         
         function SendVote(votedObject, commentId, isUpVote) {
             let targetElement = event.target;
