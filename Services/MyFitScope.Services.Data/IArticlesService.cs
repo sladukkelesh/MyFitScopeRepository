@@ -12,8 +12,10 @@
 
         IEnumerable<ArticleViewModel> GetArticlesByCategory(string articleCategory);
 
-        DetailsArticleViewModel GetArticleById(string articleId);
+        T GetArticleById<T>(string articleId);
 
         Task DeleteArticleAsync(string articleId);
+
+        Task UpdateArticleAsync(string articleId, string articleTitle, ArticleCategory articleCategory, string articleImageUrl, string articleContent);
     }
 }

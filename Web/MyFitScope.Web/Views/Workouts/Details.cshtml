@@ -1,4 +1,5 @@
-﻿@using MyFitScope.Web.ViewModels.Workouts
+﻿@using MyFitScope.Common
+@using MyFitScope.Web.ViewModels.Workouts
 @model DetailsViewModel
 
 @{ 
@@ -18,7 +19,7 @@
         {
             <div class="text-center mt-4 mb-4">
                 <a class="btn btn-info" href="#">Edit</a>
-                <a class="btn btn-danger ml-lg-5" asp-controller="Workouts" asp-action="DeleteWorkout" asp-route-workoutId="@Model.Id" onclick="ConfirmDelete('@Model.Name')">Delete</a>
+                <a class="btn btn-danger ml-lg-5" asp-controller="Workouts" asp-action="DeleteWorkout" asp-route-workoutId="@Model.Id" onclick="ConfirmDelete('@string.Format(GlobalConstants.WorkoutConfirmDeleteMessage, Model.Name)')">Delete</a>
             </div>
         }
 
@@ -81,13 +82,3 @@
         <p>There are no workout days in this workout program!</p>
     }
 </section>
-
-@section Scripts {
-    <script>
-        function ConfirmDelete(workoutName) {
-            if (!confirm(`Confirm that you want to delete "${workoutName}"?`)) {
-                event.preventDefault();
-            }
-        }
-    </script>
-}

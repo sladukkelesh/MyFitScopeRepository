@@ -5,6 +5,7 @@
     using System.Linq;
     using System.Threading.Tasks;
 
+    using MyFitScope.Data;
     using MyFitScope.Data.Common.Repositories;
     using MyFitScope.Data.Models.BlogModels;
     using MyFitScope.Data.Models.BlogModels.Enums;
@@ -46,10 +47,10 @@
             await this.articlesRepository.SaveChangesAsync();
         }
 
-        public DetailsArticleViewModel GetArticleById(string articleId)
+        public T GetArticleById<T>(string articleId)
                     => this.articlesRepository.All()
                             .Where(a => a.Id == articleId)
-                            .To<DetailsArticleViewModel>()
+                            .To<T>()
                             .FirstOrDefault();
 
         public IEnumerable<ArticleViewModel> GetArticlesByCategory(string articleCategoryInput = null)
@@ -62,6 +63,22 @@
             }
 
             return result.To<ArticleViewModel>().ToList();
+        }
+
+        public async Task UpdateArticleAsync(string articleId, string articleTitle, ArticleCategory articleCategory, string articleImageUrl, string articleContent)
+        {
+            var articleToUpdate = this.articlesRepository.All()
+                                            .Where(a => a.Id == articleId)
+                                            .FirstOrDefault();
+
+            articleToUpdate.Title = articleTitle;
+            articleToUpdate.ArticleCategory = articleCategory;
+            articleToUpdate.ImageUrl = articleImageUrl;
+            articleToUpdate.Content = articleContent;
+            articleToUpdate.ModifiedOn = DateTime.UtcNow;
+
+            // this.articlesRepository.Update(articleToUpdate);
+            await this.articlesRepository.SaveChangesAsync();
         }
     }
 }
