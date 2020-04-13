@@ -58,7 +58,7 @@
 
         public IActionResult Details(string id)
         {
-            var model = this.exercisesService.GetExerciseById(id);
+            var model = this.exercisesService.GetExerciseById<DetailsExerciseViewModel>(id);
 
             return this.View(model);
         }
@@ -95,6 +95,21 @@
             await this.exercisesService.DeleteExerciseAsync(exerciseId);
 
             return this.RedirectToAction("ExercisesListing");
+        }
+
+        public IActionResult EditExercise(string exerciseId)
+        {
+            var model = this.exercisesService.GetExerciseById<EditExerciseInputViewModel>(exerciseId);
+
+            return this.View(model);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> EditExercise(EditExerciseInputViewModel input)
+        {
+            await this.exercisesService.EditExerciseAsync(input.Id, input.Name, input.VideoUrl, input.MuscleGroup, input.Description);
+
+            return this.RedirectToAction(nameof(this.Details), new { id = input.Id });
         }
     }
 }

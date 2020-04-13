@@ -3,7 +3,7 @@
     using System;
     using System.Linq;
     using System.Threading.Tasks;
-
+    using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Identity;
     using Microsoft.AspNetCore.Mvc;
     using MyFitScope.Data;
@@ -63,6 +63,7 @@
             return this.RedirectToAction("ArticlesListing");
         }
 
+        [Authorize(Roles="Admin")]
         public IActionResult EditArticle(string articleId)
         {
             var model = this.articlesService.GetArticleById<EditArticleInputViewModel>(articleId);
@@ -70,6 +71,7 @@
             return this.View(model);
         }
 
+        [Authorize(Roles="Admin")]
         [HttpPost]
         public async Task<IActionResult> EditArticle(EditArticleInputViewModel input)
         {

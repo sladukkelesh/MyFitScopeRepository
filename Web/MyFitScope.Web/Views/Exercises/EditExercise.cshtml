@@ -1,0 +1,49 @@
+﻿@using MyFitScope.Data.Models.FitnessModels.Enums
+@using MyFitScope.Web.ViewModels.Exercises
+@model EditExerciseInputViewModel
+
+@{
+    this.Layout = "_LoggedInLayout";
+}
+
+<script src="/lib/tinymce/tinymce.min.js" type="text/javascript"></script>
+<script type="text/javascript">
+    tinymce.init({
+        selector: "textarea",
+        plugins: [
+            "image paste table link code media"
+        ]
+    });
+</script>
+
+<section class="container">
+    <h2>In this section you can EDIT your Exercise</h2>
+    <hr />
+    <form method="post" class="form-group col-md-6" asp-controller="Exercises" asp-action="EditExercise">
+        <div class="mb-3">
+            <label asp-for="Name">Exercise Name:</label>
+            <input type="text" asp-for="Name" class="form-control" value="@Model.Name"/>
+            <span asp-validation-for="Name" class="text-danger"></span>
+        </div>
+        <div class="mb-3">
+            <label asp-for="MuscleGroup">Choose muscle group:</label>
+            <select asp-for="MuscleGroup" asp-items="@Html.GetEnumSelectList<MuscleGroup>()" class="form-control">
+                <option value="@Model.MuscleGroup" selected></option>
+            </select>
+        </div>
+        <div class="mb-3">
+            <label asp-for="VideoUrl">Video Url:</label>
+            <input type="text" asp-for="VideoUrl" class="form-control" value="@Model.VideoUrl" />
+            <span asp-validation-for="VideoUrl" class="text-danger"></span>
+        </div>
+        <div class="mb-3">
+            <label asp-for="Description">Exercise Description:</label>
+            <textarea asp-for="Description" class="form-control" value="@Model.Description"></textarea>
+            <span asp-validation-for="Description" class="text-danger"></span>
+        </div>
+
+        <input type="hidden" name="Id" value="@Model.Id" />
+        
+        <button type="submit" class="btn btn-primary">Edit</button>
+    </form>
+</section>

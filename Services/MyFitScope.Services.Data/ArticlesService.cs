@@ -5,7 +5,6 @@
     using System.Linq;
     using System.Threading.Tasks;
 
-    using MyFitScope.Data;
     using MyFitScope.Data.Common.Repositories;
     using MyFitScope.Data.Models.BlogModels;
     using MyFitScope.Data.Models.BlogModels.Enums;
@@ -67,9 +66,7 @@
 
         public async Task UpdateArticleAsync(string articleId, string articleTitle, ArticleCategory articleCategory, string articleImageUrl, string articleContent)
         {
-            var articleToUpdate = this.articlesRepository.All()
-                                            .Where(a => a.Id == articleId)
-                                            .FirstOrDefault();
+            var articleToUpdate = await this.articlesRepository.GetByIdWithDeletedAsync(articleId);
 
             articleToUpdate.Title = articleTitle;
             articleToUpdate.ArticleCategory = articleCategory;
@@ -77,7 +74,7 @@
             articleToUpdate.Content = articleContent;
             articleToUpdate.ModifiedOn = DateTime.UtcNow;
 
-            // this.articlesRepository.Update(articleToUpdate);
+            this.articlesRepository.Update(articleToUpdate);
             await this.articlesRepository.SaveChangesAsync();
         }
     }

@@ -45,10 +45,24 @@
             await this.exercisesRepository.SaveChangesAsync();
         }
 
-        public DetailsExerciseViewModel GetExerciseById(string exerciseId)
+        public async Task EditExerciseAsync(string exerciseId, string name, string videoUrl, MuscleGroup muscleGroup, string description)
+        {
+            var exerciseToEdit = await this.exercisesRepository.GetByIdWithDeletedAsync(exerciseId);
+
+            exerciseToEdit.Name = name;
+            exerciseToEdit.VideoUrl = videoUrl;
+            exerciseToEdit.MuscleGroup = muscleGroup;
+            exerciseToEdit.Description = description;
+            exerciseToEdit.ModifiedOn = DateTime.UtcNow;
+
+            this.exercisesRepository.Update(exerciseToEdit);
+            await this.exercisesRepository.SaveChangesAsync();
+        }
+
+        public T GetExerciseById<T>(string exerciseId)
              => this.exercisesRepository.All()
                     .Where(e => e.Id == exerciseId)
-                    .To<DetailsExerciseViewModel>()
+                    .To<T>()
                     .FirstOrDefault();
 
         public ICollection<ExerciseViewModel> GetExercisesByCategory(string userName, string exerciseCategoryInput = null)
