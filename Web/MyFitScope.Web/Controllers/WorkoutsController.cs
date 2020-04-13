@@ -102,6 +102,21 @@
             return this.RedirectToAction("WorkoutsListing");
         }
 
+        public IActionResult EditWorkout(string workoutId)
+        {
+            var model = this.workoutsService.GetWorkoutById<EditWorkoutInputViewModel>(workoutId);
+
+            return this.View(model);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> EditWorkout(EditWorkoutInputViewModel input)
+        {
+            await this.workoutsService.EditWorkoutAsync(input.Id, input.Name, input.Difficulty, input.WorkoutType, input.Description);
+
+            return this.RedirectToAction(nameof(this.Details), new { id = input.Id });
+        }
+
         private async Task<ApplicationUser> GetLoggedInUserAsync()
         {
             return await this.userManager.FindByIdAsync(this.userManager.GetUserId(this.User));

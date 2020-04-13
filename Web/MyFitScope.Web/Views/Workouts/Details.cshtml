@@ -18,7 +18,7 @@
         @if (this.User.IsInRole("Admin") || Model.CreatorName == this.User.Identity.Name)
         {
             <div class="text-center mt-4 mb-4">
-                <a class="btn btn-info" href="#">Edit</a>
+                <a class="btn btn-info" asp-controller="Workouts" asp-action="EditWorkout" asp-route-workoutId="@Model.Id">Edit</a>
                 <a class="btn btn-danger ml-lg-5" asp-controller="Workouts" asp-action="DeleteWorkout" asp-route-workoutId="@Model.Id" onclick="ConfirmDelete('@string.Format(GlobalConstants.WorkoutConfirmDeleteMessage, Model.Name)')">Delete</a>
             </div>
         }

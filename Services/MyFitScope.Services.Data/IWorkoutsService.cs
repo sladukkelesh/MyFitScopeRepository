@@ -18,5 +18,7 @@
         Task SetCurrentWorkoutAsync(string workoutId, ApplicationUser user);
 
         Task DeleteWorkoutAsync(string workoutId);
+
+        Task EditWorkoutAsync(string workoutId, string name, Difficulty difficulty, WorkoutType workoutType, string description);
     }
 }

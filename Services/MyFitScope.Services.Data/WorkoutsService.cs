@@ -63,6 +63,20 @@
             await this.workoutsRepository.SaveChangesAsync();
         }
 
+        public async Task EditWorkoutAsync(string workoutId, string name, Difficulty difficulty, WorkoutType workoutType, string description)
+        {
+            var workoutToEdit = await this.workoutsRepository.GetByIdWithDeletedAsync(workoutId);
+
+            workoutToEdit.Name = name;
+            workoutToEdit.Difficulty = difficulty;
+            workoutToEdit.WorkoutType = workoutType;
+            workoutToEdit.Description = description;
+            workoutToEdit.ModifiedOn = DateTime.UtcNow;
+
+            this.workoutsRepository.Update(workoutToEdit);
+            await this.workoutsRepository.SaveChangesAsync();
+        }
+
         public T GetWorkoutById<T>(string workoutId)
             => this.workoutsRepository.All()
                 .Where(w => w.Id == workoutId)
