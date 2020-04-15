@@ -52,14 +52,23 @@
                             .To<T>()
                             .FirstOrDefault();
 
-        public IEnumerable<ArticleViewModel> GetArticlesByCategory(string articleCategoryInput = null)
+        public IEnumerable<ArticleViewModel> GetArticlesByCategory(string articleCategoryInput)
         {
             var result = this.articlesRepository.All();
 
-            if (articleCategoryInput != null)
+            if (articleCategoryInput != "All")
             {
-                result = result.Where(a => a.ArticleCategory == (ArticleCategory)Enum.Parse(typeof(ArticleCategory), articleCategoryInput));
+                    result = result.Where(a => a.ArticleCategory == (ArticleCategory)Enum.Parse(typeof(ArticleCategory), articleCategoryInput));
             }
+
+            return result.To<ArticleViewModel>().ToList();
+        }
+
+        public IEnumerable<ArticleViewModel> GetArticlesByKeyWord(string keyWord = null)
+        {
+            var result = this.articlesRepository.All();
+
+            result = result.Where(a => a.Title.Contains(keyWord));
 
             return result.To<ArticleViewModel>().ToList();
         }

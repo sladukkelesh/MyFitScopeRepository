@@ -70,13 +70,12 @@
                                 <span class="caret"></span>
                             </button>
                             <ul class="dropdown-menu">
+                                <li class="nav-item">
+                                    <a class="nav-link text-dark" asp-area="" asp-controller="Articles" asp-action="ArticlesListing" asp-route-articleCategory="All">All</a>
+                                </li>
 
                                 <vc:dropdown-links url="/Articles/ArticlesListing?articleCategory=" enum-name=@GlobalConstants.ArticleCategoryTypeName></vc:dropdown-links>
 
-                                <li class="nav-item">
-                                    <a class="nav-link text-dark" asp-area="" asp-controller="Articles" asp-action="ArticlesListing">All</a>
-                                </li>
-                                
                                 @if (this.User.IsInRole("Admin"))
                                 {
                                     <li class="dropdown-divider"></li>

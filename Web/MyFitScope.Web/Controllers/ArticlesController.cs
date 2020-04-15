@@ -8,6 +8,7 @@
     using Microsoft.AspNetCore.Mvc;
     using MyFitScope.Data;
     using MyFitScope.Data.Models;
+    using MyFitScope.Data.Models.BlogModels.Enums;
     using MyFitScope.Services.Data;
     using MyFitScope.Web.ViewModels.Articles;
 
@@ -26,10 +27,16 @@
 
         public IActionResult ArticlesListing(string articleCategory)
         {
-            var model = new ArticlesLIstingViewModel
+            var model = new ArticlesLIstingViewModel();
+
+            if (Enum.GetNames(typeof(ArticleCategory)).Any(ac => ac == articleCategory) || articleCategory == "All")
             {
-                Articles = this.articlesService.GetArticlesByCategory(articleCategory),
-            };
+                model.Articles = this.articlesService.GetArticlesByCategory(articleCategory);
+            }
+            else
+            {
+                model.Articles = this.articlesService.GetArticlesByKeyWord(articleCategory);
+            }
 
             return this.View(model);
         }
@@ -41,9 +48,9 @@
             return this.View(model);
         }
 
+        [Authorize(Roles = "Admin")]
         public IActionResult CreateArticle()
         {
-            var currentUserWorkout = this.User.Claims.FirstOrDefault(c => c.Type == "WorkoutId").Value;
             return this.View();
         }
 

@@ -2,10 +2,21 @@
 {
     using System;
     using System.Collections.Generic;
-    using System.Text;
+    using System.Linq;
+
+    using MyFitScope.Data.Models.BlogModels.Enums;
 
     public class ArticlesLIstingViewModel
     {
         public IEnumerable<ArticleViewModel> Articles { get; set; }
+
+        public ICollection<string> ArticleCategoriesTitles
+        {
+            get
+            {
+                return Enum.GetNames(typeof(ArticleCategory))
+                        .ToList();
+            }
+        }
     }
 }

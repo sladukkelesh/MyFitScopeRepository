@@ -3,80 +3,72 @@
 @model DetailsArticleViewModel
 
 @{
+    this.Layout = "_ArticleLayout";
     this.ViewData["Title"] = Model.Title + " Details";
 }
 
-    <div class="container">
+<!-- Post Content Column -->
 
-        <div class="row">
+<!-- Title -->
+<h1 class="mt-4">@Model.Title</h1>
 
-            <!-- Post Content Column -->
-            <div class="col-lg-8">
+<!-- Author -->
+<p class="lead">
+    by
+    @Model.UserUserName
+</p>
 
-                <!-- Title -->
-                <h1 class="mt-4">@Model.Title</h1>
+<hr>
 
-                <!-- Author -->
-                <p class="lead">
-                    by
-                    @Model.UserUserName
-                </p>
+<!-- Date/Time -->
+<p>Posted on January 1, 2019 at 12:00 PM</p>
 
-                <hr>
+<hr>
 
-                <!-- Date/Time -->
-                <p>Posted on January 1, 2019 at 12:00 PM</p>
+<!-- Preview Image -->
+<img class="img-fluid rounded article-details-image" src="@Model.ImageUrl" alt="Article Image">
 
-                <hr>
+<hr>
 
-                <!-- Preview Image -->
-                <img class="img-fluid rounded article-details-image" src="@Model.ImageUrl" alt="Article Image">
+<!-- Post Content -->
+<p>@Html.Raw(Model.SanitizedContent)</p>
 
-                <hr>
-
-                <!-- Post Content -->
-                <p>@Html.Raw(Model.SanitizedContent)</p>
-
-                <!-- Edit/Delete buttons-->
-                @if (this.User.IsInRole("Admin"))
-                {
-                    <div class="text-center mt-4 mb-4">
-                        <a class="btn btn-info" asp-controller="Articles" asp-action="EditArticle" asp-route-articleId="@Model.Id">Edit</a>
-                        <a class="btn btn-danger ml-lg-5" asp-controller="Articles" asp-action="DeleteArticle" asp-route-articleId="@Model.Id" onclick="ConfirmDelete('@string.Format(GlobalConstants.ArticleConfirmDeleteMessage, Model.Title)')">Delete</a>
-                    </div>
-                }
-
-                <hr>
-
-                <!-- Comments Input Form -->
-                @if (this.User.Identity.IsAuthenticated)
-                {
-                    <div class="card my-4">
-                        <h5 class="card-header">Leave a Comment:</h5>
-                        <div class="card-body">
-                            <form id="commentInputForm" method="post" asp-controller="Comments" asp-action="AddComment">
-                                <input type="hidden" name="articleId" value="@Model.Id" />
-                                <div class="form-group">
-                                    <textarea class="form-control" rows="3" name="commentContent"></textarea>
-                                </div>
-                                <button type="submit" class="btn btn-primary">Submit</button>
-                            </form>
-                        </div>
-                    </div>
-                }
-
-                <!-- Comments and Responses Section -->
-                @foreach (var comment in Model.Comments)
-                {
-
-                    <partial name="_CommentPartial" model="@comment" />
-                }
-
-            </div>
-
-        </div>
-
+<!-- Edit/Delete buttons-->
+@if (this.User.IsInRole("Admin"))
+{
+    <div class="text-center mt-4 mb-4">
+        <a class="btn btn-info" asp-controller="Articles" asp-action="EditArticle" asp-route-articleId="@Model.Id">Edit</a>
+        <a class="btn btn-danger ml-lg-5" asp-controller="Articles" asp-action="DeleteArticle" asp-route-articleId="@Model.Id" onclick="ConfirmDelete('@string.Format(GlobalConstants.ArticleConfirmDeleteMessage, Model.Title)')">Delete</a>
     </div>
+}
+
+<hr>
+
+<!-- Comments Input Form -->
+@if (this.User.Identity.IsAuthenticated)
+{
+    <div class="card my-4">
+        <h5 class="card-header">Leave a Comment:</h5>
+        <div class="card-body">
+            <form id="commentInputForm" method="post" asp-controller="Comments" asp-action="AddComment">
+                <input type="hidden" name="articleId" value="@Model.Id" />
+                <div class="form-group">
+                    <textarea class="form-control" rows="3" name="commentContent"></textarea>
+                </div>
+                <button type="submit" class="btn btn-primary">Submit</button>
+            </form>
+        </div>
+    </div>
+}
+
+<!-- Comments and Responses Section -->
+@foreach (var comment in Model.Comments)
+{
+
+    <partial name="_CommentPartial" model="@comment" />
+}
+
+
 
 
 @section Scripts {

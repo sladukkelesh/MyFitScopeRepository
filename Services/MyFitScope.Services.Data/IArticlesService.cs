@@ -12,6 +12,8 @@
 
         IEnumerable<ArticleViewModel> GetArticlesByCategory(string articleCategory);
 
+        IEnumerable<ArticleViewModel> GetArticlesByKeyWord(string keyWord);
+
         T GetArticleById<T>(string articleId);
 
         Task DeleteArticleAsync(string articleId);

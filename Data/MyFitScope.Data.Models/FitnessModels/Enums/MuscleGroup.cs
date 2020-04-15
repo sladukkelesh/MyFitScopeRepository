@@ -1,5 +1,6 @@
 ﻿namespace MyFitScope.Data.Models.FitnessModels.Enums
 {
+    using System.ComponentModel.DataAnnotations;
 
     public enum MuscleGroup
     {
@@ -11,8 +12,13 @@
         Glutes = 6,
         Shoulders = 7,
         Triceps = 8,
+
+        [Display(Name = "Upper Legs")]
         Upper_Legs = 9,
+
+        [Display(Name ="Lower Legs")]
         Lower_Legs = 10,
+
         Cardio = 11,
         Custom = 12,
     }
