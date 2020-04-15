@@ -5,18 +5,12 @@
     using System.Linq;
 
     using MyFitScope.Data.Models.BlogModels.Enums;
+    using MyFitScope.Web.Infrastructure;
 
     public class ArticlesLIstingViewModel
     {
-        public IEnumerable<ArticleViewModel> Articles { get; set; }
+        public PaginatedList<ArticleViewModel> Articles { get; set; }
 
-        public ICollection<string> ArticleCategoriesTitles
-        {
-            get
-            {
-                return Enum.GetNames(typeof(ArticleCategory))
-                        .ToList();
-            }
-        }
+        public string ArticleCategory { get; set; }
     }
 }

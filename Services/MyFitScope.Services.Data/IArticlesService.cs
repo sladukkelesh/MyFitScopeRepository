@@ -4,15 +4,16 @@
     using System.Threading.Tasks;
 
     using MyFitScope.Data.Models.BlogModels.Enums;
+    using MyFitScope.Web.Infrastructure;
     using MyFitScope.Web.ViewModels.Articles;
 
     public interface IArticlesService
     {
         Task<string> CreateArticle(string articleTitle, ArticleCategory articleCategory, string articleImageUrl, string articleContent, string userId);
 
-        IEnumerable<ArticleViewModel> GetArticlesByCategory(string articleCategory);
+        Task<PaginatedList<ArticleViewModel>> GetArticlesByCategoryAsync(string articleCategory, int? pageIndex);
 
-        IEnumerable<ArticleViewModel> GetArticlesByKeyWord(string keyWord);
+        Task<PaginatedList<ArticleViewModel>> GetArticlesByKeyWordAsync(string keyWord, int? pageIndex);
 
         T GetArticleById<T>(string articleId);
 

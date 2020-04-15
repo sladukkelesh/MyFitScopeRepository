@@ -25,18 +25,20 @@
             this.db = db;
         }
 
-        public IActionResult ArticlesListing(string articleCategory)
+        public async Task<IActionResult> ArticlesListing(string articleCategory, int? pageIndex = null)
         {
             var model = new ArticlesLIstingViewModel();
 
             if (Enum.GetNames(typeof(ArticleCategory)).Any(ac => ac == articleCategory) || articleCategory == "All")
             {
-                model.Articles = this.articlesService.GetArticlesByCategory(articleCategory);
+                model.Articles = await this.articlesService.GetArticlesByCategoryAsync(articleCategory, pageIndex);
             }
             else
             {
-                model.Articles = this.articlesService.GetArticlesByKeyWord(articleCategory);
+                model.Articles = await this.articlesService.GetArticlesByKeyWordAsync(articleCategory, pageIndex);
             }
+
+            model.ArticleCategory = articleCategory;
 
             return this.View(model);
         }

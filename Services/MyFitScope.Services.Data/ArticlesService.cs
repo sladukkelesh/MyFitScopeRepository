@@ -5,10 +5,12 @@
     using System.Linq;
     using System.Threading.Tasks;
 
+    using MyFitScope.Common;
     using MyFitScope.Data.Common.Repositories;
     using MyFitScope.Data.Models.BlogModels;
     using MyFitScope.Data.Models.BlogModels.Enums;
     using MyFitScope.Services.Mapping;
+    using MyFitScope.Web.Infrastructure;
     using MyFitScope.Web.ViewModels.Articles;
 
     public class ArticlesService : IArticlesService
@@ -52,7 +54,7 @@
                             .To<T>()
                             .FirstOrDefault();
 
-        public IEnumerable<ArticleViewModel> GetArticlesByCategory(string articleCategoryInput)
+        public async Task<PaginatedList<ArticleViewModel>> GetArticlesByCategoryAsync(string articleCategoryInput, int? pageIndex = null)
         {
             var result = this.articlesRepository.All();
 
@@ -61,16 +63,16 @@
                     result = result.Where(a => a.ArticleCategory == (ArticleCategory)Enum.Parse(typeof(ArticleCategory), articleCategoryInput));
             }
 
-            return result.To<ArticleViewModel>().ToList();
+            return await PaginatedList<ArticleViewModel>.CreateAsync(result.To<ArticleViewModel>(), pageIndex ?? GlobalConstants.PaginationDefaultPageIndex, GlobalConstants.PaginationPageSize);
         }
 
-        public IEnumerable<ArticleViewModel> GetArticlesByKeyWord(string keyWord = null)
+        public async Task<PaginatedList<ArticleViewModel>> GetArticlesByKeyWordAsync(string keyWord = null, int? pageIndex = null)
         {
             var result = this.articlesRepository.All();
 
             result = result.Where(a => a.Title.Contains(keyWord));
 
-            return result.To<ArticleViewModel>().ToList();
+            return await PaginatedList<ArticleViewModel>.CreateAsync(result.To<ArticleViewModel>(), pageIndex ?? GlobalConstants.PaginationDefaultPageIndex, GlobalConstants.PaginationPageSize);
         }
 
         public async Task UpdateArticleAsync(string articleId, string articleTitle, ArticleCategory articleCategory, string articleImageUrl, string articleContent)

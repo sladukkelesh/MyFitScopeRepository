@@ -20,7 +20,7 @@
     });
 </script>
 
-<form method="post" class="form-group" action="/Articles/CreateArticle">
+<form method="post" class="form-group" asp-controller="Articles" asp-action="CreateArticle">
     <div>
         <label asp-for="ArticleTitle">Title:</label>
         <input asp-for="ArticleTitle" class="form-control" placeholder="Enter article title">
