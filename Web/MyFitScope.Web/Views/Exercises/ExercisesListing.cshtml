@@ -5,40 +5,109 @@
     this.ViewData["Title"] = "Exercises";
 }
 
-<section>
-    @if (Model.ListedGroupType == "All")
-    {
-        <h1>All Exercises</h1>
-    }
-    else if (Model.ListedGroupType == "Custom")
-    {
-        <h1>Your custom created Exercises</h1>
-    }
-    else
-    {
-        <h1>Exercises of category "@Model.ListedGroupType"</h1>
-    }
-    <div class="container row">
-        @if (Model.Exercises.Count != 0)
-        {
-            foreach (var exercise in Model.Exercises)
-            {
-                <ul class="list-unstyled col-md-10">
-                    <li class="media">
-                        <img class="mb-2 mr-3  exercise-listing-image" src="@exercise.ThumbnailUrl" alt="Thumbnail Image">
-                        <div class="media-body">
-                            <a asp-controller="Exercises" asp-action="Details" asp-route-id="@exercise.Id"><h5 class="mt-0 mb-1">@exercise.Name</h5></a>
-                            <p>Muscle Group: @exercise.MuscleGroupTitle</p>
-                            @exercise.ShortDescription
-                        </div>
-                    </li>
-                </ul>
-            }
-        }
-        else
-        {
-            <p>Sorry, we don't have any exercises in this category at this moment...</p>
-        }
 
-    </div>   
+<section class="container">
+    <div class="row">
+        <div class="col-md-8">
+            @if (Model.ExerciseCategory == "All")
+            {
+                <h1>All Exercises</h1>
+            }
+            else if (Model.ExerciseCategory == "Custom")
+            {
+                <h1>Your custom created Exercises</h1>
+            }
+            else
+            {
+                <h1>Exercises of category "@Model.ExerciseCategory"</h1>
+            }
+            <div class="container row">
+                @if (Model.Exercises.Count != 0)
+                {
+                    foreach (var exercise in Model.Exercises)
+                    {
+                        <ul class="list-unstyled col-md-12">
+                            <li class="media">
+                                <img class="mb-2 mr-3  exercise-listing-image" src="@exercise.ThumbnailUrl" alt="Thumbnail Image">
+                                <div class="media-body">
+                                    <a asp-controller="Exercises" asp-action="Details" asp-route-id="@exercise.Id"><h5 class="mt-0 mb-1">@exercise.Name</h5></a>
+                                    <p>Muscle Group: @exercise.MuscleGroupTitle</p>
+                                    @exercise.ShortDescription
+                                </div>
+                            </li>
+                        </ul>
+                    }
+                }
+                else
+                {
+                    <p>Sorry, we don't have any exercises in this category at this moment...</p>
+                }
+
+            </div>
+            <!-- Pagination -->
+            <nav>
+                <ul class="pagination justify-content-center">
+                    @if (Model.Exercises.HasPreviousPage)
+                    {
+                        <li class="page-item">
+                            <a class="page-link" asp-controller="Exercises" asp-action="ExercisesListing" asp-route-exerciseCategory="@Model.ExerciseCategory" asp-route-pageIndex="@(Model.Exercises.PageIndex - 1)">Previous</a>
+                        </li>
+                    }
+                    else
+                    {
+                        <li class="page-item disabled">
+                            <a class="page-link" href="#">Previous</a>
+                        </li>
+                    }
+
+
+                    @for (var i = 1; i <= Model.Exercises.TotalPages; i++)
+                    {
+                        @if (Model.Exercises.PageIndex == i)
+                        {
+                            <li class="page-item active">
+                                <a class="page-link" asp-controller="Exercises" asp-action="ExercisesListing" asp-route-exerciseCategory="@Model.ExerciseCategory" asp-route-pageIndex="@i">@i</a>
+                            </li>
+                        }
+                        else
+                        {
+                            <li class="page-item">
+                                <a class="page-link" asp-controller="Exercises" asp-action="ExercisesListing" asp-route-exerciseCategory="@Model.ExerciseCategory" asp-route-pageIndex="@i">@i</a>
+                            </li>
+                        }
+
+                    }
+
+                    @if (Model.Exercises.HasNextPage)
+                    {
+                        <li class="page-item">
+                            <a class="page-link" asp-controller="Exercises" asp-action="ExercisesListing" asp-route-exerciseCategory="@Model.ExerciseCategory" asp-route-pageIndex="@(Model.Exercises.PageIndex + 1)">Next</a>
+                        </li>
+                    }
+                    else
+                    {
+                        <li class="page-item disabled">
+                            <a class="page-link" href="#">Next</a>
+                        </li>
+                    }
+                </ul>
+            </nav>
+        </div>
+        <div class="col-md-4">
+            <!-- Search Widget -->
+            <div class="card my-4">
+                <h5 class="card-header">Search</h5>
+                <div class="card-body">
+                    <form method="get" asp-controller="Exercises" asp-action="ExercisesListing">
+                        <div class="input-group form-group">
+                            <input type="text" class="form-control" name="exerciseCategory" placeholder="Search for...">
+                            <span class="input-group-btn">
+                                <button type="submit" class="btn btn-secondary">Go!</button>
+                            </span>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>      
 </section>

@@ -10,6 +10,7 @@
     using MyFitScope.Data.Models;
     using MyFitScope.Data.Models.FitnessModels.Enums;
     using MyFitScope.Services.Data;
+    using MyFitScope.Web.Infrastructure;
     using MyFitScope.Web.ViewModels.Exercises;
 
     public class ExercisesController : Controller
@@ -43,14 +44,14 @@
             return this.RedirectToAction("ExercisesListing", new { exerciseCategory = "Custom" });
         }
 
-        public IActionResult ExercisesListing(string exerciseCategory)
+        public async Task<IActionResult> ExercisesListing(string exerciseCategory, int? pageIndex = null)
         {
             var userName = this.User.Identity.Name;
 
             var model = new ExerciseListingViewModel
             {
-                Exercises = this.exercisesService.GetExercisesByCategory(userName, exerciseCategory),
-                ListedGroupType = exerciseCategory ?? "All",
+                Exercises = await this.exercisesService.GetExercisesByCategoryAsync(userName, exerciseCategory, true, pageIndex) as PaginatedList<ExerciseViewModel>,
+                ExerciseCategory = exerciseCategory,
             };
 
             return this.View(model);
@@ -75,11 +76,11 @@
             return this.Ok(result);
         }
 
-        public IActionResult GetExercisesByMuscleGroup(string muscleGroup)
+        public async Task<IActionResult> GetExercisesByMuscleGroup(string muscleGroup)
         {
             var userName = this.User.Identity.Name;
 
-            var exercises = this.exercisesService.GetExercisesByCategory(userName, muscleGroup);
+            var exercises = await this.exercisesService.GetExercisesByCategoryAsync(userName, muscleGroup, false, null);
 
             var result = exercises.Select(e => new ExerciseOutputModel
             {

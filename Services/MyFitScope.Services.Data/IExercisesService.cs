@@ -10,7 +10,7 @@
     {
         Task CreateExerciseAsync(string name, string videoUrl, MuscleGroup muscleGroup, string description, string creatorName);
 
-        ICollection<ExerciseViewModel> GetExercisesByCategory(string userName, string exerciseCategory);
+        Task<IEnumerable<ExerciseViewModel>> GetExercisesByCategoryAsync(string userName, string exerciseCategory, bool withPagination, int? pageIndex);
 
         T GetExerciseById<T>(string exerciseId);
 

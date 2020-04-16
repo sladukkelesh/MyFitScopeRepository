@@ -2,10 +2,12 @@
 {
     using System.Collections.Generic;
 
+    using MyFitScope.Web.Infrastructure;
+
     public class ExerciseListingViewModel
     {
-        public ICollection<ExerciseViewModel> Exercises { get; set; }
+        public PaginatedList<ExerciseViewModel> Exercises { get; set; }
 
-        public string ListedGroupType { get; set; }
+        public string ExerciseCategory { get; set; }
     }
 }

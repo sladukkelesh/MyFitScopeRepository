@@ -4,11 +4,12 @@
     using System.Collections.Generic;
     using System.Linq;
     using System.Threading.Tasks;
-
+    using MyFitScope.Common;
     using MyFitScope.Data.Common.Repositories;
     using MyFitScope.Data.Models.FitnessModels;
     using MyFitScope.Data.Models.FitnessModels.Enums;
     using MyFitScope.Services.Mapping;
+    using MyFitScope.Web.Infrastructure;
     using MyFitScope.Web.ViewModels.Exercises;
 
     public class ExercisesService : IExercisesService
@@ -65,11 +66,11 @@
                     .To<T>()
                     .FirstOrDefault();
 
-        public ICollection<ExerciseViewModel> GetExercisesByCategory(string userName, string exerciseCategoryInput = null)
+        public async Task<IEnumerable<ExerciseViewModel>> GetExercisesByCategoryAsync(string userName, string exerciseCategoryInput, bool withPagination, int? pageIndex = null)
         {
             var result = this.exercisesRepository.All();
 
-            if (exerciseCategoryInput != null)
+            if (exerciseCategoryInput != null && exerciseCategoryInput != "All")
             {
                 if (exerciseCategoryInput == "Custom")
                 {
@@ -83,6 +84,11 @@
             else
             {
                 result = result.Where(e => e.IsCustom == false);
+            }
+
+            if (withPagination)
+            {
+                return await PaginatedList<ExerciseViewModel>.CreateAsync(result.To<ExerciseViewModel>(), pageIndex ?? GlobalConstants.PaginationDefaultPageIndex, GlobalConstants.PaginationPageSize);
             }
 
             return result.To<ExerciseViewModel>().ToList();
