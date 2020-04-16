@@ -48,11 +48,18 @@
         {
             var userName = this.User.Identity.Name;
 
-            var model = new ExerciseListingViewModel
+            var model = new ExerciseListingViewModel();
+
+            if (Enum.GetNames(typeof(MuscleGroup)).Any(ac => ac == exerciseCategory) || exerciseCategory == "All")
             {
-                Exercises = await this.exercisesService.GetExercisesByCategoryAsync(userName, exerciseCategory, true, pageIndex) as PaginatedList<ExerciseViewModel>,
-                ExerciseCategory = exerciseCategory,
-            };
+                model.Exercises = await this.exercisesService.GetExercisesByCategoryAsync(userName, exerciseCategory, true, pageIndex) as PaginatedList<ExerciseViewModel>;
+                model.ExerciseCategory = "listing=" + exerciseCategory;
+            }
+            else
+            {
+                model.Exercises = await this.exercisesService.GetExercisesByKeyWordAsync(exerciseCategory, pageIndex);
+                model.ExerciseCategory = "search=" + exerciseCategory;
+            }
 
             return this.View(model);
         }

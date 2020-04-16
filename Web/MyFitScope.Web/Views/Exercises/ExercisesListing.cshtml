@@ -9,18 +9,33 @@
 <section class="container">
     <div class="row">
         <div class="col-md-8">
-            @if (Model.ExerciseCategory == "All")
-            {
-                <h1>All Exercises</h1>
+            @{
+                var tokens = Model.ExerciseCategory.Split("=", StringSplitOptions.RemoveEmptyEntries);
+                var resultType = tokens[0];
+                var resultValue = tokens[1];
             }
-            else if (Model.ExerciseCategory == "Custom")
+
+            @if (resultType == "search")
             {
-                <h1>Your custom created Exercises</h1>
+                <h1>Results for "@resultValue":</h1>
             }
             else
             {
-                <h1>Exercises of category "@Model.ExerciseCategory"</h1>
+                @if (resultValue == "All")
+                {
+                    <h1>All Exercises</h1>
+                }
+                else if (resultValue == "Custom")
+                {
+                    <h1>Your custom created Exercises</h1>
+                }
+                else
+                {
+                    <h1>Exercises of category "@resultValue"</h1>
+                }
             }
+
+
             <div class="container row">
                 @if (Model.Exercises.Count != 0)
                 {
@@ -40,7 +55,15 @@
                 }
                 else
                 {
-                    <p>Sorry, we don't have any exercises in this category at this moment...</p>
+                    @if (resultType == "search")
+                    {
+                        <p>Sorry, No exercise found...</p>
+                    }
+                    else
+                    {
+                        <p>Sorry, we don't have any exercise for this category at the moment...</p>
+                    }
+
                 }
 
             </div>

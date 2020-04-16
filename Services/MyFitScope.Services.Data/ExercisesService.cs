@@ -74,15 +74,18 @@
             {
                 if (exerciseCategoryInput == "Custom")
                 {
+                    // select only custom exercises for loggedIn User
                     result = result.Where(e => e.CreatorName == userName);
                 }
                 else
                 {
+                    // select exercises by chosen category
                     result = result.Where(e => e.MuscleGroup == (MuscleGroup)Enum.Parse(typeof(MuscleGroup), exerciseCategoryInput) && e.IsCustom == false);
                 }
             }
             else
             {
+                // select all exercises wich are not custom created
                 result = result.Where(e => e.IsCustom == false);
             }
 
@@ -92,6 +95,14 @@
             }
 
             return result.To<ExerciseViewModel>().ToList();
+        }
+
+        public async Task<PaginatedList<ExerciseViewModel>> GetExercisesByKeyWordAsync(string keyWord, int? pageIndex)
+        {
+            var result = this.exercisesRepository.All()
+                             .Where(e => e.Name.Contains(keyWord));
+
+            return await PaginatedList<ExerciseViewModel>.CreateAsync(result.To<ExerciseViewModel>(), pageIndex ?? GlobalConstants.PaginationDefaultPageIndex, GlobalConstants.PaginationPageSize);
         }
     }
 }
