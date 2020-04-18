@@ -5,6 +5,7 @@
     using System.Linq;
     using System.Threading.Tasks;
 
+    using Microsoft.AspNetCore.Http;
     using MyFitScope.Common;
     using MyFitScope.Data.Common.Repositories;
     using MyFitScope.Data.Models.BlogModels;
@@ -16,19 +17,23 @@
     public class ArticlesService : IArticlesService
     {
         private readonly IDeletableEntityRepository<Article> articlesRepository;
+        private readonly ICloudinaryService cloudinaryService;
 
-        public ArticlesService(IDeletableEntityRepository<Article> articlesRepository)
+        public ArticlesService(IDeletableEntityRepository<Article> articlesRepository, ICloudinaryService cloudinaryService)
         {
             this.articlesRepository = articlesRepository;
+            this.cloudinaryService = cloudinaryService;
         }
 
-        public async Task<string> CreateArticle(string articleTitle, ArticleCategory articleCategory, string articleImageUrl, string articleContent, string userId)
+        public async Task<string> CreateArticle(string articleTitle, ArticleCategory articleCategory, string articleContent, string userId, IFormFile photo)
         {
+            var photoUrl = await this.cloudinaryService.UploadPhotoAsync(photo, articleTitle.Replace(" ", "_") + "_image", GlobalConstants.CloudArticlesImageFolder);
+
             var article = new Article
             {
                 Title = articleTitle,
                 ArticleCategory = articleCategory,
-                ImageUrl = articleImageUrl,
+                ImageUrl = photoUrl,
                 Content = articleContent,
                 UserId = userId,
             };

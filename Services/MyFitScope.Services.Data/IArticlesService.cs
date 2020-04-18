@@ -1,15 +1,15 @@
 ﻿namespace MyFitScope.Services.Data
 {
-    using System.Collections.Generic;
     using System.Threading.Tasks;
 
+    using Microsoft.AspNetCore.Http;
     using MyFitScope.Data.Models.BlogModels.Enums;
     using MyFitScope.Web.Infrastructure;
     using MyFitScope.Web.ViewModels.Articles;
 
     public interface IArticlesService
     {
-        Task<string> CreateArticle(string articleTitle, ArticleCategory articleCategory, string articleImageUrl, string articleContent, string userId);
+        Task<string> CreateArticle(string articleTitle, ArticleCategory articleCategory, string articleContent, string userId, IFormFile photo);
 
         Task<PaginatedList<ArticleViewModel>> GetArticlesByCategoryAsync(string articleCategory, int? pageIndex);
 

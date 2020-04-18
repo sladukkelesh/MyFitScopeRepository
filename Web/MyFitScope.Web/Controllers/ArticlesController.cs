@@ -61,7 +61,7 @@
         public async Task<IActionResult> CreateArticle(CreateArticleInputViewModel input)
         {
             var userId = this.userManager.GetUserId(this.User);
-            var articleId = await this.articlesService.CreateArticle(input.ArticleTitle, input.ArticleCategory, input.ArticleImageUrl, input.ArticleContent, userId);
+            var articleId = await this.articlesService.CreateArticle(input.ArticleTitle, input.ArticleCategory, input.ArticleContent, userId, input.ArticleImage);
 
             return this.RedirectToAction(nameof(this.Details), new { articleId });
         }
@@ -70,7 +70,7 @@
         {
             await this.articlesService.DeleteArticleAsync(articleId);
 
-            return this.RedirectToAction("ArticlesListing");
+            return this.RedirectToAction("ArticlesListing", new { articleCategory = "All" });
         }
 
         [Authorize(Roles="Admin")]

@@ -25,5 +25,7 @@
         public const int PaginationPageSize = 5;
 
         public const int PaginationDefaultPageIndex = 1;
+
+        public const string CloudArticlesImageFolder = "articles_photos";
     }
 }

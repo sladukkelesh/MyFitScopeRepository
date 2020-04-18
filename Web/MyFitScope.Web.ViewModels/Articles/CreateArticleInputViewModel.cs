@@ -2,6 +2,7 @@
 {
     using System.ComponentModel.DataAnnotations;
 
+    using Microsoft.AspNetCore.Http;
     using MyFitScope.Data.Models.BlogModels.Enums;
 
     public class CreateArticleInputViewModel
@@ -15,11 +16,12 @@
         public ArticleCategory ArticleCategory { get; set; }
 
         [Required]
-        public string ArticleImageUrl { get; set; }
-
-        [Required]
         [MaxLength(20000)]
         [MinLength(3)]
         public string ArticleContent { get; set; }
+
+        [Required]
+        [Display(Name = "Profile Picture")]
+        public IFormFile ArticleImage { get; set; }
     }
 }
