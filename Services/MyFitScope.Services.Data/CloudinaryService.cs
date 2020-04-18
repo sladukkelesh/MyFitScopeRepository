@@ -7,6 +7,7 @@
     using CloudinaryDotNet.Actions;
 
     using Microsoft.AspNetCore.Http;
+    using MyFitScope.Web.ViewModels.Cloudinary;
 
     public class CloudinaryService : ICloudinaryService
     {
@@ -17,7 +18,7 @@
             this.cloudinaryUtility = cloudinaryUtility;
         }
 
-        public async Task<string> UploadPhotoAsync(IFormFile file, string fileName, string folder)
+        public async Task<CloudinaryResultModel> UploadPhotoAsync(IFormFile file, string fileName, string folder)
         {
             byte[] destinationData;
 
@@ -40,7 +41,18 @@
                 uploadResult = this.cloudinaryUtility.Upload(uploadParams);
             }
 
-            return uploadResult?.SecureUri.AbsoluteUri;
+            return new CloudinaryResultModel
+            {
+                PublicId = uploadResult?.PublicId,
+                PhotoUrl = uploadResult?.SecureUri.AbsoluteUri,
+            };
+        }
+
+        public void DeletePhoto(string publicId)
+        {
+            var deletionParams = new DeletionParams(publicId);
+
+            this.cloudinaryUtility.Destroy(deletionParams);
         }
     }
 }

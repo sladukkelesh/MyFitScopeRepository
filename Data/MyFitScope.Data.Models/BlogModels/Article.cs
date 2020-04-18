@@ -26,6 +26,8 @@
 
         public string ImageUrl { get; set; }
 
+        public string ImagePublicId { get; set; }
+
         public ICollection<Comment> Comments { get; set; }
     }
 }

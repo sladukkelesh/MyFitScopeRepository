@@ -27,13 +27,14 @@
 
         public async Task<string> CreateArticle(string articleTitle, ArticleCategory articleCategory, string articleContent, string userId, IFormFile photo)
         {
-            var photoUrl = await this.cloudinaryService.UploadPhotoAsync(photo, articleTitle.Replace(" ", "_") + "_image", GlobalConstants.CloudArticlesImageFolder);
+            var uploadPhotoResponse = await this.cloudinaryService.UploadPhotoAsync(photo, articleTitle.Replace(" ", "_") + "_image", GlobalConstants.CloudArticlesImageFolder);
 
             var article = new Article
             {
                 Title = articleTitle,
                 ArticleCategory = articleCategory,
-                ImageUrl = photoUrl,
+                ImagePublicId = uploadPhotoResponse.PublicId,
+                ImageUrl = uploadPhotoResponse.PhotoUrl,
                 Content = articleContent,
                 UserId = userId,
             };

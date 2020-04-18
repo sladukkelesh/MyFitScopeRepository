@@ -3,9 +3,12 @@
     using System.Threading.Tasks;
 
     using Microsoft.AspNetCore.Http;
+    using MyFitScope.Web.ViewModels.Cloudinary;
 
     public interface ICloudinaryService
     {
-        Task<string> UploadPhotoAsync(IFormFile file, string fileName, string folder);
+        Task<CloudinaryResultModel> UploadPhotoAsync(IFormFile file, string fileName, string folder);
+
+        void DeletePhoto(string publicId);
     }
 }
