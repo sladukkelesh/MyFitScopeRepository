@@ -27,5 +27,7 @@
         public const int PaginationDefaultPageIndex = 1;
 
         public const string CloudArticlesImageFolder = "articles_photos";
+
+        public const string CloudUsersImageFolder = "users_photos";
     }
 }

@@ -1,18 +1,34 @@
 ﻿namespace MyFitScope.Web.Controllers
 {
     using System.Diagnostics;
-
+    using System.Threading.Tasks;
+    using Microsoft.AspNetCore.Identity;
     using Microsoft.AspNetCore.Mvc;
-
+    using MyFitScope.Data.Models;
     using MyFitScope.Web.ViewModels;
+    using MyFitScope.Web.ViewModels.Users;
 
     public class HomeController : BaseController
     {
-        public IActionResult Index()
+        private readonly UserManager<ApplicationUser> userManager;
+
+        public HomeController(UserManager<ApplicationUser> userManager)
+        {
+            this.userManager = userManager;
+        }
+
+        public async Task<IActionResult> Index()
         {
             if (this.User.Identity.IsAuthenticated)
             {
-                return this.View("LoggedInIndexPage");
+                var loggedInUser = await this.userManager.FindByIdAsync(this.userManager.GetUserId(this.User));
+
+                var model = new UserLoggedInIndexPageViewModel
+                {
+                    AvatarImageUrl = loggedInUser.AvatarImageUrl,
+                };
+
+                return this.View("LoggedInIndexPage", model);
             }
 
             return this.View();

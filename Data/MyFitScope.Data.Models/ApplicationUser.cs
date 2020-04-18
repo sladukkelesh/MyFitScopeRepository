@@ -4,9 +4,8 @@ namespace MyFitScope.Data.Models
     using System;
     using System.Collections.Generic;
 
-    using MyFitScope.Data.Common.Models;
-
     using Microsoft.AspNetCore.Identity;
+    using MyFitScope.Data.Common.Models;
     using MyFitScope.Data.Models.FitnessModels;
 
     public class ApplicationUser : IdentityUser, IAuditInfo, IDeletableEntity
@@ -23,6 +22,10 @@ namespace MyFitScope.Data.Models
         public DateTime CreatedOn { get; set; }
 
         public DateTime? ModifiedOn { get; set; }
+
+        public string AvatarImageUrl { get; set; }
+
+        public string AvatarImagePublicId { get; set; }
 
         // Deletable entity
         public bool IsDeleted { get; set; }
