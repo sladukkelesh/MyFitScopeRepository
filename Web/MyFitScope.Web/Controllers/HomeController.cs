@@ -21,14 +21,16 @@
         {
             if (this.User.Identity.IsAuthenticated)
             {
-                var loggedInUser = await this.userManager.FindByIdAsync(this.userManager.GetUserId(this.User));
+                //var loggedInUser = await this.userManager.FindByIdAsync(this.userManager.GetUserId(this.User));
 
-                var model = new UserLoggedInIndexPageViewModel
-                {
-                    AvatarImageUrl = loggedInUser.AvatarImageUrl,
-                };
+                //var model = new UserLoggedInIndexPageViewModel
+                //{
+                //    AvatarImageUrl = loggedInUser.AvatarImageUrl,
+                //};
 
-                return this.View("LoggedInIndexPage", model);
+                //return this.View("LoggedInIndexPage", model);
+
+                return this.View("LoggedInIndexPage");
             }
 
             return this.View();

@@ -13,6 +13,10 @@
             this.CreatedOn = DateTime.UtcNow;
         }
 
+        public string UserId { get; set; }
+
+        public virtual ApplicationUser User { get; set; }
+
         [Required]
         public double Weight { get; set; }
 

@@ -6,7 +6,6 @@
     using Microsoft.AspNetCore.Builder;
     using Microsoft.AspNetCore.Hosting;
     using Microsoft.AspNetCore.Http;
-    using Microsoft.AspNetCore.Identity;
     using Microsoft.AspNetCore.Mvc;
     using Microsoft.EntityFrameworkCore;
     using Microsoft.Extensions.Configuration;
@@ -94,6 +93,7 @@
             services.AddTransient<IWorkoutDaysService, WorkoutDaysService>();
             services.AddTransient<IWorkoutDaysExercisesService, WorkoutDaysExercisesService>();
             services.AddTransient<IProgressesService, ProgressesService>();
+            services.AddTransient<IProgressImagesService, ProgressImagesService>();
 
             // Administration services
             services.AddTransient<IAdministrationService, AdministrationService>();

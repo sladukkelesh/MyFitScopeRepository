@@ -1,53 +1,72 @@
-﻿@using MyFitScope.Web.ViewModels.Users
-@model UserLoggedInIndexPageViewModel
+﻿@using MyFitScope.Data.Models
+@using Microsoft.AspNetCore.Identity
+@inject UserManager<ApplicationUser> UserManager
 @{
     this.Layout = "_Layout";
 }
 
 
 <div class="container">
-    <main role="main" class="pb-3">
-        <div>
-            <div class="row">
-                <div class="col-md-3">
-                    <ul class="nav nav-pills flex-column">
-                        <!--add class "active" to select a link-->
-                        <li>
-                            @if (Model.AvatarImageUrl != null)
-                            {
-                                <img src="@Model.AvatarImageUrl" width="100" alt="avatar photo" />
-                            }
-                            else
-                            {
-                                <img src="https://capenetworks.com/static/images/testimonials/user-icon.svg" width="100" alt="default user photo" />
-                            }
+    <div class="d-flex row" id="wrapper">
+        <!-- Sidebar -->
+        <div class="border-right" id="sidebar-wrapper">
+            <div class="card" style="width: 13rem;">
+                @{
+                    var loggedInUser = await UserManager.GetUserAsync(User);
+                }
 
-                            <form method="post" asp-controller="Users" asp-action="AddAvatarPhoto" enctype="multipart/form-data">
-                                <div class="form-group">
-                                    <label for="avatarInputForm" class="upload-btn">
-                                        <i class="fa fa-upload"></i> Upload
-                                        <input id="avatarInputForm" type="file" name="Photo" class="form-control" />
-                                    </label>
-                                    <div class="margin-top-0"></div>
-                                    <span id="file-selected"></span>
-                                </div>
-                                <button type="submit" class="btn btn-primary">Submit</button>
-                            </form>
-                        </li>
-                        <li class="nav-item"><a class="nav-link" id="curent-workout" asp-controller="Workouts" asp-action="CurrentWorkout">Current Workout</a></li>
-                        <li class="nav-item"><a class="nav-link" id="progress" asp-controller="Progresses" asp-action="Statistics">Progress</a></li>
-                        <li class="nav-item"><a class="nav-link" id="create-exercise" asp-controller="Exercises" asp-action="CreateExercise">Create Exercise</a></li>
-                        <li class="nav-item"><a class="nav-link" id="create-workout" asp-controller="Workouts" asp-action="AddWorkout">Create Workout</a></li>
-                    </ul>
+                @if (loggedInUser.AvatarImageUrl != null)
+                {
+                    <img src="@loggedInUser.AvatarImageUrl" class="card-img-top" alt="Card image cap">
+                }
+                else
+                {
+                    <img src="https://capenetworks.com/static/images/testimonials/user-icon.svg" class="card-img-top" alt="default user photo" />
+                }
+                <div class="card-body bg-dark">
+                    <button class="btn btn-info btn-sm btn-block" onclick="ToggleAddWorkoutDayInputForm('#uploadAvatarPhotoForm')">Change Photo</button>
                 </div>
-                <div class="col-md-9">
-
-                    @this.RenderBody()
-
+                <div id="uploadAvatarPhotoForm" class="card-body">
+                    <form method="post" asp-controller="Users" asp-action="AddAvatarPhoto" enctype="multipart/form-data">
+                        <div class="form-group">
+                            <label for="avatarInputForm" class="upload-btn">
+                                <i class="fa fa-upload"></i> Upload
+                                <input id="avatarInputForm" type="file" name="Photo" class="form-control" />
+                            </label>
+                            <div class="margin-top-0"></div>
+                            <span id="file-selected"></span>
+                        </div>
+                        <button type="submit" class="btn btn-primary">Submit</button>
+                    </form>
+                </div>
+            </div>
+            <div class="list-group list-group-flush">
+                <div class="list-group list-group-flush">
+                    <a id="curent-workout" class="list-group-item list-group-item-action text-light bg-dark" asp-controller="Workouts" asp-action="CurrentWorkout"><i class="fa fa-fw fa-dumbbell mr-1"></i>  Current Workout</a>
+                    <a id="progress" class="list-group-item list-group-item-action text-light bg-dark" asp-controller="Progresses" asp-action="Statistics"><i class="fas fa-tasks mr-1"></i> Progress Statistics</a>
+                    <a id="progress" class="list-group-item list-group-item-action text-light bg-dark" asp-controller="ProgressImages" asp-action="ProgressImagesListing"><i class="fas fa-camera mr-1"></i> Progress Images</a>
+                    <a id="create-exercise" class="list-group-item list-group-item-action text-light bg-dark" asp-controller="Exercises" asp-action="CreateExercise"><i class="fas fa-tools mr-1"></i> Create Exercise</a>
+                    <a id="create-workout" class="list-group-item list-group-item-action text-light bg-dark" asp-controller="Workouts" asp-action="AddWorkout"><i class="fas fa-tools mr-1"></i> Create Workout</a>
                 </div>
             </div>
         </div>
-    </main>
+        <!-- /#sidebar-wrapper -->
+
+        <!-- Page Content -->
+        <div id="page-content-wrapper" class="pl-lg-4 col-md-9">
+            @this.RenderBody()
+        </div>
+        <!-- /#page-content-wrapper -->
+
+    </div>
 </div>
 
 @this.RenderSection("Scripts", required: false)
+@section Scripts{ 
+    <script>
+        $("#menu-toggle").click(function (e) {
+            e.preventDefault();
+            $("#wrapper").toggleClass("toggled");
+        });
+    </script>
+}

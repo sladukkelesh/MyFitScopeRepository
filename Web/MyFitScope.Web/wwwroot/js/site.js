@@ -7,3 +7,7 @@ function ConfirmDelete(confirmMessage) {
         event.preventDefault();
     }
 }
+
+function ToggleAddWorkoutDayInputForm(toggleElement) {
+    $(toggleElement).toggle();
+}

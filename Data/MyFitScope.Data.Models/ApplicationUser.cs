@@ -3,6 +3,8 @@ namespace MyFitScope.Data.Models
 {
     using System;
     using System.Collections.Generic;
+    using System.Security.Claims;
+    using System.Threading.Tasks;
 
     using Microsoft.AspNetCore.Identity;
     using MyFitScope.Data.Common.Models;
@@ -16,6 +18,8 @@ namespace MyFitScope.Data.Models
             this.Roles = new HashSet<IdentityUserRole<string>>();
             this.Claims = new HashSet<IdentityUserClaim<string>>();
             this.Logins = new HashSet<IdentityUserLogin<string>>();
+            this.Progresses = new HashSet<Progress>();
+            this.ProgressImages = new HashSet<ProgressImage>();
         }
 
         // Audit info
@@ -41,5 +45,9 @@ namespace MyFitScope.Data.Models
         public virtual ICollection<IdentityUserClaim<string>> Claims { get; set; }
 
         public virtual ICollection<IdentityUserLogin<string>> Logins { get; set; }
+
+        public virtual ICollection<Progress> Progresses { get; set; }
+
+        public virtual ICollection<ProgressImage> ProgressImages { get; set; }
     }
 }

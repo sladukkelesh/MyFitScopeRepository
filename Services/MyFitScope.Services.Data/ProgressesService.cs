@@ -5,10 +5,13 @@
     using System.Linq;
     using System.Threading.Tasks;
 
+    using Microsoft.AspNetCore.Http;
+    using MyFitScope.Common;
     using MyFitScope.Data.Common.Repositories;
     using MyFitScope.Data.Models.FitnessModels;
     using MyFitScope.Services.Mapping;
     using MyFitScope.Web.ViewModels.Progresses;
+    using shortid;
 
     public class ProgressesService : IProgressesService
     {
@@ -19,10 +22,11 @@
             this.progressesRepository = progressesRepository;
         }
 
-        public async Task CreateStatisticAsync(double weight, double? biceps = null, double? chest = null, double? stomach = null, double? hips = null, double? thigh = null, double? calf = null)
+        public async Task CreateStatisticAsync(string userId, double weight, double? biceps = null, double? chest = null, double? stomach = null, double? hips = null, double? thigh = null, double? calf = null)
         {
             var statistic = new Progress
             {
+                UserId = userId,
                 Weight = weight,
                 Biceps = biceps,
                 Chest = chest,

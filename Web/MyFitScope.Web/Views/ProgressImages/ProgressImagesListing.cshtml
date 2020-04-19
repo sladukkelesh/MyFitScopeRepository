@@ -1,0 +1,38 @@
+﻿@using MyFitScope.Web.ViewModels.ProgressImages
+@model ProgressImagesListingViewModel
+@{
+    this.ViewData["Title"] = "User Statistics";
+    this.Layout = "_LoggedInLayout";
+}
+
+<div>
+    <p1>Upload Image</p1>
+    <form method="post" class="form-group" asp-controller="ProgressImages" asp-action="AddProgressImage" enctype="multipart/form-data">
+        <div class="form-group">
+            <label for="ProgressImageInputForm" class="upload-btn">
+                <i class="fa fa-upload"></i> Upload
+                <input id="ProgressImageInputForm" type="file" name="ProgressImage" class="form-control" />
+            </label>
+            <div class="margin-top-0"></div>
+            <span id="file-selected"></span>
+        </div>
+        <button type="submit" class="btn btn-primary">Submit</button>
+    </form>
+</div>
+
+<hr />
+
+<h1>Your images are here</h1>
+
+<hr />
+
+<div>
+    @if(Model.Images.Count() != 0)
+    {
+        @for (var i = 0; i < Model.Images.Count; i++)
+        {
+            <img src="@Model.Images[i].Url" alt="progress image"/>
+        }
+    }
+</div>
+

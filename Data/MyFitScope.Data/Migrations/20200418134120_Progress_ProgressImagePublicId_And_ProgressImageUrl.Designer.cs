@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using MyFitScope.Data;
 
 namespace MyFitScope.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20200418134120_Progress_ProgressImagePublicId_And_ProgressImageUrl")]
+    partial class Progress_ProgressImagePublicId_And_ProgressImageUrl
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -463,6 +465,12 @@ namespace MyFitScope.Data.Migrations
                     b.Property<DateTime?>("ModifiedOn")
                         .HasColumnType("datetime2");
 
+                    b.Property<string>("ProgressImagePublicId")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("ProgressImageUrl")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<double?>("Stomach")
                         .HasColumnType("float");
 
@@ -482,41 +490,6 @@ namespace MyFitScope.Data.Migrations
                     b.HasIndex("UserId");
 
                     b.ToTable("Progresses");
-                });
-
-            modelBuilder.Entity("MyFitScope.Data.Models.FitnessModels.ProgressImage", b =>
-                {
-                    b.Property<string>("Id")
-                        .HasColumnType("nvarchar(450)");
-
-                    b.Property<DateTime>("CreatedOn")
-                        .HasColumnType("datetime2");
-
-                    b.Property<DateTime?>("DeletedOn")
-                        .HasColumnType("datetime2");
-
-                    b.Property<bool>("IsDeleted")
-                        .HasColumnType("bit");
-
-                    b.Property<DateTime?>("ModifiedOn")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("PublidId")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Url")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("UserId")
-                        .HasColumnType("nvarchar(450)");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("IsDeleted");
-
-                    b.HasIndex("UserId");
-
-                    b.ToTable("ProgressImages");
                 });
 
             modelBuilder.Entity("MyFitScope.Data.Models.FitnessModels.Workout", b =>
@@ -787,13 +760,6 @@ namespace MyFitScope.Data.Migrations
                 {
                     b.HasOne("MyFitScope.Data.Models.ApplicationUser", "User")
                         .WithMany("Progresses")
-                        .HasForeignKey("UserId");
-                });
-
-            modelBuilder.Entity("MyFitScope.Data.Models.FitnessModels.ProgressImage", b =>
-                {
-                    b.HasOne("MyFitScope.Data.Models.ApplicationUser", "User")
-                        .WithMany("ProgressImages")
                         .HasForeignKey("UserId");
                 });
 

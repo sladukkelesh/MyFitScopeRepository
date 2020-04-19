@@ -2,34 +2,42 @@
 @using MyFitScope.Web.ViewModels
 @model ResponseViewModel
 
-<div class="media mt-4">
-    <img class="d-flex mr-3 rounded-circle" src="http://placehold.it/50x50" alt="">
-    <div class="media-body">
-        <h5 class="mt-0">@Model.UserUserName</h5>
-        @Model.Content
-
-        <!-- Voting Section-->
-    <ul class="list-inline d-sm-flex my-0 parent-vote-element">
-        <li class="list-inline-item g-mr-20">
-            <a class="u-link-v5 g-color-gray-dark-v4 g-color-primary--hover" onclick="SendVote('Response', '@Model.Id', true)" href="#!">
-                <i class="fa fa-thumbs-up g-pos-rel g-top-1 g-mr-3"></i>
-                <span class="vote-span">@Model.UpVotes</span>
-            </a>
-        </li>
-        <li class="list-inline-item g-mr-20">
-            <a class="u-link-v5 g-color-gray-dark-v4 g-color-primary--hover" onclick="SendVote('Response', '@Model.Id', false)" href="#!">
-                <i class="fa fa-thumbs-down g-pos-rel g-top-1 g-mr-3"></i>
-                <span class="vote-span">@Model.DownVotes</span>
-            </a>
-        </li>
-        @if (this.User.IsInRole("Admin"))
+    <div class="media mt-4">
+        @if (Model.UserAvatarImageUrl != null)
         {
-            <li class="list-inline-item ml-auto">
-                <a class="btn btn-sm btn-danger ml-lg-5" asp-controller="Responses" asp-action="DeleteResponse" asp-route-responseId="@Model.Id" asp-route-articleId="@Model.ArticleId" onclick="ConfirmDelete('@string.Format(GlobalConstants.ResponseConfirmDeleteMessage, Model.UserUserName)')">Delete</a>
-            </li>
+            <img class="d-flex mr-3 rounded-circle" width="50" height="50" src="@Model.UserAvatarImageUrl" alt="user avatar">
+        }
+        else
+        {
+            <img class="d-flex mr-3 rounded-circle" src="http://placehold.it/50x50" alt="default avatar">
         }
 
-    </ul>
-    </div>      
-</div>
+        <div class="media-body">
+            <h5 class="mt-0">@Model.UserUserName</h5>
+            @Model.Content
+
+            <!-- Voting Section-->
+            <ul class="list-inline d-sm-flex my-0 parent-vote-element">
+                <li class="list-inline-item g-mr-20">
+                    <a class="u-link-v5 g-color-gray-dark-v4 g-color-primary--hover" onclick="SendVote('Response', '@Model.Id', true)" href="#!">
+                        <i class="fa fa-thumbs-up g-pos-rel g-top-1 g-mr-3"></i>
+                        <span class="vote-span">@Model.UpVotes</span>
+                    </a>
+                </li>
+                <li class="list-inline-item g-mr-20">
+                    <a class="u-link-v5 g-color-gray-dark-v4 g-color-primary--hover" onclick="SendVote('Response', '@Model.Id', false)" href="#!">
+                        <i class="fa fa-thumbs-down g-pos-rel g-top-1 g-mr-3"></i>
+                        <span class="vote-span">@Model.DownVotes</span>
+                    </a>
+                </li>
+                @if (this.User.IsInRole("Admin"))
+                {
+                    <li class="list-inline-item ml-auto">
+                        <a class="btn btn-sm btn-danger ml-lg-5" asp-controller="Responses" asp-action="DeleteResponse" asp-route-responseId="@Model.Id" asp-route-articleId="@Model.ArticleId" onclick="ConfirmDelete('@string.Format(GlobalConstants.ResponseConfirmDeleteMessage, Model.UserUserName)')">Delete</a>
+                    </li>
+                }
+
+            </ul>
+        </div>
+    </div>
 

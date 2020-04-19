@@ -19,9 +19,9 @@
 </head>
 <body>
     <header>
-        <nav class="navbar navbar-expand-sm navbar-light bg-white border-bottom box-shadow mb-3">
+        <nav class="navbar navbar-expand-sm navbar-light bg-dark border-bottom box-shadow mb-3">
             <div class="container">
-                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">@GlobalConstants.SystemName</a>
+                <a class="navbar-brand text-light" asp-area="" asp-controller="Home" asp-action="Index"><span>@GlobalConstants.BrandPrefix</span><span id="brandMainPart">@GlobalConstants.BrandMainFix</span><span>@GlobalConstants.BrandPostFix</span></a>
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse" aria-controls="navbarSupportedContent"
                         aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
@@ -30,12 +30,11 @@
                     <partial name="_LoginPartial" />
                     <ul class="navbar-nav flex-grow-1">
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
+                            <a class="nav-link text-light" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
                         </li>
                         <li class="nav-item dropdown">
-                            <button class="btn dropdown-toggle" type="button" data-toggle="dropdown">
+                            <button class="btn dropdown-toggle text-light" type="button" data-toggle="dropdown">
                                 Workouts
-                                <span class="caret"></span>
                             </button>
                             <ul class="dropdown-menu">
 
@@ -43,14 +42,13 @@
 
                                 <li class="dropdown-divider"></li>
                                 <li class="nav-item">
-                                    <a class="nav-link text-dark" asp-area="" asp-controller="Workouts" asp-action="WorkoutsListing">All</a>
+                                    <a class="nav-link text-light" asp-area="" asp-controller="Workouts" asp-action="WorkoutsListing">All</a>
                                 </li>
                             </ul>
                         </li>
                         <li class="nav-item dropdown">
-                            <button class="btn dropdown-toggle" type="button" data-toggle="dropdown">
-                                Exercises
-                                <span class="caret"></span>
+                            <button class="btn dropdown-toggle text-light" type="button" data-toggle="dropdown">                               
+                                <span class="caret">Exercises</span>
                             </button>
                             <ul class="dropdown-menu">
 
@@ -58,16 +56,15 @@
 
                                 <li class="dropdown-divider"></li>
                                 <li class="nav-item">
-                                    <a class="nav-link text-dark" asp-area="" asp-controller="Exercises" asp-action="ExercisesListing" asp-route-exerciseCategory="All">All</a>
+                                    <a class="nav-link text-light" asp-area="" asp-controller="Exercises" asp-action="ExercisesListing" asp-route-exerciseCategory="All">All</a>
                                 </li>
 
                             </ul>
                         </li>
 
                         <li class="nav-item dropdown">
-                            <button class="btn dropdown-toggle" type="button" data-toggle="dropdown">
-                                Blog
-                                <span class="caret"></span>
+                            <button class="btn dropdown-toggle text-light" type="button" data-toggle="dropdown">                             
+                                <span class="caret">Blog</span>
                             </button>
                             <ul class="dropdown-menu">
                                 <li class="nav-item">
@@ -88,9 +85,8 @@
                         @if (this.User.IsInRole("Admin"))
                         {
                             <li class="nav-item dropdown">
-                                <button class="btn dropdown-toggle" type="button" data-toggle="dropdown">
-                                    Administration
-                                    <span class="caret"></span>
+                                <button class="btn dropdown-toggle text-light" type="button" data-toggle="dropdown">                                 
+                                    <span class="caret">Administration</span>
                                 </button>
                                 <ul class="dropdown-menu">
                                     <li class="nav-item">
@@ -115,7 +111,7 @@
         </main>
     </div>
 
-    <footer class="border-top footer text-muted">
+    <footer class="border-top footer text-light bg-dark">
         <div class="container">
             &copy; @DateTime.Now.Year - @GlobalConstants.SystemName - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
         </div>

@@ -4,6 +4,12 @@
     {
         public const string SystemName = "MyFitScope";
 
+        public const string BrandPrefix = "My";
+
+        public const string BrandMainFix = "Fit";
+
+        public const string BrandPostFix = "Scope";
+
         public const string AdministratorRoleName = "Administrator";
 
         public const string ArticleCategoryTypeName = "MyFitScope.Data.Models.BlogModels.Enums.ArticleCategory";
@@ -29,5 +35,7 @@
         public const string CloudArticlesImageFolder = "articles_photos";
 
         public const string CloudUsersImageFolder = "users_photos";
+
+        public const string CloudProgressImageFolder = "progress_photos";
     }
 }

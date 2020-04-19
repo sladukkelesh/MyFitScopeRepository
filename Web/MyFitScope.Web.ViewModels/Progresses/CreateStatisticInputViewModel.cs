@@ -2,6 +2,8 @@
 {
     using System.ComponentModel.DataAnnotations;
 
+    using Microsoft.AspNetCore.Http;
+
     public class CreateStatisticInputViewModel
     {
         [Required]
@@ -18,5 +20,7 @@
         public double? Thigh { get; set; }
 
         public double? Calf { get; set; }
+
+        public IFormFile ProgressPhoto { get; set; }
     }
 }

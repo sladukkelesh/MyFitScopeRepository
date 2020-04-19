@@ -48,7 +48,7 @@
 @if (this.User.Identity.IsAuthenticated)
 {
     <div class="card my-4">
-        <h5 class="card-header">Leave a Comment:</h5>
+        <h5 class="card-header bg-dark text-light">Leave a Comment:</h5>
         <div class="card-body">
             <form id="commentInputForm" method="post" asp-controller="Comments" asp-action="AddComment">
                 <input type="hidden" name="articleId" value="@Model.Id" />

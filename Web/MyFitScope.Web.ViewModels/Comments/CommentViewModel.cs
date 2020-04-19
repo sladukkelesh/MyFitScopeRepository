@@ -13,6 +13,8 @@
     {
         public string Id { get; set; }
 
+        public string UserAvatarImageUrl { get; set; }
+
         public string ArticleId { get; set; }
 
         public string UserUserName { get; set; }
