@@ -6,11 +6,17 @@
 }
 
 <section>
-    <article>
-        <header>
-            <h1>Edit Workout Day</h1>
+    <article class="bg-light p-4 rcorners">
+        <header class="text-center">
+            <h1>Edit Workout Day - @Model.WeekDayTitle</h1>
         </header>
         <div>
+            @if (Html.ValidationSummary(false) != null)
+            {
+                <div class="alert alert-danger" role="alert">
+                    @Html.ValidationSummary(false)
+                </div>
+            }
 
             @if (Model.Exercises.Count == 0)
             {
@@ -46,11 +52,12 @@
                         }
                     </tbody>
                 </table>
-            }        
-            
-            <div id="exerciseManager" class="exercise-menu-main-div">
-                <h3 class="text-center">Exercise Manager</h3>
-                <hr />
+            }
+
+            <div id="exerciseManager" class="bg-secondary exercise-menu-main-div">
+                <div class="bg-dark">
+                    <h3 class="text-center text-white pb-2 pt-1">Exercise Manager</h3>
+                </div>
                 <div class="row">
                     <div class="col-4">
                         <div class="list-group" id="list-tab" role="tablist">
@@ -62,7 +69,7 @@
                         </div>
                     </div>
                 </div>
-            </div>           
+            </div>
         </div>
     </article>
 </section>
@@ -126,30 +133,47 @@
 
                     parentDivElement.innerHTML = "";
 
-                    let child = document.createElement("UL");
+                    if (data.length != 0) {
+                        let child = document.createElement("UL");
 
-                    child.classList.add("tab-pane");
-                    child.classList.add("fade");
-                    child.classList.add("show");
-                    child.classList.add("active");
+                        child.style.listStyleType = "none";
+                        child.style.paddingTop = "10px";
+                        child.style.paddingBottom = "10px";
+                        child.classList.add("bg-white");
+                        child.classList.add("tab-pane");
+                        child.classList.add("fade");
+                        child.classList.add("show");
+                        child.classList.add("active");
 
-                    child.setAttribute("id", "list-" + attributeValue);
-                    child.setAttribute("role", "tabpanel");
-                    child.setAttribute("aria-labelledby", "list-" + attributeValue + "-list");
+                        child.setAttribute("id", "list-" + attributeValue);
+                        child.setAttribute("role", "tabpanel");
+                        child.setAttribute("aria-labelledby", "list-" + attributeValue + "-list");
 
-                    for (let i = 0; i < data.length; i++) {
-                        let innerChild = document.createElement("LI");
-                        let anchorElement = document.createElement("A");
+                        for (let i = 0; i < data.length; i++) {
+                            let innerChild = document.createElement("LI");
+                            innerChild.style.margin = "10px";
+                            let anchorElement = document.createElement("A");
 
-                        anchorElement.setAttribute("href", "/WorkoutDaysExercises/AddExerciseToWorkoutDay?exerciseId=" + data[i].id + "&workoutDayId=" + "@Model.Id");
-                        anchorElement.textContent = data[i].name;
+                            anchorElement.style.textDecoration = "none";
+                            anchorElement.style.fontSize = "20px";
+                            anchorElement.setAttribute("href", "/WorkoutDaysExercises/AddExerciseToWorkoutDay?exerciseId=" + data[i].id + "&workoutDayId=" + "@Model.Id");
+                            anchorElement.textContent = data[i].name;
 
-                        innerChild.appendChild(anchorElement);
+                            innerChild.appendChild(anchorElement);
 
-                        child.appendChild(innerChild);
+                            child.appendChild(innerChild);
+                        }
+
+                        parentDivElement.appendChild(child);
                     }
+                    else {
+                        let errorPElement = document.createElement("P");
 
-                    parentDivElement.appendChild(child);
+                        errorPElement.style.color = "white";
+                        errorPElement.textContent = "Sorry, no exercises in this category!";
+
+                        parentDivElement.appendChild(errorPElement);
+                    }
                 }
             });
         }

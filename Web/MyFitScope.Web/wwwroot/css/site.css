@@ -49,7 +49,8 @@ html {
 
 body {
     /* Margin bottom by footer height */
-    background-color: lightgrey;
+    background-image: url("/Images/Frozen.jpg");
+    /*background-color: lightgrey;*/
     margin-bottom: 60px;
 }
 
@@ -111,9 +112,8 @@ body {
 -------------------------------------------------- */
 
 .exercise-menu-main-div, .workoutday-radio-buttons {
-    border: 1px solid black;
-    margin: 10px 0 10px 0;
-    padding: 5px;
+    margin: 20px 0 20px 0;
+    padding: 10px;
 }
 
 .exercise-manager-menu {
@@ -126,6 +126,16 @@ body {
 -------------------------------------------------- */
 .rcorners {
     border-radius: 25px;
+}
+
+.r-top-corners {
+    border-top-left-radius: 25px;
+    border-top-right-radius: 25px;
+}
+
+.r-bottom-corners {
+    border-bottom-left-radius: 25px;
+    border-bottom-right-radius: 25px;
 }
 
 .rcornersInnerMenus {
