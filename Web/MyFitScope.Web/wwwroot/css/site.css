@@ -6,6 +6,10 @@ for details on configuring this project to bundle and minify static web assets. 
     color: olivedrab;
 }
 
+div.dropdown-menu a:hover {
+    background-color: grey;
+}
+
 a.navbar-brand {
     white-space: normal;
     text-align: center;
@@ -13,6 +17,10 @@ a.navbar-brand {
     font-size: 30px
 }
 
+a.nav-bar-title-anchor:hover, button.nav-bar-title-anchor:hover {
+    border-radius: 5px;
+    background-color: #1D2124;
+}
 /* Sticky footer styles
 -------------------------------------------------- */
 html {
@@ -50,7 +58,7 @@ html {
 body {
     /* Margin bottom by footer height */
     background-image: url("/Images/Frozen.jpg");
-    /*background-color: lightgrey;*/
+    background-repeat: no-repeat;
     margin-bottom: 60px;
 }
 
@@ -143,6 +151,6 @@ body {
 }
 
 .indent-text {
-    text-indent: 50px;
+    text-indent: 40px;
 }
 

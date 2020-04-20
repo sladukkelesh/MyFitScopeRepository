@@ -6,77 +6,72 @@
     this.ViewData["Title"] = "Articles";
 }
 
+<section>
+    <!-- Page Content -->
+    <h1 class="my-4">
+        Blog Articles
+        <small>You can find every one of our articles here.</small>
+    </h1>
 
-<!-- Page Content -->
-<h1 class="my-4">
-    Blog Articles
-    <small>You can find every one of our articles here.</small>
-</h1>
-
-@if (Model.Articles.Count() == 0)
-{
-    <h3>No results found!</h3>
-}
-else
-{
-    @foreach (var article in Model.Articles)
+    @if (Model.Articles.Count() == 0)
     {
-        <div class="media mt-3">
-            <div class="media-body">
-                <h5 class="mt-0 mb-1"><a href="Details?articleId=@article.Id">@article.Title</a></h5>
-                @article.ShortContent
-            </div>
-            <img src="@article.ImageUrl" class="ml-3 articles-listing-images" alt="@article.Title">
-        </div>
+        <h3>No articles found!</h3>
     }
-}
-
-
-<!-- Pagination -->
-<nav class="text-center">
-    <ul class="pagination justify-content-center">
-        @if (Model.Articles.HasPreviousPage)
+    else
+    {
+        @foreach (var article in Model.Articles)
         {
-            <li class="page-item">
-                <a class="page-link" asp-controller="Articles" asp-action="ArticlesListing" asp-route-articleCategory="@Model.ArticleCategory" asp-route-pageIndex="@(Model.Articles.PageIndex - 1)">Previous</a>
-            </li>
+            <div class="card mb-4 rcorners">
+                <img src="@article.ImageUrl" class="card-img-top h-25 r-top-corners" alt="@article.Title">
+                <div class="card-body bg-dark text-white">
+                    <h2 class="card-title pb-2 border-bottom border-light">@article.Title</h2>
+                    <p class="card-text indent-text">@article.ShortContent</p>
+                    <a asp-controller="Articles" asp-action="Details" asp-route-articleId="@article.Id" class="btn btn-primary">Read More &rarr;</a>
+                </div>
+                <div class="card-footer text-muted">
+                    Posted on January 1, 2017 by
+                    <a href="#">Start Bootstrap</a>
+                </div>
+            </div>
         }
-        else
-        {
-            <li class="page-item disabled">
-                <a class="page-link" href="#" tabindex="-1">Previous</a>
-            </li>
-        }
+    }
 
 
-        @for (var i = 1; i <= Model.Articles.TotalPages; i++)
-        {
-            @if (Model.Articles.PageIndex == i)
-            {
-                <li class="page-item active">
-                    <a class="page-link" asp-controller="Articles" asp-action="ArticlesListing" asp-route-articleCategory="@Model.ArticleCategory" asp-route-pageIndex="@i">@i</a>
-                </li>
-            }
-            else
+    <!-- Pagination -->
+    <nav class="text-center mt-3">
+        <ul class="pagination justify-content-center">
+            @if (Model.Articles.HasPreviousPage)
             {
                 <li class="page-item">
-                    <a class="page-link" asp-controller="Articles" asp-action="ArticlesListing" asp-route-articleCategory="@Model.ArticleCategory" asp-route-pageIndex="@i">@i</a>
+                    <a class="page-link" asp-controller="Articles" asp-action="ArticlesListing" asp-route-articleCategory="@Model.ArticleCategory" asp-route-pageIndex="@(Model.Articles.PageIndex - 1)">Previous</a>
                 </li>
             }
 
-        }
 
-        @if (Model.Articles.HasNextPage)
-        {
-            <li class="page-item">
-                <a class="page-link" asp-controller="Articles" asp-action="ArticlesListing" asp-route-articleCategory="@Model.ArticleCategory" asp-route-pageIndex="@(Model.Articles.PageIndex + 1)">Next</a>
-            </li>
-        }
-        else
-        {
-            <li class="page-item disabled">
-                <a class="page-link" href="#">Next</a>
-            </li>
-        }
-    </ul>
-</nav>
+            @for (var i = 1; i <= Model.Articles.TotalPages; i++)
+            {
+                @if (Model.Articles.PageIndex == i)
+                {
+                    <li class="page-item active">
+                        <a class="page-link" asp-controller="Articles" asp-action="ArticlesListing" asp-route-articleCategory="@Model.ArticleCategory" asp-route-pageIndex="@i">@i</a>
+                    </li>
+                }
+                else
+                {
+                    <li class="page-item">
+                        <a class="page-link" asp-controller="Articles" asp-action="ArticlesListing" asp-route-articleCategory="@Model.ArticleCategory" asp-route-pageIndex="@i">@i</a>
+                    </li>
+                }
+
+            }
+
+            @if (Model.Articles.HasNextPage)
+            {
+                <li class="page-item">
+                    <a class="page-link" asp-controller="Articles" asp-action="ArticlesListing" asp-route-articleCategory="@Model.ArticleCategory" asp-route-pageIndex="@(Model.Articles.PageIndex + 1)">Next</a>
+                </li>
+            }
+        </ul>
+    </nav>
+</section>
+

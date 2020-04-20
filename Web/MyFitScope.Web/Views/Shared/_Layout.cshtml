@@ -22,7 +22,7 @@
         <nav class="navbar navbar-expand-sm navbar-light bg-dark border-bottom box-shadow mb-3">
             <div class="container">
                 <a class="navbar-brand text-light" asp-area="" asp-controller="Home" asp-action="Index"><span>@GlobalConstants.BrandPrefix</span><span id="brandMainPart">@GlobalConstants.BrandMainFix</span><span>@GlobalConstants.BrandPostFix</span></a>
-                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse" aria-controls="navbarSupportedContent"
+                <button class="navbar-toggler bg-light" type="button" data-toggle="collapse" data-target=".navbar-collapse" aria-controls="navbarSupportedContent"
                         aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
                 </button>
@@ -30,72 +30,50 @@
                     <partial name="_LoginPartial" />
                     <ul class="navbar-nav flex-grow-1">
                         <li class="nav-item">
-                            <a class="nav-link text-light" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
+                            <a class="nav-link text-light nav-bar-title-anchor" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
                         </li>
-                        <li class="nav-item dropdown">
-                            <button class="btn dropdown-toggle text-light" type="button" data-toggle="dropdown">
-                                Workouts
-                            </button>
-                            <ul class="dropdown-menu">
 
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle text-white nav-bar-title-anchor" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Workouts</a>
+                            <div class="dropdown-menu">
                                 <vc:dropdown-links url="/Workouts/WorkoutsListing?workoutCategory=" enum-name=@GlobalConstants.WorkoutCategoryTypeName></vc:dropdown-links>
-
-                                <li class="dropdown-divider"></li>
-                                <li class="nav-item">
-                                    <a class="nav-link" asp-area="" asp-controller="Workouts" asp-action="WorkoutsListing">All</a>
-                                </li>
-                            </ul>
+                                <div class="dropdown-divider"></div>
+                                <a class="nav-link" asp-area="" asp-controller="Workouts" asp-action="WorkoutsListing">All</a>
+                            </div>
                         </li>
-                        <li class="nav-item dropdown">
-                            <button class="btn dropdown-toggle text-light" type="button" data-toggle="dropdown">                               
-                                <span class="caret">Exercises</span>
-                            </button>
-                            <ul class="dropdown-menu">
 
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle text-white nav-bar-title-anchor" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Exercises</a>
+                            <div class="dropdown-menu">
                                 <vc:dropdown-links url="/Exercises/ExercisesListing?exerciseCategory=" enum-name=@GlobalConstants.ExerciseCategoryTypeName></vc:dropdown-links>
-
-                                <li class="dropdown-divider"></li>
-                                <li class="nav-item">
-                                    <a class="nav-link" asp-area="" asp-controller="Exercises" asp-action="ExercisesListing" asp-route-exerciseCategory="All">All</a>
-                                </li>
-
-                            </ul>
+                                <div class="dropdown-divider"></div>
+                                <a class="nav-link" asp-area="" asp-controller="Exercises" asp-action="ExercisesListing" asp-route-exerciseCategory="All">All</a>
+                            </div>
                         </li>
 
                         <li class="nav-item dropdown">
-                            <button class="btn dropdown-toggle text-light" type="button" data-toggle="dropdown">                             
-                                <span class="caret">Blog</span>
-                            </button>
-                            <ul class="dropdown-menu">
-                                <li class="nav-item">
-                                    <a class="nav-link text-dark" asp-area="" asp-controller="Articles" asp-action="ArticlesListing" asp-route-articleCategory="All">All</a>
-                                </li>
-
+                            <a class="nav-link dropdown-toggle text-white nav-bar-title-anchor" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Blog</a>
+                            <div class="dropdown-menu">
                                 <vc:dropdown-links url="/Articles/ArticlesListing?articleCategory=" enum-name=@GlobalConstants.ArticleCategoryTypeName></vc:dropdown-links>
+                                <div class="dropdown-divider"></div>
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Articles" asp-action="ArticlesListing" asp-route-articleCategory="All">All</a>
 
                                 @if (this.User.IsInRole("Admin"))
                                 {
-                                    <li class="dropdown-divider"></li>
-                                    <li class="nav-item">
-                                        <a class="nav-link text-dark" asp-area="" asp-controller="Articles" asp-action="CreateArticle">Create Article</a>
-                                    </li>
+                                    <a class="nav-link text-dark" asp-area="" asp-controller="Articles" asp-action="CreateArticle">Create Article</a>
+
                                 }
-                            </ul>
+                            </div>
                         </li>
+
                         @if (this.User.IsInRole("Admin"))
                         {
                             <li class="nav-item dropdown">
-                                <button class="btn dropdown-toggle text-light" type="button" data-toggle="dropdown">                                 
-                                    <span class="caret">Administration</span>
-                                </button>
-                                <ul class="dropdown-menu">
-                                    <li class="nav-item">
-                                        <a class="nav-link text-dark" asp-area="Administration" asp-controller="Administration" asp-action="AddRole">Add Role</a>
-                                    </li>
-                                    <li class="nav-item">
-                                        <a class="nav-link text-dark" asp-area="Administration" asp-controller="Administration" asp-action="AllRoles">Roles</a>
-                                    </li>
-                                </ul>
+                                <a class="nav-link dropdown-toggle text-white nav-bar-title-anchor" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Administration</a>
+                                <div class="dropdown-menu">
+                                    <a class="nav-link text-dark" asp-area="Administration" asp-controller="Administration" asp-action="AddRole">Add Role</a>
+                                    <a class="nav-link text-dark" asp-area="Administration" asp-controller="Administration" asp-action="AllRoles">Roles</a>
+                                </div>
                             </li>
                         }
                     </ul>
