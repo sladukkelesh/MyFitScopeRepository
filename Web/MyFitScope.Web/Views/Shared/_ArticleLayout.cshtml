@@ -1,4 +1,5 @@
-﻿@{
+﻿@using MyFitScope.Common
+@{
     this.Layout = "_Layout";
 }
 
@@ -14,7 +15,7 @@
         <div class="col-md-4">
 
             <!-- Search Widget -->
-            <div class="card my-4 rcornersInnerMenus">
+            <div class="card my-4">
                 <h5 class="card-header bg-dark text-white">Search</h5>
                 <div class="card-body">
                     <form method="get" asp-controller="Articles" asp-action="ArticlesListing">
@@ -34,8 +35,7 @@
                 <div class="card-body">
                     <div class="row">
                         <div class="col-lg-12">
-                            <ul class="list-unstyled mb-0">
-                            </ul>
+                                <vc:dropdown-links url="/Articles/ArticlesListing?articleCategory=" enum-name=@GlobalConstants.ArticleCategoryTypeName></vc:dropdown-links>         
                         </div>
                     </div>
                 </div>

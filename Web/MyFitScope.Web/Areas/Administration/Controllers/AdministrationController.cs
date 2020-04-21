@@ -62,7 +62,11 @@
         {
             var role = await this.roleManager.FindByIdAsync(roleId);
 
-            var model = await this.administrationService.ListUsersInRoleAsync(roleId, role.Name);
+            var model = new EditUsersInRoleViewModel
+            {
+                RoleName = role.Name,
+                Users = await this.administrationService.ListUsersInRoleAsync(roleId, role.Name),
+            };
 
             return this.View(model);
         }

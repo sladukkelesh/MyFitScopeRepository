@@ -10,5 +10,7 @@
         Task CreateWorkoutDayAsync(string workoutId, WeekDay weekDay);
 
         EditWorkoutDayViewModel GetWorkoutDayById(string workoutDayId);
+
+        Task DeleteWorkoutDayAsync(string workoutDayId);
     }
 }

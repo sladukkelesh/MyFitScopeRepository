@@ -1,4 +1,5 @@
-﻿@using MyFitScope.Data.Models.FitnessModels.Enums
+﻿@using MyFitScope.Common
+@using MyFitScope.Data.Models.FitnessModels.Enums
 @using MyFitScope.Web.ViewModels.Workouts
 @model CurrentWorkoutViewModel
 
@@ -63,68 +64,73 @@
                         {
                             var day = workoutDays[i];
 
-                        <div class="card">
-                            <div class="card-header d-flex justify-content-between" id="@("heading" + i)">
-                                <h3 class="mb-0">
-                                    @{
-                                        var buttonCollapseValue = i > 0 ? " collased" : string.Empty;
+                            <div class="card">
+                                <div class="card-header d-flex justify-content-between" id="@("heading" + i)">
+                                    <h3 class="mb-0">
+                                        @{
+                                            var buttonCollapseValue = i > 0 ? " collased" : string.Empty;
+                                        }
+                                        <button class="@("btn btn-link" + buttonCollapseValue)" type="button" data-toggle="collapse" data-target="@("#collapse" + i)" aria-expanded="true" aria-controls="@("collapse" + i)">
+                                            <h3>@day.WeekDayTitle @(day.Name != string.Empty ? "- " + day.Name : string.Empty)</h3>
+                                        </button>
+                                    </h3>
+                                    @if (User.IsInRole("Admin") || Model.CreatorName == User.Identity.Name)
+                                    {
+                                        <div class="d-flex">
+                                            <div class="my-auto">
+                                                <a class="btn btn-primary text-white mr-2" asp-controller="WorkoutDays" asp-action="Edit" asp-route-workoutDayId="@day.Id">Edit</a>
+                                            </div>
+                                            <div class="my-auto">
+                                                <a class="btn btn-danger text-white" asp-controller="WorkoutDays" asp-action="Delete" asp-route-workoutDayId="@day.Id" onclick="ConfirmDelete('(@String.Format(GlobalConstants.WorkoutDayConfirmDeleteMessage, day.WeekDayTitle)')">Delete</a>
+                                            </div>
+                                        </div>                       
                                     }
-                                    <button class="@("btn btn-link" + buttonCollapseValue)" type="button" data-toggle="collapse" data-target="@("#collapse" + i)" aria-expanded="true" aria-controls="@("collapse" + i)">
-                                        <h3>@day.WeekDayTitle @(day.Name != string.Empty ? "- " + day.Name : string.Empty)</h3>
-                                    </button>
-                                </h3>
-                                 @if(User.IsInRole("Admin") || Model.CreatorName == User.Identity.Name)
-                                 {
-                                     <div class="my-auto">
-                                         <a class="btn btn-primary text-white" asp-controller="WorkoutDays" asp-action="Edit" asp-route-workoutDayId ="@day.Id">Edit</a>
-                                     </div>
-                                 }
-                            </div>
+                                </div>
                             
-                            @{
-                                var collapseValue = i > 0 ? "collapse" : "collapse show";
-                            }
+                                @{
+                                    var collapseValue = i > 0 ? "collapse" : "collapse show";
+                                }
 
-                            <div id="@("collapse" + i)" class="@collapseValue" aria-labelledby="@("heading"+ i)" data-parent="#accordionExample">
-                                <div class="card-body bg-dark">
-                                    <div>
+                                <div id="@("collapse" + i)" class="@collapseValue" aria-labelledby="@("heading"+ i)" data-parent="#accordionExample">
+                                    <div class="card-body bg-dark">
+                                        <div>
 
 
 
-                                        @if (day.Exercises.Count != 0)
-                                        {
-                                            <table class="table table-striped">
+                                            @if (day.Exercises.Count != 0)
+                                            {
+                                                <table class="table table-striped">
 
-                                                <thead>
-                                                    <tr class="bg-light">
-                                                        <th scope="col">#</th>
-                                                        <th scope="col">Muscle</th>
-                                                        <th scope="col">Exercise</th>
-                                                    </tr>
-                                                </thead>
-                                                <tbody>
-
-                                                    @for (var j = 0; j < day.Exercises.Count; j++)
-                                                    {
-                                                        var exercise = day.Exercises[j];
-
+                                                    <thead>
                                                         <tr class="bg-light">
-                                                            <th scope="row">@(j + 1)</th>
-                                                            <td>@exercise.MuscleGroupTitle</td>
-                                                            <td><a asp-controller="Exercises" asp-action="Details" asp-route-id="@exercise.ExerciseId">@exercise.ExerciseName</a></td>
+                                                            <th scope="col">#</th>
+                                                            <th scope="col">Muscle</th>
+                                                            <th scope="col">Exercise</th>
                                                         </tr>
-                                                    }
-                                                </tbody>
-                                            </table>
-                                        }
-                                        else
-                                        {
-                                            <p class="text-center text-white">No exercises added for this day!</p>
-                                        }
+                                                    </thead>
+                                                    <tbody>
+
+                                                        @for (var j = 0; j < day.Exercises.Count; j++)
+                                                        {
+                                                            var exercise = day.Exercises[j];
+
+                                                            <tr class="bg-light">
+                                                                <th scope="row">@(j + 1)</th>
+                                                                <td>@exercise.MuscleGroupTitle</td>
+                                                                <td><a asp-controller="Exercises" asp-action="Details" asp-route-id="@exercise.ExerciseId">@exercise.ExerciseName</a></td>
+                                                            </tr>
+                                                        }
+                                                    </tbody>
+                                                </table>
+                                            }
+                                            else
+                                            {
+                                                <p class="text-center text-white">No exercises added for this day!</p>
+                                            }
+                                        </div>
                                     </div>
                                 </div>
                             </div>
-                        </div>
                         }
                     </div>                 
             </div>

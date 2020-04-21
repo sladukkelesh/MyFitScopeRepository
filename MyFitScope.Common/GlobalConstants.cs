@@ -20,6 +20,8 @@
 
         public const string WorkoutConfirmDeleteMessage = "Confirm that you want to delete workout \"{0}\"?";
 
+        public const string WorkoutDayConfirmDeleteMessage = "Confirm that you want to delete workout day \"{0}\"?";
+
         public const string ExerciseConfirmDeleteMessage = "Confirm that you want to delete exercise \"{0}\"?";
 
         public const string ArticleConfirmDeleteMessage = "Confirm that you want to delete article \"{0}\"?";

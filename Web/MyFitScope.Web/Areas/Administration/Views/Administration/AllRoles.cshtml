@@ -5,18 +5,22 @@
     this.ViewData["Title"] = "All Roles";
 }
 
-<section>
-    <h1>All Roles:</h1>
-
-    <div class="row">
-        @foreach (var role in Model.Roles)
-        {
-            <div class="card col-md-3 m-3">
-                <h5 class="card-header">@role.Name</h5>
-                <div class="card-body">
-                    <a asp-area="Administration" asp-controller="Administration" asp-action="EditUsersInRole" asp-route-roleId="@role.Id" class="btn btn-primary">Add / Remove User</a>
+<section class="container bg-white p-3 rcorners">
+    <article>
+        <header class="text-center">
+            <h1>All Roles:</h1>
+            <hr/>
+        </header>
+        <div class="row justify-content-center">
+            @foreach (var role in Model.Roles)
+            {
+                <div class="card col-md-3 m-3 pl-0 pr-0 border-dark">
+                    <h5 class="card-header bg-dark text-white">@role.Name</h5>
+                    <div class="card-body text-center">
+                        <a asp-area="Administration" asp-controller="Administration" asp-action="EditUsersInRole" asp-route-roleId="@role.Id" class="btn btn-primary btn-sm">Add / Remove User</a>
+                    </div>
                 </div>
-            </div>
-        }
-    </div>       
+            }
+        </div>
+    </article>       
 </section>

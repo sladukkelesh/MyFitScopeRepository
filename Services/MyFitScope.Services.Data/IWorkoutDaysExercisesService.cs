@@ -6,6 +6,6 @@
     {
         Task AddExerciseToWorkoutDayAsync(string exerciseId, string workoutDayId);
 
-        Task<string> RemoveExerciseFromWorkoutDayAsync(string exerciseId);
+        Task<string> RemoveExerciseFromWorkoutDayAsync(string exerciseId, string workoutDayId);
     }
 }

@@ -44,5 +44,12 @@
 
             return this.View(model);
         }
+
+        public async Task<IActionResult> DeleteProgressImage(string imageId)
+        {
+            await this.progressImagesService.DeleteProgressImageAsync(imageId);
+
+            return this.RedirectToAction(nameof(this.ProgressImagesListing));
+        }
     }
 }

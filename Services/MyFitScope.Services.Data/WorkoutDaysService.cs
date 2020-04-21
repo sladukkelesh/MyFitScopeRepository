@@ -9,14 +9,19 @@
     using MyFitScope.Data.Models.FitnessModels.Enums;
     using MyFitScope.Services.Mapping;
     using MyFitScope.Web.ViewModels.WorkoutDays;
+    using MyFitScope.Web.ViewModels.WorkoutDaysExercises;
 
     public class WorkoutDaysService : IWorkoutDaysService
     {
         private readonly IDeletableEntityRepository<WorkoutDay> workoutDaysRepository;
+        private readonly IWorkoutDaysExercisesService workoutDaysExercisesService;
+        private readonly IRepository<WorkoutDayExercise> workoutDaysExercisesRespository;
 
-        public WorkoutDaysService(IDeletableEntityRepository<WorkoutDay> workoutDaysRepository)
+        public WorkoutDaysService(IDeletableEntityRepository<WorkoutDay> workoutDaysRepository, IWorkoutDaysExercisesService workoutDaysExercisesService, IRepository<WorkoutDayExercise> workoutDaysExercisesRespository)
         {
             this.workoutDaysRepository = workoutDaysRepository;
+            this.workoutDaysExercisesService = workoutDaysExercisesService;
+            this.workoutDaysExercisesRespository = workoutDaysExercisesRespository;
         }
 
         public async Task CreateWorkoutDayAsync(string workoutId, WeekDay weekDay)
@@ -28,6 +33,25 @@
             };
 
             await this.workoutDaysRepository.AddAsync(workoutDay);
+            await this.workoutDaysRepository.SaveChangesAsync();
+        }
+
+        public async Task DeleteWorkoutDayAsync(string workoutDayId)
+        {
+            var workoutDayToDelete = await this.workoutDaysRepository.GetByIdWithDeletedAsync(workoutDayId);
+
+            var exercisesConnectionsToDelete = this.workoutDaysExercisesRespository.All()
+                                                   .Where(we => we.WorkoutDayId == workoutDayId)
+                                                   .To<WorkoutDaysExercisesToDeleteInputModel>()
+                                                   .ToList();
+
+            foreach (var connection in exercisesConnectionsToDelete)
+            {
+                await this.workoutDaysExercisesService.RemoveExerciseFromWorkoutDayAsync(connection.ExerciseId, connection.WorkoutDayId);
+
+            }
+
+            this.workoutDaysRepository.HardDelete(workoutDayToDelete);
             await this.workoutDaysRepository.SaveChangesAsync();
         }
 

@@ -42,13 +42,6 @@
                 <div>
                     <h3>@day.WeekDayTitle /@(day.Name != string.Empty ? day.Name : "Add execises to see muscle groups!")/</h3>
 
-                    @if (this.User.IsInRole("Admin") || Model.IsCustom == true)
-                    {
-                        <div>
-                            <a class="btn btn-info" asp-controller="WorkoutDays" asp-action="Edit" asp-route-workoutDayId="@day.Id">Edit</a>
-                        </div>
-                    }
-
                     @if (day.Exercises.Count != 0)
                     {
                         <table class="table table-striped">

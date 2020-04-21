@@ -10,20 +10,17 @@
         <header class="text-center">
             <h1>Edit Workout Day - @Model.WeekDayTitle</h1>
         </header>
+
+        <div class="m-3">
+            <a class="btn btn-primary" asp-controller="Workouts" asp-action="CurrentWorkout"><i class="fas fa-arrow-left"></i> Back to Current Workouot</a></div>
         <div>
-            @if (Html.ValidationSummary(false) != null)
-            {
-                <div class="alert alert-danger" role="alert">
-                    @Html.ValidationSummary(false)
-                </div>
-            }
 
             @if (Model.Exercises.Count == 0)
             {
                 <div>
                     <p>
                         You currently don't have any execises in this workout day. <br />
-                        Use "Exercise Manager" and add exercise to this day.
+                        Use "Exercise Manager" to add exercise for this day.
                     </p>
                 </div>
             }
@@ -47,7 +44,7 @@
                                 <th scope="row">@(i + 1)</th>
                                 <td>@Model.Exercises[i].MuscleGroupTitle</td>
                                 <td><a asp-controller="Exercises" asp-action="Details" asp-route-id="@Model.Exercises[i].Id">@Model.Exercises[i].Name</a></td>
-                                <td><a class="btn btn-danger btn-sm" asp-controller="WorkoutDaysExercises" asp-action="RemoveExercise" asp-route-exerciseId="@Model.Exercises[i].Id">Remove</a></td>
+                                <td><a class="btn btn-danger btn-sm" asp-controller="WorkoutDaysExercises" asp-action="RemoveExercise" asp-route-exerciseId="@Model.Exercises[i].Id" asp-route-workoutDayId="@Model.Id">Remove</a></td>
                             </tr>
                         }
                     </tbody>

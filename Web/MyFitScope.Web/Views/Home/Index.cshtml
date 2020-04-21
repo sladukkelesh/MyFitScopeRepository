@@ -3,7 +3,34 @@
     this.ViewData["Title"] = "Home Page";
 }
 
-<div class="text-center">
-    <h1 class="display-4">Welcome to @GlobalConstants.SystemName!</h1>
-    <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+
+<div class="box text-dark text-right pt-4">
+    <h1 class="text-white mb-3">
+        Welcome to<br />
+        <span id="logo">@GlobalConstants.BrandPrefix<span class="brandMainPart">@GlobalConstants.BrandMainFix</span>@GlobalConstants.BrandPostFix</span>
+    </h1>
+    <p class="text-white secondary-headings">The best plase to create your fitness plan!</p>
+    <p class="text-white secondary-headings">
+        Please <a asp-area="Identity" asp-page="/Account/Login">Login</a>
+        or <a asp-area="Identity" asp-page="/Account/Register">Register</a>
+        if you still don't have an account!
+    </p>
 </div>
+   
+
+@section Scripts {
+    <script>
+        function ChangeBackgroundImage() {
+            let bodyElement = document.getElementsByTagName("body")[0];
+
+            bodyElement.style.background = "url('/Images/fit-index-background.jpg')";
+            bodyElement.style.backgroundRepeat = "no-repeat";
+            bodyElement.style.backgroundSize = "cover";
+        }
+
+        window.onload = ChangeBackgroundImage;
+    </script>
+}
+
+
+

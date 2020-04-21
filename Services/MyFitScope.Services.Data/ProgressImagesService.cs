@@ -31,7 +31,7 @@
             var progressImage = new ProgressImage
             {
                 UserId = userId,
-                PublidId = uploadPhotoResponse.PublicId,
+                PublicId = uploadPhotoResponse.PublicId,
                 Url = uploadPhotoResponse.PhotoUrl,
             };
 
@@ -39,9 +39,11 @@
             await this.progressImagesRepository.SaveChangesAsync();
         }
 
-        public async Task DeleteProgressImage(string imageId)
+        public async Task DeleteProgressImageAsync(string imageId)
         {
             var imageToDelete = await this.progressImagesRepository.GetByIdWithDeletedAsync(imageId);
+
+            this.cloudinaryService.DeletePhoto(imageToDelete.PublicId);
 
             imageToDelete.IsDeleted = true;
 

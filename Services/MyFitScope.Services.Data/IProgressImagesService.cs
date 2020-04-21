@@ -10,7 +10,7 @@
     {
         Task UploadProgressImageAsync(string userId, string userName, IFormFile file);
 
-        Task DeleteProgressImage(string imageId);
+        Task DeleteProgressImageAsync(string imageId);
 
         ICollection<ProgressImageViewModel> GetAllImages(string userId);
     }

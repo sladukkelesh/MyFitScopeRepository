@@ -27,10 +27,10 @@
             await this.workoutDayExerciseRepository.SaveChangesAsync();
         }
 
-        public async Task<string> RemoveExerciseFromWorkoutDayAsync(string exerciseId)
+        public async Task<string> RemoveExerciseFromWorkoutDayAsync(string exerciseId, string workoutDayId)
         {
             var targetToDelete = this.workoutDayExerciseRepository.All()
-                                     .Where(e => e.ExerciseId == exerciseId)
+                                     .Where(we => we.ExerciseId == exerciseId && we.WorkoutDayId == workoutDayId)
                                      .FirstOrDefault();
 
             this.workoutDayExerciseRepository.Delete(targetToDelete);

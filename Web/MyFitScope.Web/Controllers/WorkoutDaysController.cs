@@ -32,5 +32,12 @@
 
             return this.View(model);
         }
+
+        public async Task<IActionResult> Delete(string workoutDayId)
+        {
+            await this.workoutDaysService.DeleteWorkoutDayAsync(workoutDayId);
+
+            return this.RedirectToAction("CurrentWorkout", "Workouts");
+        }
     }
 }

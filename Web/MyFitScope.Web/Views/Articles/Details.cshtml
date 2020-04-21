@@ -7,66 +7,68 @@
     this.ViewData["Title"] = Model.Title + " Details";
 }
 
-<!-- Post Content Column -->
+<section class="bg-white p-3 rcorners">
+    <!-- Post Content Column -->
+    <!-- Title -->
+    <h1 class="mt-4">@Model.Title</h1>
 
-<!-- Title -->
-<h1 class="mt-4">@Model.Title</h1>
+    <!-- Author -->
+    <p class="lead">
+        by
+        @Model.UserUserName
+    </p>
 
-<!-- Author -->
-<p class="lead">
-    by
-    @Model.UserUserName
-</p>
+    <hr>
 
-<hr>
+    <!-- Date/Time -->
+    <p>Posted on January 1, 2019 at 12:00 PM</p>
 
-<!-- Date/Time -->
-<p>Posted on January 1, 2019 at 12:00 PM</p>
+    <hr>
 
-<hr>
+    <!-- Preview Image -->
+    <img class="img-fluid rounded article-details-image" src="@Model.ImageUrl" alt="Article Image">
 
-<!-- Preview Image -->
-<img class="img-fluid rounded article-details-image" src="@Model.ImageUrl" alt="Article Image">
+    <hr>
 
-<hr>
+    <!-- Post Content -->
+    <p>@Html.Raw(Model.SanitizedContent)</p>
 
-<!-- Post Content -->
-<p>@Html.Raw(Model.SanitizedContent)</p>
-
-<!-- Edit/Delete buttons-->
-@if (this.User.IsInRole("Admin"))
-{
-    <div class="text-center mt-4 mb-4">
-        <a class="btn btn-info" asp-controller="Articles" asp-action="EditArticle" asp-route-articleId="@Model.Id">Edit</a>
-        <a class="btn btn-danger ml-lg-5" asp-controller="Articles" asp-action="DeleteArticle" asp-route-articleId="@Model.Id" onclick="ConfirmDelete('@string.Format(GlobalConstants.ArticleConfirmDeleteMessage, Model.Title)')">Delete</a>
-    </div>
-}
-
-<hr>
-
-<!-- Comments Input Form -->
-@if (this.User.Identity.IsAuthenticated)
-{
-    <div class="card my-4">
-        <h5 class="card-header bg-dark text-light">Leave a Comment:</h5>
-        <div class="card-body">
-            <form id="commentInputForm" method="post" asp-controller="Comments" asp-action="AddComment">
-                <input type="hidden" name="articleId" value="@Model.Id" />
-                <div class="form-group">
-                    <textarea class="form-control" rows="3" name="commentContent"></textarea>
-                </div>
-                <button type="submit" class="btn btn-primary">Submit</button>
-            </form>
+    <!-- Edit/Delete buttons-->
+    @if (this.User.IsInRole("Admin"))
+    {
+        <div class="text-center mt-4 mb-4">
+            <a class="btn btn-info" asp-controller="Articles" asp-action="EditArticle" asp-route-articleId="@Model.Id">Edit</a>
+            <a class="btn btn-danger ml-lg-5" asp-controller="Articles" asp-action="DeleteArticle" asp-route-articleId="@Model.Id" onclick="ConfirmDelete('@string.Format(GlobalConstants.ArticleConfirmDeleteMessage, Model.Title)')">Delete</a>
         </div>
-    </div>
-}
+    }
 
-<!-- Comments and Responses Section -->
-@foreach (var comment in Model.Comments)
-{
+    <hr>
 
-    <partial name="_CommentPartial" model="@comment" />
-}
+    <!-- Comments Input Form -->
+    @if (this.User.Identity.IsAuthenticated)
+    {
+        <div class="card my-4">
+            <h5 class="card-header bg-dark text-light">Leave a Comment:</h5>
+            <div class="card-body">
+                <form id="commentInputForm" method="post" asp-controller="Comments" asp-action="AddComment">
+                    <input type="hidden" name="articleId" value="@Model.Id" />
+                    <div class="form-group">
+                        <textarea class="form-control" rows="3" name="commentContent"></textarea>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Submit</button>
+                </form>
+            </div>
+        </div>
+    }
+
+    <!-- Comments and Responses Section -->
+    @foreach (var comment in Model.Comments)
+    {
+
+        <partial name="_CommentPartial" model="@comment" />
+    }
+</section>
+
 
 
 
@@ -94,7 +96,10 @@
 
             //create form element
             let responseForm = document.createElement("form");
-            responseForm.style.border = "1px solid black";
+            responseForm.style.border = "1px solid grey";
+            responseForm.style.borderRadius = "8px";
+            responseForm.style.padding = "10px";
+            responseForm.style.marginTop = "10px";
             responseForm.setAttribute("id", "responseInputForm");
             responseForm.setAttribute("method", "post");
             responseForm.setAttribute("action", "/Responses/AddResponse");

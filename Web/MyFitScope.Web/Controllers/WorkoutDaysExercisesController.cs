@@ -39,11 +39,11 @@
             return this.RedirectToAction("Edit", "WorkoutDays", new { workoutDayId = input.WorkoutDayId });
         }
 
-        public async Task<IActionResult> RemoveExercise(string exerciseId)
+        public async Task<IActionResult> RemoveExercise(string exerciseId, string workoutDayId)
         {
-            var workoutDayId = await this.workoutDayExerciseService.RemoveExerciseFromWorkoutDayAsync(exerciseId);
+            var workoutDayIdResult = await this.workoutDayExerciseService.RemoveExerciseFromWorkoutDayAsync(exerciseId, workoutDayId);
 
-            return this.RedirectToAction("Edit", "WorkoutDays", new { workoutDayId });
+            return this.RedirectToAction("Edit", "WorkoutDays", new { workoutDayId = workoutDayIdResult });
         }
 
         private string WorkoutDayAlreadyContainsExercise(string workoutDayId, string exerciseId)
