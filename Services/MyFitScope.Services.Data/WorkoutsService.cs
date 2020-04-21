@@ -6,11 +6,13 @@
     using System.Threading.Tasks;
 
     using Microsoft.AspNetCore.Identity;
+    using MyFitScope.Common;
     using MyFitScope.Data.Common.Repositories;
     using MyFitScope.Data.Models;
     using MyFitScope.Data.Models.FitnessModels;
     using MyFitScope.Data.Models.FitnessModels.Enums;
     using MyFitScope.Services.Mapping;
+    using MyFitScope.Web.Infrastructure;
     using MyFitScope.Web.ViewModels.Workouts;
 
     public class WorkoutsService : IWorkoutsService
@@ -83,7 +85,7 @@
                 .To<T>()
                 .FirstOrDefault();
 
-        public ICollection<WorkoutViewModel> GetWorkoutsByCategory(string userName, string workoutCategory)
+        public async Task<PaginatedList<WorkoutViewModel>> GetWorkoutsByCategoryAsync(string userName, string workoutCategory, int? pageIndex = null)
         {
             var workouts = this.workoutsRepository.All();
 
@@ -103,7 +105,7 @@
                 workouts = workouts.Where(w => w.IsCustom == false);
             }
 
-            return workouts.OrderByDescending(w => w.CreatedOn).To<WorkoutViewModel>().ToList();
+            return await PaginatedList<WorkoutViewModel>.CreateAsync(workouts.OrderByDescending(w => w.CreatedOn).To<WorkoutViewModel>(), pageIndex ?? GlobalConstants.PaginationDefaultPageIndex, GlobalConstants.PaginationPageSize);
         }
 
         public async Task SetCurrentWorkoutAsync(string workoutId, ApplicationUser user)

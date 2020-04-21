@@ -34,44 +34,34 @@
                 </div>
             </div>
         }
-    }
 
+        <!-- Pagination -->
+        <nav class="text-center mt-3">
+            <ul class="pagination justify-content-center">
+                @{
+                    var previousActive = Model.Articles.HasPreviousPage ? string.Empty : " disabled";
+                    var nextActive = Model.Articles.HasNextPage ? string.Empty : " disabled";
+                }
 
-    <!-- Pagination -->
-    <nav class="text-center mt-3">
-        <ul class="pagination justify-content-center">
-            @if (Model.Articles.HasPreviousPage)
-            {
-                <li class="page-item">
+                <li class="@("page-item" + previousActive)">
                     <a class="page-link" asp-controller="Articles" asp-action="ArticlesListing" asp-route-articleCategory="@Model.ArticleCategory" asp-route-pageIndex="@(Model.Articles.PageIndex - 1)">Previous</a>
                 </li>
-            }
 
-
-            @for (var i = 1; i <= Model.Articles.TotalPages; i++)
-            {
-                @if (Model.Articles.PageIndex == i)
+                @for (var i = 1; i <= Model.Articles.TotalPages; i++)
                 {
-                    <li class="page-item active">
+                    var currentActive = Model.Articles.PageIndex == i ? " active" : string.Empty;
+
+                    <li class="@("page-item" + currentActive)">
                         <a class="page-link" asp-controller="Articles" asp-action="ArticlesListing" asp-route-articleCategory="@Model.ArticleCategory" asp-route-pageIndex="@i">@i</a>
                     </li>
-                }
-                else
-                {
-                    <li class="page-item">
-                        <a class="page-link" asp-controller="Articles" asp-action="ArticlesListing" asp-route-articleCategory="@Model.ArticleCategory" asp-route-pageIndex="@i">@i</a>
-                    </li>
+
                 }
 
-            }
-
-            @if (Model.Articles.HasNextPage)
-            {
-                <li class="page-item">
+                <li class="@("page-item" + nextActive)">
                     <a class="page-link" asp-controller="Articles" asp-action="ArticlesListing" asp-route-articleCategory="@Model.ArticleCategory" asp-route-pageIndex="@(Model.Articles.PageIndex + 1)">Next</a>
                 </li>
-            }
-        </ul>
-    </nav>
+            </ul>
+        </nav>
+    }
 </section>
 

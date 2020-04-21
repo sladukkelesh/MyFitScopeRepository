@@ -53,22 +53,22 @@
             return this.View(model);
         }
 
-        public IActionResult WorkoutsListing(string workoutCategory)
+        public async Task<IActionResult> WorkoutsListing(string workoutCategory, int? pageIndex = null)
         {
             var userName = this.User.Identity.Name;
 
             var model = new WorkoutsListingViewModel
             {
-                Workouts = this.workoutsService.GetWorkoutsByCategory(userName, workoutCategory),
+                Workouts = await this.workoutsService.GetWorkoutsByCategoryAsync(userName, workoutCategory, pageIndex),
             };
 
             if (workoutCategory != null)
             {
-                model.ListedGroupType = workoutCategory.Replace("_", " ");
+                model.WorkoutCategory = workoutCategory;
             }
             else
             {
-                model.ListedGroupType = "All";
+                model.WorkoutCategory = "All";
             }
 
             return this.View(model);

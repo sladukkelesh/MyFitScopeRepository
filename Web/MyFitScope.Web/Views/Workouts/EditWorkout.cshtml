@@ -6,19 +6,19 @@
     this.Layout = "_LoggedInLayout";
 }
 
-<h1>EDIT your workout plan with the form bellow:</h1>
-<section class="container col-md-8">
+<section class="col-md-9">
     <script src="/lib/tinymce/tinymce.min.js" type="text/javascript"></script>
     <script type="text/javascript">
-    tinymce.init({
-        selector: "textarea",
-        plugins: [
-            "image paste table link code media"
-        ]
-    });
+        tinymce.init({
+            selector: "textarea",
+            plugins: [
+                "image paste table link code media"
+            ]
+        });
     </script>
 
-    <form method="post" asp-controller="Workouts" asp-action="EditWorkout">
+    <h1 class="mb-0 p-3 text-center text-white bg-dark r-top-corners">Edit Workout</h1>
+    <form method="post" class="form-group bg-light p-4 mt-0 r-bottom-corners" asp-controller="Workouts" asp-action="EditWorkout">
         <div class="form-group">
             <label asp-for="Name">Workout name:</label>
             <input type="text" asp-for="Name" class="form-control" value="@Model.Name" />
@@ -44,6 +44,9 @@
 
         <input type="hidden" name="Id" value="@Model.Id" />
 
-        <button type="submit" class="btn btn-primary">Edit</button>
+        <div class="text-center">
+            <button type="submit" class="btn btn-primary">Edit</button>
+            <a class="btn btn-info ml-2" asp-controller="Workouts" asp-action="Details" asp-route-id="@Model.Id">Cancel</a>
+        </div>       
     </form>
 </section>

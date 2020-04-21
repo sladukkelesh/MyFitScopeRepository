@@ -1,11 +1,13 @@
-﻿using System.Collections.Generic;
-
-namespace MyFitScope.Web.ViewModels.Workouts
+﻿namespace MyFitScope.Web.ViewModels.Workouts
 {
+    using System.Collections.Generic;
+
+    using MyFitScope.Web.Infrastructure;
+
     public class WorkoutsListingViewModel
     {
-        public ICollection<WorkoutViewModel> Workouts { get; set; }
+        public PaginatedList<WorkoutViewModel> Workouts { get; set; }
 
-        public string ListedGroupType { get; set; }
+        public string WorkoutCategory { get; set; }
     }
 }

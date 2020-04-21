@@ -70,7 +70,7 @@
                                         @{
                                             var buttonCollapseValue = i > 0 ? " collased" : string.Empty;
                                         }
-                                        <button class="@("btn btn-link" + buttonCollapseValue)" type="button" data-toggle="collapse" data-target="@("#collapse" + i)" aria-expanded="true" aria-controls="@("collapse" + i)">
+                                        <button class="@("btn btn-link text-decoration-none" + buttonCollapseValue)" type="button" data-toggle="collapse" data-target="@("#collapse" + i)" aria-expanded="true" aria-controls="@("collapse" + i)">
                                             <h3>@day.WeekDayTitle @(day.Name != string.Empty ? "- " + day.Name : string.Empty)</h3>
                                         </button>
                                     </h3>
