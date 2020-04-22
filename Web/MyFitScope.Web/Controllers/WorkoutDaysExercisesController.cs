@@ -1,15 +1,14 @@
 ﻿namespace MyFitScope.Web.Controllers
 {
-    using System;
-    using System.Collections.Generic;
     using System.Linq;
     using System.Threading.Tasks;
 
+    using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Mvc;
     using MyFitScope.Services.Data;
     using MyFitScope.Web.ViewModels.WorkoutDaysExercises;
 
-    public class WorkoutDaysExercisesController : Controller
+    public class WorkoutDaysExercisesController : BaseController
     {
         private readonly IWorkoutDaysExercisesService workoutDayExerciseService;
         private readonly IWorkoutDaysService workoutDayService;
@@ -20,6 +19,7 @@
             this.workoutDayService = workoutDayService;
         }
 
+        [Authorize]
         public async Task<IActionResult> AddExerciseToWorkoutDay(AddExerciseToWorkoutDayInputModel input)
         {
             var exerciseAlreadyIn = this.WorkoutDayAlreadyContainsExercise(input.WorkoutDayId, input.ExerciseId);
@@ -39,6 +39,7 @@
             return this.RedirectToAction("Edit", "WorkoutDays", new { workoutDayId = input.WorkoutDayId });
         }
 
+        [Authorize]
         public async Task<IActionResult> RemoveExercise(string exerciseId, string workoutDayId)
         {
             var workoutDayIdResult = await this.workoutDayExerciseService.RemoveExerciseFromWorkoutDayAsync(exerciseId, workoutDayId);

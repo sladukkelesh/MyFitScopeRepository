@@ -2,6 +2,7 @@
 {
     using System.Threading.Tasks;
 
+    using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Identity;
     using Microsoft.AspNetCore.Mvc;
     using MyFitScope.Data.Models;
@@ -19,6 +20,7 @@
             this.userManager = userManager;
         }
 
+        [Authorize]
         [HttpPost]
         public async Task<IActionResult> AddComment(CreateCommentInputModel input)
         {
@@ -34,6 +36,7 @@
             return this.RedirectToAction("Details", "Articles", new { articleId = input.ArticleId });
         }
 
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> DeleteComment(string commentId, string articleId)
         {
             await this.commentsService.DeleteCommentAsync(commentId);

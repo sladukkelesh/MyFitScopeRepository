@@ -2,16 +2,15 @@
 {
     using System.Linq;
     using System.Threading.Tasks;
-    using Microsoft.AspNetCore.Http;
+
+    using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Identity;
     using Microsoft.AspNetCore.Mvc;
-    using MyFitScope.Data;
     using MyFitScope.Data.Models;
-    using MyFitScope.Data.Models.FitnessModels;
     using MyFitScope.Services.Data;
     using MyFitScope.Web.ViewModels.ProgressImages;
 
-    public class ProgressImagesController : Controller
+    public class ProgressImagesController : BaseController
     {
         private readonly UserManager<ApplicationUser> userManager;
         private readonly IProgressImagesService progressImagesService;
@@ -23,6 +22,7 @@
         }
 
         [HttpPost]
+        [Authorize]
         public async Task<IActionResult> AddProgressImage(CreateProgressImageInputModel input)
         {
             if (!this.ModelState.IsValid)
@@ -38,6 +38,7 @@
             return this.RedirectToAction("ProgressImagesListing", "ProgressImages");
         }
 
+        [Authorize]
         public IActionResult ProgressImagesListing()
         {
             var userId = this.userManager.GetUserId(this.User);
@@ -50,6 +51,7 @@
             return this.View(model);
         }
 
+        [Authorize]
         public async Task<IActionResult> DeleteProgressImage(string imageId)
         {
             await this.progressImagesService.DeleteProgressImageAsync(imageId);

@@ -2,6 +2,7 @@
 {
     using System.Threading.Tasks;
 
+    using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Identity;
     using Microsoft.AspNetCore.Mvc;
     using MyFitScope.Data.Models;
@@ -20,6 +21,7 @@
         }
 
         [HttpPost]
+        [Authorize]
         public async Task<IActionResult> AddResponse(CreateResponseInputModel input)
         {
             if (!this.ModelState.IsValid)
@@ -34,6 +36,7 @@
             return this.RedirectToAction("Details", "Articles", new { articleId = input.ArticleId });
         }
 
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> DeleteResponse(string responseId, string articleId)
         {
             await this.responsesService.DeleteResponseAsync(responseId);

@@ -66,6 +66,7 @@
             return this.View();
         }
 
+        [Authorize(Roles = "Admin")]
         [HttpPost]
         public async Task<IActionResult> CreateArticle(CreateArticleInputViewModel input)
         {
@@ -80,6 +81,7 @@
             return this.RedirectToAction(nameof(this.Details), new { articleId });
         }
 
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> DeleteArticle(string articleId)
         {
             await this.articlesService.DeleteArticleAsync(articleId);

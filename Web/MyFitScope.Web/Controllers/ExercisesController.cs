@@ -5,6 +5,7 @@
     using System.Threading.Tasks;
 
     using Ganss.XSS;
+    using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Identity;
     using Microsoft.AspNetCore.Mvc;
     using MyFitScope.Data.Models;
@@ -12,7 +13,7 @@
     using MyFitScope.Services.Data;
     using MyFitScope.Web.ViewModels.Exercises;
 
-    public class ExercisesController : Controller
+    public class ExercisesController : BaseController
     {
         private readonly IExercisesService exercisesService;
         private readonly UserManager<ApplicationUser> userManager;
@@ -23,11 +24,13 @@
             this.userManager = userManager;
         }
 
+        [Authorize]
         public IActionResult CreateExercise()
         {
             return this.View();
         }
 
+        [Authorize]
         [HttpPost]
         public async Task<IActionResult> CreateExercise(CreateExerciseInputModel input)
         {
@@ -86,6 +89,7 @@
             return this.View(model);
         }
 
+        [Authorize]
         public IActionResult GetMuscleGroups()
         {
             var result = Enum.GetNames(typeof(MuscleGroup))
@@ -103,6 +107,7 @@
             return this.Ok(result);
         }
 
+        [Authorize]
         public async Task<IActionResult> GetExercisesByMuscleGroup(string muscleGroup)
         {
             var userName = this.User.Identity.Name;
@@ -119,6 +124,7 @@
             return this.Ok(result);
         }
 
+        [Authorize]
         public async Task<IActionResult> DeleteExercise(string exerciseId)
         {
             await this.exercisesService.DeleteExerciseAsync(exerciseId);
@@ -126,6 +132,7 @@
             return this.RedirectToAction("ExercisesListing");
         }
 
+        [Authorize]
         public IActionResult EditExercise(string exerciseId)
         {
             var model = this.exercisesService.GetExerciseById<EditExerciseInputViewModel>(exerciseId);
@@ -133,6 +140,7 @@
             return this.View(model);
         }
 
+        [Authorize]
         [HttpPost]
         public async Task<IActionResult> EditExercise(EditExerciseInputViewModel input)
         {

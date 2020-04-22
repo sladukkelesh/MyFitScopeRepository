@@ -2,14 +2,14 @@
 {
     using System.Threading.Tasks;
 
-    using Microsoft.AspNetCore.Http;
+    using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Identity;
     using Microsoft.AspNetCore.Mvc;
     using MyFitScope.Data.Models;
     using MyFitScope.Services.Data;
     using MyFitScope.Web.ViewModels.Users;
 
-    public class UsersController : Controller
+    public class UsersController : BaseController
     {
         private readonly IUsersService usersService;
         private readonly UserManager<ApplicationUser> userManager;
@@ -21,6 +21,7 @@
         }
 
         [HttpPost]
+        [Authorize]
         public async Task<IActionResult> AddAvatarPhoto(CreateAvatarPhotoInputModel input)
         {
             if (!this.ModelState.IsValid)

@@ -9,7 +9,7 @@
     using MyFitScope.Services.Data;
     using MyFitScope.Web.ViewModels.Workouts;
 
-    public class WorkoutsController : Controller
+    public class WorkoutsController : BaseController
     {
         private readonly IWorkoutsService workoutsService;
         private readonly UserManager<ApplicationUser> userManager;
@@ -44,6 +44,7 @@
             return this.RedirectToAction(nameof(this.CurrentWorkout));
         }
 
+        [Authorize]
         public async Task<IActionResult> CurrentWorkout()
         {
             var loggedInUser = await this.GetLoggedInUserAsync();
@@ -75,6 +76,7 @@
             return this.View(model);
         }
 
+        [Authorize]
         public async Task<IActionResult> SetAsCurrentWorkout(string workoutId)
         {
             var loggedInUser = await this.GetLoggedInUserAsync();
@@ -84,6 +86,7 @@
             return this.RedirectToAction(nameof(this.CurrentWorkout));
         }
 
+        [Authorize]
         public async Task<IActionResult> DeleteWorkout(string workoutId)
         {
             await this.workoutsService.DeleteWorkoutAsync(workoutId);
@@ -91,6 +94,7 @@
             return this.RedirectToAction(nameof(this.WorkoutsListing), new { workoutCategory = "All" });
         }
 
+        [Authorize]
         public IActionResult EditWorkout(string workoutId)
         {
             var model = this.workoutsService.GetWorkoutById<EditWorkoutInputViewModel>(workoutId);
@@ -99,6 +103,7 @@
         }
 
         [HttpPost]
+        [Authorize]
         public async Task<IActionResult> EditWorkout(EditWorkoutInputViewModel input)
         {
             await this.workoutsService.EditWorkoutAsync(input.Id, input.Name, input.Difficulty, input.WorkoutType, input.Description);

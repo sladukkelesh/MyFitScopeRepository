@@ -13,7 +13,7 @@
     using MyFitScope.Web.Controllers;
     using MyFitScope.Web.ViewModels.Administration.Administration;
 
-    //[Authorize(Roles = GlobalConstants.AdministratorRoleName)]
+    [Authorize(Roles = "Admin")]
     [Area("Administration")]
     public class AdministrationController : BaseController
     {
