@@ -9,9 +9,9 @@
 
     public interface IExercisesService
     {
-        Task CreateExerciseAsync(string name, string videoUrl, MuscleGroup muscleGroup, string description, string creatorName);
+        Task CreateExerciseAsync(string name, string videoUrl, MuscleGroup muscleGroup, string description, string creatorName, bool isAdmin);
 
-        Task<PaginatedList<ExerciseViewModel>> GetExercisesByCategoryAsync(string userName, string exerciseCategory, bool withPagination, int? pageIndex);
+        Task<PaginatedList<ExerciseViewModel>> GetExercisesByCategoryAsync(bool isAdmin, string userName, string exerciseCategory, int? pageIndex);
 
         Task<PaginatedList<ExerciseViewModel>> GetExercisesByKeyWordAsync(string keyWord, int? pageIndex);
 

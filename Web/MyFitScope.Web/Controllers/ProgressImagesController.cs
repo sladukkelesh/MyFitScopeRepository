@@ -23,12 +23,17 @@
         }
 
         [HttpPost]
-        public async Task<IActionResult> AddProgressImage(IFormFile progressImage)
+        public async Task<IActionResult> AddProgressImage(CreateProgressImageInputModel input)
         {
+            if (!this.ModelState.IsValid)
+            {
+                return this.RedirectToAction(nameof(this.ProgressImagesListing));
+            }
+
             var userId = this.userManager.GetUserId(this.User);
             var userName = this.User.Identity.Name;
 
-            await this.progressImagesService.UploadProgressImageAsync(userId, userName, progressImage);
+            await this.progressImagesService.UploadProgressImageAsync(userId, userName, input.ProgressImage);
 
             return this.RedirectToAction("ProgressImagesListing", "ProgressImages");
         }

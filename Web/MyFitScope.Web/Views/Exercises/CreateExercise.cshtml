@@ -19,21 +19,21 @@
     <h2 class="mb-0 p-3 text-center text-white bg-dark r-top-corners">Create your own Exercise</h2>
     <form method="post" class="form-group bg-light p-4 mt-0 r-bottom-corners" asp-controller="Exercises" asp-action="CreateExercise">
         <div class="mb-3">
-            <label asp-for="Name">Exercise Name:</label>
+            <label asp-for="Name"></label>
             <input type="text" asp-for="Name" class="form-control" placeholder="Enter Exercise Name..." />
             <span asp-validation-for="Name" class="text-danger"></span>
         </div>
         <div class="mb-3">
-            <label asp-for="MuscleGroup">Choose muscle group:</label>
+            <label asp-for="MuscleGroup"></label>
             <select asp-for="MuscleGroup" asp-items="@Html.GetEnumSelectList<MuscleGroup>()" class="form-control"></select>
         </div>
         <div class="mb-3">
-            <label asp-for="VideoUrl">Video Url:</label>
+            <label asp-for="VideoUrl"></label>
             <input type="text" asp-for="VideoUrl" class="form-control" placeholder="Enter link to Video File..." />
             <span asp-validation-for="VideoUrl" class="text-danger"></span>
         </div>
         <div class="mb-3">
-            <label asp-for="Description">Exercise Description:</label>
+            <label asp-for="Description"></label>
             <textarea asp-for="Description" class="form-control" placeholder="Enter exercise description"></textarea>
             <span asp-validation-for="Description" class="text-danger"></span>
         </div>

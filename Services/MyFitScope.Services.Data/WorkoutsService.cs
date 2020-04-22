@@ -28,7 +28,7 @@
             this.usersRepository = usersRepository;
         }
 
-        public async Task<string> CreateWorkoutAsync(string name, Difficulty difficulty, WorkoutType workoutType, string description, ApplicationUser user)
+        public async Task CreateWorkoutAsync(string name, Difficulty difficulty, WorkoutType workoutType, string description, ApplicationUser user)
         {
             var workout = new Workout
             {
@@ -52,8 +52,6 @@
 
             await this.workoutsRepository.AddAsync(workout);
             await this.workoutsRepository.SaveChangesAsync();
-
-            return workout.Id;
         }
 
         public async Task DeleteWorkoutAsync(string workoutId)
@@ -85,7 +83,7 @@
                 .To<T>()
                 .FirstOrDefault();
 
-        public async Task<PaginatedList<WorkoutViewModel>> GetWorkoutsByCategoryAsync(string userName, string workoutCategory, int? pageIndex = null)
+        public async Task<PaginatedList<WorkoutViewModel>> GetWorkoutsByCategoryAsync(bool isAdmin, string userName, string workoutCategory, int? pageIndex = null)
         {
             var workouts = this.workoutsRepository.All();
 
@@ -93,7 +91,14 @@
             {
                 if (workoutCategory == "Custom")
                 {
-                    workouts = workouts.Where(w => w.IsCustom == true && w.CreatorName == userName);
+                    if (isAdmin)
+                    {
+                        workouts = workouts.Where(w => w.IsCustom == true);
+                    }
+                    else
+                    {
+                        workouts = workouts.Where(w => w.IsCustom == true && w.CreatorName == userName);
+                    }
                 }
                 else
                 {

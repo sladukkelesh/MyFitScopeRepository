@@ -1,9 +1,7 @@
 ﻿namespace MyFitScope.Web.Controllers
 {
-    using System;
-    using System.Collections.Generic;
-    using System.Linq;
     using System.Threading.Tasks;
+
     using Microsoft.AspNetCore.Http;
     using Microsoft.AspNetCore.Identity;
     using Microsoft.AspNetCore.Mvc;
@@ -23,11 +21,16 @@
         }
 
         [HttpPost]
-        public async Task<IActionResult> AddAvatarPhoto(IFormFile photo)
+        public async Task<IActionResult> AddAvatarPhoto(CreateAvatarPhotoInputModel input)
         {
+            if (!this.ModelState.IsValid)
+            {
+                return this.Redirect("/");
+            }
+
             var loggedInUserId = this.userManager.GetUserId(this.User);
 
-            await this.usersService.UpdateAvatarPhotoAsync(loggedInUserId, photo);
+            await this.usersService.UpdateAvatarPhotoAsync(loggedInUserId, input.Photo);
 
             return this.Redirect("/");
         }

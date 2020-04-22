@@ -27,7 +27,15 @@
                 }
                 else if (resultValue == "Custom")
                 {
-                    <h1 class="text-center">Your custom created Exercises</h1>
+                    @if (User.IsInRole("Admin"))
+                    {
+                        <h1 class="text-center">Users custom created Exercises</h1>
+                    }
+                    else
+                    {
+                        <h1 class="text-center">Your custom created Exercises</h1>
+                    }
+
                 }
                 else
                 {
@@ -46,7 +54,9 @@
                             <img class="mb-2 mr-3  exercise-listing-image" src="@exercise.ThumbnailUrl" alt="Thumbnail Image">
                             <div class="media-body">
                                 <a asp-controller="Exercises" asp-action="Details" asp-route-id="@exercise.Id"><h5 class="mt-0 mb-1">@exercise.Name</h5></a>
+                                <p>Created by: @exercise.CreatorName</p>
                                 <p>Muscle Group: @exercise.MuscleGroupTitle</p>
+
                                 @exercise.ShortDescription
                             </div>
                         </li>

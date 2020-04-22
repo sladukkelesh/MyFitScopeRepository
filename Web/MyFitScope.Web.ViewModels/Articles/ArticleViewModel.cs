@@ -1,5 +1,6 @@
 ﻿namespace MyFitScope.Web.ViewModels.Articles
 {
+    using System;
     using System.Net;
     using System.Text.RegularExpressions;
 
@@ -11,6 +12,8 @@
         public string Id { get; set; }
 
         public string UserUserName { get; set; }
+
+        public DateTime CretedOn { get; set; }
 
         public string Title { get; set; }
 

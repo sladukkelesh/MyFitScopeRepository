@@ -1,9 +1,9 @@
 ﻿namespace MyFitScope.Services.Data
 {
     using System;
-    using System.Collections.Generic;
     using System.Linq;
     using System.Threading.Tasks;
+
     using MyFitScope.Common;
     using MyFitScope.Data.Common.Repositories;
     using MyFitScope.Data.Models.FitnessModels;
@@ -21,7 +21,7 @@
             this.exercisesRepository = exercisesRepository;
         }
 
-        public async Task CreateExerciseAsync(string name, string videoUrl, MuscleGroup muscleGroup, string description, string creatorName)
+        public async Task CreateExerciseAsync(string name, string videoUrl, MuscleGroup muscleGroup, string description, string creatorName, bool isAdmin)
         {
             var exercise = new Exercise
             {
@@ -31,7 +31,17 @@
                 MuscleGroup = muscleGroup,
                 Description = description,
                 CreatorName = creatorName,
+
             };
+
+            if (isAdmin)
+            {
+                exercise.IsCustom = false;
+            }
+            else
+            {
+                exercise.IsCustom = true;
+            }
 
             await this.exercisesRepository.AddAsync(exercise);
             await this.exercisesRepository.SaveChangesAsync();
@@ -66,7 +76,7 @@
                     .To<T>()
                     .FirstOrDefault();
 
-        public async Task<PaginatedList<ExerciseViewModel>> GetExercisesByCategoryAsync(string userName, string exerciseCategoryInput, bool withPagination, int? pageIndex = null)
+        public async Task<PaginatedList<ExerciseViewModel>> GetExercisesByCategoryAsync(bool isAdmin, string userName, string exerciseCategoryInput, int? pageIndex = null)
         {
             var result = this.exercisesRepository.All();
 
@@ -74,29 +84,31 @@
             {
                 if (exerciseCategoryInput == "Custom")
                 {
-                    // select only custom exercises for loggedIn User
-                    result = result.Where(e => e.IsCustom == true && e.CreatorName == userName);
+                    if (isAdmin)
+                    {
+                        // if User is in role "Admin", select all custom exercises:
+                        result = result.Where(e => e.IsCustom == true);
+                    }
+                    else
+                    {
+                        // select only the custom exercises for the current User:
+                        result = result.Where(e => e.IsCustom == true && e.CreatorName == userName);
+                    }
+
                 }
                 else
                 {
-                    // select exercises by chosen category
+                    // select exercises by chosen category:
                     result = result.Where(e => e.MuscleGroup == (MuscleGroup)Enum.Parse(typeof(MuscleGroup), exerciseCategoryInput) && e.IsCustom == false);
                 }
             }
             else
             {
-                // select all exercises wich are not custom created
+                // select all exercises wich are not custom created:
                 result = result.Where(e => e.IsCustom == false);
             }
 
             return await PaginatedList<ExerciseViewModel>.CreateAsync(result.To<ExerciseViewModel>(), pageIndex ?? GlobalConstants.PaginationDefaultPageIndex, GlobalConstants.PaginationPageSize);
-
-            //if (withPagination)
-            //{
-                
-            //}
-
-            //return result.To<ExerciseViewModel>().ToList();
         }
 
         public async Task<PaginatedList<ExerciseViewModel>> GetExercisesByKeyWordAsync(string keyWord, int? pageIndex)

@@ -3,7 +3,7 @@
     using System;
     using System.Linq;
     using System.Threading.Tasks;
-
+    using Ganss.XSS;
     using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Identity;
     using Microsoft.AspNetCore.Mvc;
@@ -28,18 +28,27 @@
 
         public async Task<IActionResult> ArticlesListing(string articleCategory, int? pageIndex = null)
         {
+            if (articleCategory == null)
+            {
+                articleCategory = "All";
+            }
+            else
+            {
+                articleCategory = new HtmlSanitizer().Sanitize(articleCategory);
+            }
+
             var model = new ArticlesLIstingViewModel();
 
             if (Enum.GetNames(typeof(ArticleCategory)).Any(ac => ac == articleCategory) || articleCategory == "All")
             {
                 model.Articles = await this.articlesService.GetArticlesByCategoryAsync(articleCategory, pageIndex);
+                model.ArticleCategory = "listing=" + articleCategory;
             }
             else
             {
                 model.Articles = await this.articlesService.GetArticlesByKeyWordAsync(articleCategory, pageIndex);
+                model.ArticleCategory = "search=" + articleCategory;
             }
-
-            model.ArticleCategory = articleCategory;
 
             return this.View(model);
         }
@@ -60,6 +69,11 @@
         [HttpPost]
         public async Task<IActionResult> CreateArticle(CreateArticleInputViewModel input)
         {
+            if (!this.ModelState.IsValid)
+            {
+                return this.View(input);
+            }
+
             var userId = this.userManager.GetUserId(this.User);
             var articleId = await this.articlesService.CreateArticle(input.ArticleTitle, input.ArticleCategory, input.ArticleContent, userId, input.ArticleImage);
 

@@ -6,18 +6,18 @@
     using MyFitScope.Data.Models.FitnessModels.Enums;
     using MyFitScope.Services.Mapping;
 
-    public class CreateWorkoutInputModel : IMapFrom<Workout>
+    public class CreateWorkoutInputModel
     {
         [Required]
-        [MaxLength(50)]
+        [MaxLength(100)]
         [MinLength(5)]
         public string Name { get; set; }
 
+        [Required]
         public Difficulty Difficulty { get; set; }
 
+        [Required]
         public WorkoutType WorkoutType { get; set; }
-
-        public bool IsCustom { get; set; }
 
         [Required]
         [MaxLength(2000)]

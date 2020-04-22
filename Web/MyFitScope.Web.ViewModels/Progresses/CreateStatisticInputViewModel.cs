@@ -7,6 +7,7 @@
     public class CreateStatisticInputViewModel
     {
         [Required]
+        [Range(0, double.MaxValue, ErrorMessage = "The value must be greater than 0")]
         public double Weight { get; set; }
 
         public double? Biceps { get; set; }
@@ -20,7 +21,5 @@
         public double? Thigh { get; set; }
 
         public double? Calf { get; set; }
-
-        public IFormFile ProgressPhoto { get; set; }
     }
 }

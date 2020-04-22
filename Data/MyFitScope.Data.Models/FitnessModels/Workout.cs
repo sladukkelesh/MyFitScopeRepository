@@ -13,7 +13,6 @@
         {
             this.Id = Guid.NewGuid().ToString();
             this.CreatedOn = DateTime.UtcNow;
-            this.IsCustom = false;
             this.Users = new HashSet<ApplicationUser>();
             this.WorkoutDays = new HashSet<WorkoutDay>();
         }

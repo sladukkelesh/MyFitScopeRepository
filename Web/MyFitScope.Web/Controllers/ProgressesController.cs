@@ -40,6 +40,11 @@
         [HttpPost]
         public async Task<IActionResult> AddStatistic(CreateStatisticInputViewModel input)
         {
+            if (!this.ModelState.IsValid)
+            {
+                return this.View(input);
+            }
+
             var userId = this.userManager.GetUserId(this.User);
 
             await this.progressesService.CreateStatisticAsync(userId, input.Weight, input.Biceps, input.Chest, input.Stomach, input.Hips, input.Thigh, input.Calf);

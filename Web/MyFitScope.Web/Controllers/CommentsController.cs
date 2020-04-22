@@ -6,6 +6,7 @@
     using Microsoft.AspNetCore.Mvc;
     using MyFitScope.Data.Models;
     using MyFitScope.Services.Data;
+    using MyFitScope.Web.ViewModels.Comments;
 
     public class CommentsController : BaseController
     {
@@ -19,13 +20,18 @@
         }
 
         [HttpPost]
-        public async Task<IActionResult> AddComment(string commentContent, string articleId)
+        public async Task<IActionResult> AddComment(CreateCommentInputModel input)
         {
+            if (!this.ModelState.IsValid)
+            {
+                return this.RedirectToAction("Details", "Articles", new { articleId = input.ArticleId });
+            }
+
             string userId = this.userManager.GetUserId(this.User);
 
-            await this.commentsService.CreateComment(commentContent, articleId, userId);
+            await this.commentsService.CreateComment(input.CommentContent, input.ArticleId, userId);
 
-            return this.RedirectToAction("Details", "Articles", new { articleId });
+            return this.RedirectToAction("Details", "Articles", new { articleId = input.ArticleId });
         }
 
         public async Task<IActionResult> DeleteComment(string commentId, string articleId)

@@ -19,8 +19,13 @@
         }
 
         [HttpPost]
-        public async Task<IActionResult> AddWorkoutDay(AddWorkoutDayInputViewModel input)
+        public async Task<IActionResult> AddWorkoutDay(CreateWorkoutDayInputViewModel input)
         {
+            if (!this.ModelState.IsValid)
+            {
+                return this.RedirectToAction("CurrentWorkout", "Workouts");
+            }
+
             await this.workoutDaysService.CreateWorkoutDayAsync(input.WorkoutId, input.WeekDay);
 
             return this.RedirectToAction("CurrentWorkout", "Workouts");

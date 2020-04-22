@@ -3,6 +3,7 @@
     using System;
     using System.Net;
     using System.Text.RegularExpressions;
+
     using MyFitScope.Data.Models.FitnessModels;
     using MyFitScope.Data.Models.FitnessModels.Enums;
     using MyFitScope.Services.Mapping;
@@ -12,6 +13,8 @@
         public string Id { get; set; }
 
         public string Name { get; set; }
+
+        public string CreatorName { get; set; }
 
         public string VideoUrl { get; set; }
 

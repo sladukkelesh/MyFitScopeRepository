@@ -6,62 +6,89 @@
     this.ViewData["Title"] = "Articles";
 }
 
-<section>
-    <!-- Page Content -->
-    <h1 class="my-4">
-        Blog Articles
-        <small>You can find every one of our articles here.</small>
-    </h1>
-
-    @if (Model.Articles.Count() == 0)
-    {
-        <h3>No articles found!</h3>
-    }
-    else
-    {
-        @foreach (var article in Model.Articles)
-        {
-            <div class="card mb-4 rcorners">
-                <img src="@article.ImageUrl" class="card-img-top r-top-corners" alt="@article.Title">
-                <div class="card-body bg-dark text-white">
-                    <h2 class="card-title pb-2 border-bottom border-light">@article.Title</h2>
-                    <p class="card-text indent-text">@article.ShortContent</p>
-                    <a asp-controller="Articles" asp-action="Details" asp-route-articleId="@article.Id" class="btn btn-primary">Read More &rarr;</a>
-                </div>
-                <div class="card-footer text-muted">
-                    Posted on January 1, 2017 by
-                    <a href="#">Start Bootstrap</a>
-                </div>
-            </div>
+    <section class="bg-white rcorners p-3">
+        <!-- Page Content -->
+        @{
+            var tokens = Model.ArticleCategory.Split("=", StringSplitOptions.RemoveEmptyEntries);
+            var resultType = tokens[0];
+            var resultValue = tokens[1];
         }
 
-        <!-- Pagination -->
-        <nav class="text-center mt-3">
-            <ul class="pagination justify-content-center">
-                @{
-                    var previousActive = Model.Articles.HasPreviousPage ? string.Empty : " disabled";
-                    var nextActive = Model.Articles.HasNextPage ? string.Empty : " disabled";
-                }
+        @if (resultType == "search")
+        {
+            <h1 class="text-center">Search results for "@resultValue":</h1>
+        }
+        else
+        {
+            if (resultValue == "All")
+            {
+                <h1 class="text-center">All Articles</h1>
+            }
+            else
+            {
+                <h1 class="text-center">Articles from category "@resultValue"</h1>
+            }
 
-                <li class="@("page-item" + previousActive)">
-                    <a class="page-link" asp-controller="Articles" asp-action="ArticlesListing" asp-route-articleCategory="@Model.ArticleCategory" asp-route-pageIndex="@(Model.Articles.PageIndex - 1)">Previous</a>
-                </li>
+        }
 
-                @for (var i = 1; i <= Model.Articles.TotalPages; i++)
-                {
-                    var currentActive = Model.Articles.PageIndex == i ? " active" : string.Empty;
+        <hr />
 
-                    <li class="@("page-item" + currentActive)">
-                        <a class="page-link" asp-controller="Articles" asp-action="ArticlesListing" asp-route-articleCategory="@Model.ArticleCategory" asp-route-pageIndex="@i">@i</a>
+        @if (Model.Articles.Count() == 0)
+        {
+            if (resultType == "search")
+            {
+                <p>Sorry, no articles found...</p>
+            }
+            else
+            {
+                <p>Sorry, we don't have any articles in this category at this moment...</p>
+            }
+
+        }
+        else
+        {
+            @foreach (var article in Model.Articles)
+            {
+                <div class="card mb-4 rcorners">
+                    <img src="@article.ImageUrl" class="card-img-top r-top-corners" alt="@article.Title">
+                    <div class="card-body bg-dark text-white">
+                        <h2 class="card-title pb-2 border-bottom border-light">@article.Title</h2>
+                        <p class="card-text indent-text">@article.ShortContent</p>
+                        <a asp-controller="Articles" asp-action="Details" asp-route-articleId="@article.Id" class="btn btn-primary">Read More &rarr;</a>
+                    </div>
+                    <div class="card-footer text-muted">
+                        Posted on @article.CretedOn.ToString() by @article.UserUserName
+                    </div>
+                </div>
+            }
+
+            <!-- Pagination -->
+            <nav class="text-center mt-3">
+                <ul class="pagination justify-content-center">
+                    @{
+                        var previousActive = Model.Articles.HasPreviousPage ? string.Empty : " disabled";
+                        var nextActive = Model.Articles.HasNextPage ? string.Empty : " disabled";
+                    }
+
+                    <li class="@("page-item" + previousActive)">
+                        <a class="page-link" asp-controller="Articles" asp-action="ArticlesListing" asp-route-articleCategory="@resultValue" asp-route-pageIndex="@(Model.Articles.PageIndex - 1)">Previous</a>
                     </li>
 
-                }
+                    @for (var i = 1; i <= Model.Articles.TotalPages; i++)
+                    {
+                        var currentActive = Model.Articles.PageIndex == i ? " active" : string.Empty;
 
-                <li class="@("page-item" + nextActive)">
-                    <a class="page-link" asp-controller="Articles" asp-action="ArticlesListing" asp-route-articleCategory="@Model.ArticleCategory" asp-route-pageIndex="@(Model.Articles.PageIndex + 1)">Next</a>
-                </li>
-            </ul>
-        </nav>
-    }
-</section>
+                        <li class="@("page-item" + currentActive)">
+                            <a class="page-link" asp-controller="Articles" asp-action="ArticlesListing" asp-route-articleCategory="@resultValue" asp-route-pageIndex="@i">@i</a>
+                        </li>
+
+                    }
+
+                    <li class="@("page-item" + nextActive)">
+                        <a class="page-link" asp-controller="Articles" asp-action="ArticlesListing" asp-route-articleCategory="@resultValue" asp-route-pageIndex="@(Model.Articles.PageIndex + 1)">Next</a>
+                    </li>
+                </ul>
+            </nav>
+        }
+    </section>
 

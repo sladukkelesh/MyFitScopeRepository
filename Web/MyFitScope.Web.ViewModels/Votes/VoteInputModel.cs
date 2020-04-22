@@ -1,15 +1,16 @@
 ﻿namespace MyFitScope.Web.ViewModels.Votes
 {
-    using System;
-    using System.Collections.Generic;
-    using System.Text;
+    using System.ComponentModel.DataAnnotations;
 
     public class VoteInputModel
     {
+        [Required]
         public string VotedObject { get; set; }
 
+        [Required]
         public string VotedObjectId { get; set; }
 
+        [Required]
         public bool IsUpVote { get; set; }
     }
 }

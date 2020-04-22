@@ -37,14 +37,17 @@
                         </tr>
                     </thead>
                     <tbody>
+                        @{ 
+                            var exercises = Model.Exercises.OrderBy(e => e.MuscleGroup).ToList();
+                        }
 
-                        @for (var i = 0; i < Model.Exercises.Count; i++)
+                        @for (var i = 0; i <exercises.Count; i++)
                         {
                             <tr>
                                 <th scope="row">@(i + 1)</th>
-                                <td>@Model.Exercises[i].MuscleGroupTitle</td>
-                                <td><a asp-controller="Exercises" asp-action="Details" asp-route-id="@Model.Exercises[i].Id">@Model.Exercises[i].Name</a></td>
-                                <td><a class="btn btn-danger btn-sm" asp-controller="WorkoutDaysExercises" asp-action="RemoveExercise" asp-route-exerciseId="@Model.Exercises[i].Id" asp-route-workoutDayId="@Model.Id">Remove</a></td>
+                                <td>@exercises[i].MuscleGroupTitle</td>
+                                <td><a asp-controller="Exercises" asp-action="Details" asp-route-id="@exercises[i].Id">@exercises[i].Name</a></td>
+                                <td><a class="btn btn-danger btn-sm" asp-controller="WorkoutDaysExercises" asp-action="RemoveExercise" asp-route-exerciseId="@exercises[i].Id" asp-route-workoutDayId="@Model.Id">Remove</a></td>
                             </tr>
                         }
                     </tbody>

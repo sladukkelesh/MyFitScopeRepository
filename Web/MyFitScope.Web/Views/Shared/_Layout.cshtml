@@ -39,6 +39,10 @@
                                 <vc:dropdown-links url="/Workouts/WorkoutsListing?workoutCategory=" enum-name=@GlobalConstants.WorkoutCategoryTypeName></vc:dropdown-links>
                                 <div class="dropdown-divider"></div>
                                 <a class="nav-link" asp-area="" asp-controller="Workouts" asp-action="WorkoutsListing" asp-route-workoutCategory="All">All</a>
+                                @if (User.Identity.IsAuthenticated)
+                                {
+                                    <a class="nav-link" asp-area="" asp-controller="Workouts" asp-action="WorkoutsListing" asp-route-workoutCategory="Custom">Custom</a>
+                                }
                             </div>
                         </li>
 
@@ -48,6 +52,10 @@
                                 <vc:dropdown-links url="/Exercises/ExercisesListing?exerciseCategory=" enum-name=@GlobalConstants.ExerciseCategoryTypeName></vc:dropdown-links>
                                 <div class="dropdown-divider"></div>
                                 <a class="nav-link" asp-area="" asp-controller="Exercises" asp-action="ExercisesListing" asp-route-exerciseCategory="All">All</a>
+                                @if (User.Identity.IsAuthenticated)
+                                {
+                                    <a class="nav-link" asp-area="" asp-controller="Exercises" asp-action="ExercisesListing" asp-route-exerciseCategory="Custom">Custom</a>
+                                }
                             </div>
                         </li>
 

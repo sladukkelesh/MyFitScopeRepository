@@ -6,6 +6,7 @@
     using Microsoft.AspNetCore.Mvc;
     using MyFitScope.Data.Models;
     using MyFitScope.Services.Data;
+    using MyFitScope.Web.ViewModels.Responses;
 
     public class ResponsesController : BaseController
     {
@@ -19,13 +20,18 @@
         }
 
         [HttpPost]
-        public async Task<IActionResult> AddResponse(string responseContent, string parentCommentId, string articleId)
+        public async Task<IActionResult> AddResponse(CreateResponseInputModel input)
         {
+            if (!this.ModelState.IsValid)
+            {
+                return this.RedirectToAction("Details", "Articles", new { articleId = input.ArticleId });
+            }
+
             var userId = this.userManager.GetUserId(this.User);
 
-            await this.responsesService.CreateResponseAsync(responseContent, parentCommentId, articleId, userId);
+            await this.responsesService.CreateResponseAsync(input.ResponseContent, input.ParentCommentId, input.ArticleId, userId);
 
-            return this.RedirectToAction("Details", "Articles", new { articleId });
+            return this.RedirectToAction("Details", "Articles", new { articleId = input.ArticleId });
         }
 
         public async Task<IActionResult> DeleteResponse(string responseId, string articleId)

@@ -1,6 +1,6 @@
 ﻿namespace MyFitScope.Web.ViewModels.Exercises
 {
-
+    using Ganss.XSS;
     using MyFitScope.Web.Infrastructure;
 
     public class ExerciseListingViewModel

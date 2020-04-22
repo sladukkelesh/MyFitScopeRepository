@@ -11,6 +11,7 @@
         public Article()
         {
             this.Id = Guid.NewGuid().ToString();
+            this.CreatedOn = DateTime.UtcNow;
             this.Comments = new HashSet<Comment>();
         }
 

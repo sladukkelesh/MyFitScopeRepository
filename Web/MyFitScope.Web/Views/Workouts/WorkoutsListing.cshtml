@@ -14,7 +14,14 @@
             }
             else if (Model.WorkoutCategory == "Custom")
             {
-                <h1 class="text-center">Your custom created Workouts</h1>
+                @if (User.IsInRole("Admin"))
+                {
+                    <h1 class="text-center">Users custom created Workouts</h1>
+                }
+                else
+                {
+                    <h1 class="text-center">Your custom created Workouts</h1>
+                }
             }
             else
             {
@@ -31,6 +38,7 @@
                         <li class="media">
                             <div class="media-body">
                                 <a asp-controller="Workouts" asp-action="Details" asp-route-id="@workout.Id"><h5 class="mt-0 mb-1">@workout.Name</h5></a>
+                                <p>Created by: @workout.CreatorName</p>
                                 <p>Workout Type: @workout.WorkoutTypeTitle</p>
                                 <p>Difficulty: @workout.DifficultyTitle</p>
                                 <p>Description: @workout.ShortDescription</p>

@@ -1,16 +1,15 @@
 ﻿namespace MyFitScope.Web.Controllers
 {
     using System;
-    using System.Collections.Generic;
     using System.Linq;
     using System.Threading.Tasks;
 
+    using Ganss.XSS;
     using Microsoft.AspNetCore.Identity;
     using Microsoft.AspNetCore.Mvc;
     using MyFitScope.Data.Models;
     using MyFitScope.Data.Models.FitnessModels.Enums;
     using MyFitScope.Services.Data;
-    using MyFitScope.Web.Infrastructure;
     using MyFitScope.Web.ViewModels.Exercises;
 
     public class ExercisesController : Controller
@@ -38,10 +37,16 @@
             }
 
             var creatorName = this.User.Identity.Name;
+            var isAdmin = this.User.IsInRole("Admin");
 
-            await this.exercisesService.CreateExerciseAsync(input.Name, input.VideoUrl, input.MuscleGroup, input.Description, creatorName);
+            await this.exercisesService.CreateExerciseAsync(input.Name, input.VideoUrl, input.MuscleGroup, input.Description, creatorName, isAdmin);
 
-            return this.RedirectToAction("ExercisesListing", new { exerciseCategory = "Custom" });
+            if (isAdmin)
+            {
+                return this.RedirectToAction(nameof(this.ExercisesListing), new { exerciseCategory = "All" });
+            }
+
+            return this.RedirectToAction(nameof(this.ExercisesListing), new { exerciseCategory = "Custom" });
         }
 
         public async Task<IActionResult> ExercisesListing(string exerciseCategory, int? pageIndex = null)
@@ -50,14 +55,19 @@
             {
                 exerciseCategory = "All";
             }
+            else
+            {
+                exerciseCategory = new HtmlSanitizer().Sanitize(exerciseCategory);
+            }
 
             var userName = this.User.Identity.Name;
+            var isAdmin = this.User.IsInRole("Admin");
 
             var model = new ExerciseListingViewModel();
 
-            if (Enum.GetNames(typeof(MuscleGroup)).Any(ac => ac == exerciseCategory) || exerciseCategory == "All")
+            if (Enum.GetNames(typeof(MuscleGroup)).Any(ac => ac == exerciseCategory) || exerciseCategory == "All" || exerciseCategory == "Custom")
             {
-                model.Exercises = await this.exercisesService.GetExercisesByCategoryAsync(userName, exerciseCategory, true, pageIndex);
+                model.Exercises = await this.exercisesService.GetExercisesByCategoryAsync(isAdmin, userName, exerciseCategory, pageIndex);
                 model.ExerciseCategory = "listing=" + exerciseCategory;
             }
             else
@@ -85,14 +95,20 @@
                         })
                         .ToList();
 
+            result.Add(new ExerciseMuscleGroupOutputModel
+            {
+                GroupName = "Custom",
+            });
+
             return this.Ok(result);
         }
 
         public async Task<IActionResult> GetExercisesByMuscleGroup(string muscleGroup)
         {
             var userName = this.User.Identity.Name;
+            var isAdmin = this.User.IsInRole("Admin");
 
-            var exercises = await this.exercisesService.GetExercisesByCategoryAsync(userName, muscleGroup, false, null);
+            var exercises = await this.exercisesService.GetExercisesByCategoryAsync(isAdmin, userName, muscleGroup, null);
 
             var result = exercises.Select(e => new ExerciseOutputModel
             {

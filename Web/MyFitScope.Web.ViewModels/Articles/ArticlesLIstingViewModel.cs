@@ -1,5 +1,6 @@
 ﻿namespace MyFitScope.Web.ViewModels.Articles
 {
+    using Ganss.XSS;
     using MyFitScope.Web.Infrastructure;
 
     public class ArticlesLIstingViewModel

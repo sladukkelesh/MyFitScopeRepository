@@ -39,9 +39,9 @@
 
             var loggedInUser = await this.GetLoggedInUserAsync();
 
-            var workoutId = await this.workoutsService.CreateWorkoutAsync(input.Name, input.Difficulty, input.WorkoutType, input.Description, loggedInUser);
+            await this.workoutsService.CreateWorkoutAsync(input.Name, input.Difficulty, input.WorkoutType, input.Description, loggedInUser);
 
-            return this.Redirect("/");
+            return this.RedirectToAction(nameof(this.CurrentWorkout));
         }
 
         public async Task<IActionResult> CurrentWorkout()
@@ -56,10 +56,11 @@
         public async Task<IActionResult> WorkoutsListing(string workoutCategory, int? pageIndex = null)
         {
             var userName = this.User.Identity.Name;
+            var isAdmin = this.User.IsInRole("Admin");
 
             var model = new WorkoutsListingViewModel
             {
-                Workouts = await this.workoutsService.GetWorkoutsByCategoryAsync(userName, workoutCategory, pageIndex),
+                Workouts = await this.workoutsService.GetWorkoutsByCategoryAsync(isAdmin, userName, workoutCategory, pageIndex),
             };
 
             model.WorkoutCategory = workoutCategory;
@@ -71,11 +72,6 @@
         {
             var model = this.workoutsService.GetWorkoutById<DetailsViewModel>(id);
 
-            if (model == null)
-            {
-                return this.NotFound();
-            }
-
             return this.View(model);
         }
 
@@ -85,14 +81,14 @@
 
             await this.workoutsService.SetCurrentWorkoutAsync(workoutId, loggedInUser);
 
-            return this.RedirectToAction("CurrentWorkout");
+            return this.RedirectToAction(nameof(this.CurrentWorkout));
         }
 
         public async Task<IActionResult> DeleteWorkout(string workoutId)
         {
             await this.workoutsService.DeleteWorkoutAsync(workoutId);
 
-            return this.RedirectToAction("WorkoutsListing");
+            return this.RedirectToAction(nameof(this.WorkoutsListing), new { workoutCategory = "All" });
         }
 
         public IActionResult EditWorkout(string workoutId)

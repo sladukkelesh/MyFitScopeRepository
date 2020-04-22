@@ -11,6 +11,5 @@
 
         Cardio = 3,
         CrossFit = 4,
-        Custom = 5,
     }
 }

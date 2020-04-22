@@ -20,6 +20,5 @@
         Lower_Legs = 10,
 
         Cardio = 11,
-        Custom = 12,
     }
 }

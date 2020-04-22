@@ -17,19 +17,10 @@
             this.userManager = userManager;
         }
 
-        public async Task<IActionResult> Index()
+        public IActionResult Index()
         {
             if (this.User.Identity.IsAuthenticated)
             {
-                //var loggedInUser = await this.userManager.FindByIdAsync(this.userManager.GetUserId(this.User));
-
-                //var model = new UserLoggedInIndexPageViewModel
-                //{
-                //    AvatarImageUrl = loggedInUser.AvatarImageUrl,
-                //};
-
-                //return this.View("LoggedInIndexPage", model);
-
                 return this.View("LoggedInIndexPage");
             }
 
