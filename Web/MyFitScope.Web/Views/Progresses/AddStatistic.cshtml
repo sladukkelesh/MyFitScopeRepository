@@ -5,54 +5,51 @@
     this.ViewData["Title"] = "Create Statistics";
 }
 
-<section>
-    <article>
-        <header class="text-center">
-            <h1>Create Body Statistic</h1>
-        </header>
-        <section class="container col-md-8">
-            <form method="post" class="form-group" asp-controller="Progresses" asp-action="AddStatistic" enctype="multipart/form-data">
-                <div class="form-row">
-                    <div class="form-group col-md-6">
-                        <label asp-for="Weight">Weight:</label>
-                        <input type="number" asp-for="Weight" class="form-control" step="any" min="0"/>
-                        <span asp-validation-for="Weight" class="text-danger"></span>
-                    </div>
-                    <div class="form-group col-md-6">
-                        <label asp-for="Biceps">Biceps:</label>
-                        <input type="number" asp-for="Biceps" class="form-control" step="any" min="0"/>
-                    </div>
-                </div>
-                <div class="form-row">
-                    <div class="form-group col-md-6">
-                        <label asp-for="Chest">Chest:</label>
-                        <input type="number" asp-for="Chest" class="form-control" step="any" min="0"/>
-                    </div>
-                    <div class="form-group col-md-6">
-                        <label asp-for="Hips  ">Hips:</label>
-                        <input type="number" asp-for="Hips" class="form-control" step="any" min="0"/>
-                    </div>
-                </div>
-                <div class="form-row">
-                    <div class="form-group col-md-6">
-                        <label asp-for="Thigh ">Thigh:</label>
-                        <input type="number" asp-for="Thigh" class="form-control" step="any" min="0"/>
-                    </div>
-                    <div class="form-group col-md-6">
-                        <label asp-for="Calf  ">Calf:</label>
-                        <input type="number" asp-for="Calf" class="form-control" step="any" min="0"/>
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label asp-for="ProgressPhoto" class="upload-btn">
-                        <i class="fa fa-upload"></i> Upload
-                        <input asp-for="ProgressPhoto" type="file" class="form-control" />
-                    </label>
-                    <div class="margin-top-0"></div>
-                    <span id="file-selected"></span>
-                </div>
-                <input type="submit" class="btn btn-info btn-block" value="Add Statistic" />
-            </form>
-        </section>
-    </article>
+
+<section class="container col-md-8">
+    <h1 class="mb-0 p-3 text-center text-white bg-dark r-top-corners">Create Body Statistic</h1>
+    <form method="post" class="form-group bg-light p-4 mt-0 r-bottom-corners" asp-controller="Progresses" asp-action="AddStatistic" enctype="multipart/form-data">
+        <div class="form-row">
+            <div class="form-group col-md-6">
+                <label asp-for="Weight">Weight:</label>
+                <input type="number" asp-for="Weight" class="form-control" step="any" min="0" />
+                <span asp-validation-for="Weight" class="text-danger"></span>
+            </div>
+            <div class="form-group col-md-6">
+                <label asp-for="Biceps">Biceps:</label>
+                <input type="number" asp-for="Biceps" class="form-control" step="any" min="0" />
+            </div>
+        </div>
+        <div class="form-row">
+            <div class="form-group col-md-6">
+                <label asp-for="Chest">Chest:</label>
+                <input type="number" asp-for="Chest" class="form-control" step="any" min="0" />
+            </div>
+            <div class="form-group col-md-6">
+                <label asp-for="Hips  ">Hips:</label>
+                <input type="number" asp-for="Hips" class="form-control" step="any" min="0" />
+            </div>
+        </div>
+        <div class="form-row">
+            <div class="form-group col-md-6">
+                <label asp-for="Thigh ">Thigh:</label>
+                <input type="number" asp-for="Thigh" class="form-control" step="any" min="0" />
+            </div>
+            <div class="form-group col-md-6">
+                <label asp-for="Calf  ">Calf:</label>
+                <input type="number" asp-for="Calf" class="form-control" step="any" min="0" />
+            </div>
+        </div>
+        <div class="form-group">
+            <label asp-for="ProgressPhoto" class="upload-btn">
+                <i class="fa fa-upload"></i> Upload
+                <input asp-for="ProgressPhoto" type="file" class="form-control" />
+            </label>
+            <div class="margin-top-0"></div>
+            <span id="file-selected"></span>
+        </div>
+        <div class="text-center">
+            <input type="submit" class="btn btn-info btn-block" value="Add Statistic" />
+        </div>       
+    </form>
 </section>

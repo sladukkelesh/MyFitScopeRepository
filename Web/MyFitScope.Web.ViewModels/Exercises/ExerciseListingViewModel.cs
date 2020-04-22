@@ -1,6 +1,5 @@
 ﻿namespace MyFitScope.Web.ViewModels.Exercises
 {
-    using System.Collections.Generic;
 
     using MyFitScope.Web.Infrastructure;
 

@@ -46,13 +46,18 @@
 
         public async Task<IActionResult> ExercisesListing(string exerciseCategory, int? pageIndex = null)
         {
+            if (exerciseCategory == null)
+            {
+                exerciseCategory = "All";
+            }
+
             var userName = this.User.Identity.Name;
 
             var model = new ExerciseListingViewModel();
 
             if (Enum.GetNames(typeof(MuscleGroup)).Any(ac => ac == exerciseCategory) || exerciseCategory == "All")
             {
-                model.Exercises = await this.exercisesService.GetExercisesByCategoryAsync(userName, exerciseCategory, true, pageIndex) as PaginatedList<ExerciseViewModel>;
+                model.Exercises = await this.exercisesService.GetExercisesByCategoryAsync(userName, exerciseCategory, true, pageIndex);
                 model.ExerciseCategory = "listing=" + exerciseCategory;
             }
             else

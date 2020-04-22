@@ -11,7 +11,7 @@
     {
         Task CreateExerciseAsync(string name, string videoUrl, MuscleGroup muscleGroup, string description, string creatorName);
 
-        Task<IEnumerable<ExerciseViewModel>> GetExercisesByCategoryAsync(string userName, string exerciseCategory, bool withPagination, int? pageIndex);
+        Task<PaginatedList<ExerciseViewModel>> GetExercisesByCategoryAsync(string userName, string exerciseCategory, bool withPagination, int? pageIndex);
 
         Task<PaginatedList<ExerciseViewModel>> GetExercisesByKeyWordAsync(string keyWord, int? pageIndex);
 

@@ -6,65 +6,79 @@
 }
 
 <section class="container">
-    @if (Model.WorkoutCategory == "All")
-    {
-        <h1>All Workouts</h1>
-    }
-    else if (Model.WorkoutCategory == "Custom")
-    {
-        <h1>Your custom created Workouts</h1>
-    }
-    else
-    {
-        <h1>Workouts of category "@Model.WorkoutCategory"</h1>
-    }
-    @if (Model.Workouts.Count != 0)
-    {
-        foreach (var workout in Model.Workouts)
-        {
-            <ul class="list-unstyled col-md-10">
-                <li class="media">
-                    <div class="media-body">
-                        <a asp-controller="Workouts" asp-action="Details" asp-route-id="@workout.Id"><h5 class="mt-0 mb-1">@workout.Name</h5></a>
-                        <p>Workout Type: @workout.WorkoutTypeTitle</p>
-                        <p>Difficulty: @workout.DifficultyTitle</p>
-                        <p>Description: @workout.ShortDescription</p>
-                    </div>
-                </li>
-            </ul>
-        }
+    <div class="row">
+        <div class="col-md-8 bg-white rcorners p-3">
+            @if (Model.WorkoutCategory == "All")
+            {
+                <h1 class="text-center">All Workouts</h1>
+            }
+            else if (Model.WorkoutCategory == "Custom")
+            {
+                <h1 class="text-center">Your custom created Workouts</h1>
+            }
+            else
+            {
+                <h1 class="text-center">Workouts of category "@Model.WorkoutCategory"</h1>
+            }
 
-        <!-- Pagination -->
-        <nav class="text-center mt-3">
-            <ul class="pagination justify-content-center">
-                @{
-                    var previousActive = Model.Workouts.HasPreviousPage ? string.Empty : " disabled";
-                    var nextActive = Model.Workouts.HasNextPage ? string.Empty : " disabled";
-                }
+            <hr />
 
-                <li class="@("page-item" + previousActive)">
-                    <a class="page-link" asp-controller="Workouts" asp-action="WorkoutsListing" asp-route-articleCategory="@Model.WorkoutCategory" asp-route-pageIndex="@(Model.Workouts.PageIndex - 1)">Previous</a>
-                </li>
-
-                @for (var i = 1; i <= Model.Workouts.TotalPages; i++)
+            @if (Model.Workouts.Count != 0)
+            {
+                foreach (var workout in Model.Workouts)
                 {
-                    var currentActive = Model.Workouts.PageIndex == i ? " active" : string.Empty;
-
-                    <li class="@("page-item" + currentActive)">
-                        <a class="page-link" asp-controller="Workouts" asp-action="WorkoutsListing" asp-route-articleCategory="@Model.WorkoutCategory" asp-route-pageIndex="@i">@i</a>
-                    </li>
-
+                    <ul class="list-unstyled col-md-10">
+                        <li class="media">
+                            <div class="media-body">
+                                <a asp-controller="Workouts" asp-action="Details" asp-route-id="@workout.Id"><h5 class="mt-0 mb-1">@workout.Name</h5></a>
+                                <p>Workout Type: @workout.WorkoutTypeTitle</p>
+                                <p>Difficulty: @workout.DifficultyTitle</p>
+                                <p>Description: @workout.ShortDescription</p>
+                            </div>
+                        </li>
+                    </ul>
                 }
 
-                <li class="@("page-item" + nextActive)">
-                    <a class="page-link" asp-controller="Workouts" asp-action="WorkoutsListing" asp-route-articleCategory="@Model.WorkoutCategory" asp-route-pageIndex="@(Model.Workouts.PageIndex + 1)">Next</a>
-                </li>
-            </ul>
-        </nav>
+                <!-- Pagination -->
+                <nav class="text-center mt-3">
+                    <ul class="pagination justify-content-center">
+                        @{
+                            var previousActive = Model.Workouts.HasPreviousPage ? string.Empty : " disabled";
+                            var nextActive = Model.Workouts.HasNextPage ? string.Empty : " disabled";
+                        }
 
-    }
-    else
-    {
-        <p>Sorry, we don't have any workouts in this category at this moment...</p>
-    }
+                        <li class="@("page-item" + previousActive)">
+                            <a class="page-link" asp-controller="Workouts" asp-action="WorkoutsListing" asp-route-articleCategory="@Model.WorkoutCategory" asp-route-pageIndex="@(Model.Workouts.PageIndex - 1)">Previous</a>
+                        </li>
+
+                        @for (var i = 1; i <= Model.Workouts.TotalPages; i++)
+                        {
+                            var currentActive = Model.Workouts.PageIndex == i ? " active" : string.Empty;
+
+                            <li class="@("page-item" + currentActive)">
+                                <a class="page-link" asp-controller="Workouts" asp-action="WorkoutsListing" asp-route-articleCategory="@Model.WorkoutCategory" asp-route-pageIndex="@i">@i</a>
+                            </li>
+
+                        }
+
+                        <li class="@("page-item" + nextActive)">
+                            <a class="page-link" asp-controller="Workouts" asp-action="WorkoutsListing" asp-route-articleCategory="@Model.WorkoutCategory" asp-route-pageIndex="@(Model.Workouts.PageIndex + 1)">Next</a>
+                        </li>
+                    </ul>
+                </nav>
+
+            }
+            else
+            {
+                @if (Model.WorkoutCategory == "Custom")
+                {
+                    <p>You have no Custom Workouts. You can create one <a asp-controller="Workouts" asp-action="AddWorkout">here</a>.</p>
+                }
+                else
+                {
+                    <p>Sorry, we don't have any workouts in this category at this moment...</p>
+                }
+            }
+        </div>
+    </div>   
 </section>

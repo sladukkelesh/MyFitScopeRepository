@@ -89,7 +89,7 @@
         {
             var workouts = this.workoutsRepository.All();
 
-            if (workoutCategory != null)
+            if (workoutCategory != null && workoutCategory != "All")
             {
                 if (workoutCategory == "Custom")
                 {

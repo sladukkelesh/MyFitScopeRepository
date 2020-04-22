@@ -17,34 +17,41 @@
     });
 </script>
 
-<h2 class="mb-0 p-3 text-center text-white bg-dark r-top-corners">Create your Article</h2>
-<form method="post" class="form-group bg-light p-4 mt-0 r-bottom-corners" asp-controller="Articles" asp-action="CreateArticle" enctype="multipart/form-data">
-    <div class="form-group">
-        <label asp-for="ArticleTitle">Title:</label>
-        <input asp-for="ArticleTitle" class="form-control" placeholder="Enter article title">
-        <span asp-validation-for="ArticleTitle" class="text-danger"></span>
+<section class="container">
+    <div class="row">
+        <div class="col-md-9">
+            <h2 class="mb-0 p-3 text-center text-white bg-dark r-top-corners">Create Article</h2>
+            <form method="post" class="form-group bg-light p-4 mt-0 r-bottom-corners" asp-controller="Articles" asp-action="CreateArticle" enctype="multipart/form-data">
+                <div class="form-group">
+                    <label asp-for="ArticleTitle">Title:</label>
+                    <input asp-for="ArticleTitle" class="form-control" placeholder="Enter article title">
+                    <span asp-validation-for="ArticleTitle" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="ArticleCategory">Article Category:</label>
+                    <select asp-for="ArticleCategory" asp-items="@Html.GetEnumSelectList<ArticleCategory>()" class="form-control"></select>
+                    <span asp-validation-for="ArticleCategory" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="ArticleContent">Content:</label>
+                    <textarea asp-for="ArticleContent" class="form-control" placeholder="Enter article content"></textarea>
+                    <span asp-validation-for="ArticleContent" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="ArticleImage" class="upload-btn">
+                        Upload Cover Image:
+                        <input asp-for="ArticleImage" type="file" class="form-control bg-dark text-white" />
+                        <span asp-validation-for="ArticleImage" class="text-danger"></span>
+                    </label>
+                    <div class="margin-top-0"></div>
+                    <span id="file-selected"></span>
+                </div>
+                <div class="text-center">
+                    <button type="submit" class="btn btn-primary">Create Article</button>
+                </div>
+            </form>
+        </div>
     </div>
-    <div class="form-group">
-        <label asp-for="ArticleCategory">Article Category:</label>
-        <select asp-for="ArticleCategory" asp-items="@Html.GetEnumSelectList<ArticleCategory>()" class="form-control"></select>
-        <span asp-validation-for="ArticleCategory" class="text-danger"></span>
-    </div>
-    <div class="form-group">
-        <label asp-for="ArticleContent">Content:</label>
-        <textarea asp-for="ArticleContent" class="form-control" placeholder="Enter article content"></textarea>
-        <span asp-validation-for="ArticleContent" class="text-danger"></span>
-    </div>
-    <div class="form-group">
-        <label asp-for="ArticleImage" class="upload-btn">
-            Upload Cover Image:
-            <input asp-for="ArticleImage" type="file" class="form-control bg-dark text-white" />
-            <span asp-validation-for="ArticleImage" class="text-danger"></span>
-        </label>
-        <div class="margin-top-0"></div>
-        <span id="file-selected"></span>
-    </div>
-    <div class="text-center">
-        <button type="submit" class="btn btn-primary">Create Article</button>
-    </div>
-</form>
+</section>
+
 

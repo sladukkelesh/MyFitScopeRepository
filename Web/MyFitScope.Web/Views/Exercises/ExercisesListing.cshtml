@@ -8,7 +8,7 @@
 
 <section class="container">
     <div class="row">
-        <div class="col-md-8">
+        <div class="col-md-8 bg-white rcorners p-3">
             @{
                 var tokens = Model.ExerciseCategory.Split("=", StringSplitOptions.RemoveEmptyEntries);
                 var resultType = tokens[0];
@@ -17,83 +17,91 @@
 
             @if (resultType == "search")
             {
-                <h1>Results for "@resultValue":</h1>
+                <h1 class="text-center">Search results for "@resultValue":</h1>
             }
             else
             {
                 @if (resultValue == "All")
                 {
-                    <h1>All Exercises</h1>
+                    <h1 class="text-center">All Exercises</h1>
                 }
                 else if (resultValue == "Custom")
                 {
-                    <h1>Your custom created Exercises</h1>
+                    <h1 class="text-center">Your custom created Exercises</h1>
                 }
                 else
                 {
-                    <h1>Exercises of category "@resultValue"</h1>
+                    <h1 class="text-center">Exercises of category "@resultValue"</h1>
                 }
             }
 
+            <hr />
 
-            <div class="container row">
-                @if (Model.Exercises.Count != 0)
+            @if (Model.Exercises.Count != 0)
+            {
+                foreach (var exercise in Model.Exercises)
                 {
-                    foreach (var exercise in Model.Exercises)
-                    {
-                        <ul class="list-unstyled col-md-12">
-                            <li class="media">
-                                <img class="mb-2 mr-3  exercise-listing-image" src="@exercise.ThumbnailUrl" alt="Thumbnail Image">
-                                <div class="media-body">
-                                    <a asp-controller="Exercises" asp-action="Details" asp-route-id="@exercise.Id"><h5 class="mt-0 mb-1">@exercise.Name</h5></a>
-                                    <p>Muscle Group: @exercise.MuscleGroupTitle</p>
-                                    @exercise.ShortDescription
-                                </div>
+                    <ul class="list-unstyled col-md-12 border border-light">
+                        <li class="media">
+                            <img class="mb-2 mr-3  exercise-listing-image" src="@exercise.ThumbnailUrl" alt="Thumbnail Image">
+                            <div class="media-body">
+                                <a asp-controller="Exercises" asp-action="Details" asp-route-id="@exercise.Id"><h5 class="mt-0 mb-1">@exercise.Name</h5></a>
+                                <p>Muscle Group: @exercise.MuscleGroupTitle</p>
+                                @exercise.ShortDescription
+                            </div>
+                        </li>
+                    </ul>
+                }
+
+                <!-- Pagination -->
+                <nav>
+                    <ul class="pagination justify-content-center">
+                        @{
+                            var previousActive = Model.Exercises.HasPreviousPage ? string.Empty : " disabled";
+                            var nextActive = Model.Exercises.HasNextPage ? string.Empty : " disabled";
+                        }
+
+                        <li class="@("page-item" + previousActive)">
+                            <a class="page-link" asp-controller="Exercises" asp-action="ExercisesListing" asp-route-exerciseCategory="@resultValue" asp-route-pageIndex="@(Model.Exercises.PageIndex - 1)">Previous</a>
+                        </li>
+
+                        @for (var i = 1; i <= Model.Exercises.TotalPages; i++)
+                        {
+                            var currentActive = Model.Exercises.PageIndex == i ? " active" : string.Empty;
+
+                            <li class="@("page-item" + currentActive)">
+                                <a class="page-link" asp-controller="Exercises" asp-action="ExercisesListing" asp-route-exerciseCategory="@resultValue" asp-route-pageIndex="@i">@i</a>
                             </li>
-                        </ul>
-                    }
+
+
+
+                        }
+
+                        <li class="@("page-item" + nextActive)">
+                            <a class="page-link" asp-controller="Exercises" asp-action="ExercisesListing" asp-route-exerciseCategory="@resultValue" asp-route-pageIndex="@(Model.Exercises.PageIndex + 1)">Next</a>
+                        </li>
+                    </ul>
+                </nav>
+            }
+            else
+            {
+                @if (resultType == "search")
+                {
+                    <p>Sorry, No exercise found...</p>
                 }
                 else
                 {
-                    @if (resultType == "search")
+                    @if (resultValue == "Custom")
                     {
-                        <p>Sorry, No exercise found...</p>
+                        <p>You have no Custom Exercises. You can create one <a asp-controller="Exercises" asp-action="CreateExercise">here</a>.</p>
                     }
                     else
                     {
-                        <p>Sorry, we don't have any exercise for this category at the moment...</p>
+                        <p>Sorry, we don't have any exercises in this category at this moment...</p>
                     }
-
                 }
 
-            </div>
-            <!-- Pagination -->
-            <nav>
-                <ul class="pagination justify-content-center">
-                    @{ 
-                        var previousActive = Model.Exercises.HasPreviousPage ? string.Empty : " disabled";
-                        var nextActive = Model.Exercises.HasNextPage ? string.Empty : " disabled";
-                    }
-
-                    <li class="@("page-item" + previousActive)">
-                        <a class="page-link" asp-controller="Exercises" asp-action="ExercisesListing" asp-route-articleCategory="@Model.ExerciseCategory" asp-route-pageIndex="@(Model.Exercises.PageIndex - 1)">Previous</a>
-                    </li>
-
-                    @for (var i = 1; i <= Model.Exercises.TotalPages; i++)
-                    {
-                        var currentActive = Model.Exercises.PageIndex == i ? " active" : string.Empty;
-
-                        <li class="@("page-item" + currentActive)">
-                            <a class="page-link" asp-controller="Exercises" asp-action="ExercisesListing" asp-route-articleCategory="@Model.ExerciseCategory" asp-route-pageIndex="@i">@i</a>
-                        </li>                       
-
-                    }
-
-                    <li class="@("page-item" + nextActive)">
-                        <a class="page-link" asp-controller="Articles" asp-action="ArticlesListing" asp-route-articleCategory="@Model.ExerciseCategory" asp-route-pageIndex="@(Model.Exercises.PageIndex + 1)">Next</a>
-                    </li>
-                </ul>
-            </nav>
+            }
         </div>
         <div class="col-md-4">
             <!-- Search Widget -->

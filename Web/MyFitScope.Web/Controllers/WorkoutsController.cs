@@ -62,14 +62,7 @@
                 Workouts = await this.workoutsService.GetWorkoutsByCategoryAsync(userName, workoutCategory, pageIndex),
             };
 
-            if (workoutCategory != null)
-            {
-                model.WorkoutCategory = workoutCategory;
-            }
-            else
-            {
-                model.WorkoutCategory = "All";
-            }
+            model.WorkoutCategory = workoutCategory;
 
             return this.View(model);
         }

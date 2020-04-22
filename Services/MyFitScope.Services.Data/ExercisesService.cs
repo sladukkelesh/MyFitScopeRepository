@@ -66,7 +66,7 @@
                     .To<T>()
                     .FirstOrDefault();
 
-        public async Task<IEnumerable<ExerciseViewModel>> GetExercisesByCategoryAsync(string userName, string exerciseCategoryInput, bool withPagination, int? pageIndex = null)
+        public async Task<PaginatedList<ExerciseViewModel>> GetExercisesByCategoryAsync(string userName, string exerciseCategoryInput, bool withPagination, int? pageIndex = null)
         {
             var result = this.exercisesRepository.All();
 
@@ -75,7 +75,7 @@
                 if (exerciseCategoryInput == "Custom")
                 {
                     // select only custom exercises for loggedIn User
-                    result = result.Where(e => e.CreatorName == userName);
+                    result = result.Where(e => e.IsCustom == true && e.CreatorName == userName);
                 }
                 else
                 {
@@ -89,12 +89,14 @@
                 result = result.Where(e => e.IsCustom == false);
             }
 
-            if (withPagination)
-            {
-                return await PaginatedList<ExerciseViewModel>.CreateAsync(result.To<ExerciseViewModel>(), pageIndex ?? GlobalConstants.PaginationDefaultPageIndex, GlobalConstants.PaginationPageSize);
-            }
+            return await PaginatedList<ExerciseViewModel>.CreateAsync(result.To<ExerciseViewModel>(), pageIndex ?? GlobalConstants.PaginationDefaultPageIndex, GlobalConstants.PaginationPageSize);
 
-            return result.To<ExerciseViewModel>().ToList();
+            //if (withPagination)
+            //{
+                
+            //}
+
+            //return result.To<ExerciseViewModel>().ToList();
         }
 
         public async Task<PaginatedList<ExerciseViewModel>> GetExercisesByKeyWordAsync(string keyWord, int? pageIndex)
