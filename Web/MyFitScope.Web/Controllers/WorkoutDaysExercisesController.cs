@@ -26,11 +26,8 @@
 
             if (!string.IsNullOrEmpty(exerciseAlreadyIn))
             {
-                this.ModelState.AddModelError(string.Empty, exerciseAlreadyIn);
-            }
+                this.TempData["error"] = exerciseAlreadyIn;
 
-            if (!this.ModelState.IsValid)
-            {
                 return this.RedirectToAction("Edit", "WorkoutDays", new { workoutDayId = input.WorkoutDayId });
             }
 

@@ -7,6 +7,14 @@
 
 <section>
     <article class="bg-light p-4 rcorners">
+
+        @if(TempData["error"] != null)
+        {
+        <div class="alert alert-danger" role="alert">
+            <i class="fas fa-exclamation-triangle mr-2"></i>@TempData["error"]!
+        </div>
+        }
+
         <header class="text-center">
             <h1>Edit Workout Day - @Model.WeekDayTitle</h1>
         </header>
