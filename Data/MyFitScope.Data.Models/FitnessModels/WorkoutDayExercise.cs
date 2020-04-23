@@ -4,13 +4,8 @@
 
     using MyFitScope.Data.Common.Models;
 
-    public class WorkoutDayExercise : BaseModel<string>
+    public class WorkoutDayExercise : BaseModel<int>
     {
-        public WorkoutDayExercise()
-        {
-            this.Id = Guid.NewGuid().ToString();
-        }
-
         public string WorkoutDayId { get; set; }
 
         public virtual WorkoutDay WorkoutDay { get; set; }

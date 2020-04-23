@@ -6,7 +6,7 @@
     using MyFitScope.Data.Models.FitnessModels.Enums;
     using MyFitScope.Services.Mapping;
 
-    public class EditWorkoutDayViewModel
+    public class EditWorkoutDayViewModel : IMapFrom<WorkoutDay>
     {
         public string Id { get; set; }
 
@@ -15,6 +15,6 @@
         public string WeekDayTitle
             => this.WeekDay.ToString();
 
-        public List<EditWorkoutDayExerciseViewModel> Exercises { get; set; }
+        public ICollection<EditWorkoutDayExerciseViewModel> Exercises { get; set; }
     }
 }

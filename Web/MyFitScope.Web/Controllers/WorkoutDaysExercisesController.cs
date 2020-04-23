@@ -51,9 +51,9 @@
         {
             var workoutDay = this.workoutDayService.GetWorkoutDayById(workoutDayId);
 
-            if (workoutDay.Exercises.Any(e => e.Id == exerciseId))
+            if (workoutDay.Exercises.Any(e => e.ExerciseId == exerciseId))
             {
-                var exerciseName = workoutDay.Exercises.FirstOrDefault(e => e.Id == exerciseId).Name;
+                var exerciseName = workoutDay.Exercises.FirstOrDefault(e => e.ExerciseId == exerciseId).ExerciseName;
                 var day = workoutDay.WeekDayTitle;
 
                 return day + " already contains exercise with name " + exerciseName;

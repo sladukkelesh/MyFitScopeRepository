@@ -4,15 +4,19 @@
     using MyFitScope.Data.Models.FitnessModels.Enums;
     using MyFitScope.Services.Mapping;
 
-    public class EditWorkoutDayExerciseViewModel
+    public class EditWorkoutDayExerciseViewModel : IMapFrom<WorkoutDayExercise>
     {
-        public string Id { get; set; }
+        public int Id { get; set; }
 
-        public string Name { get; set; }
+        public string ExerciseId { get; set; }
 
-        public MuscleGroup MuscleGroup { get; set; }
+        public string ExerciseName { get; set; }
+
+        public MuscleGroup ExerciseMuscleGroup { get; set; }
 
         public string MuscleGroupTitle
-            => this.MuscleGroup.ToString().Replace("_", " ");
+            => this.ExerciseMuscleGroup.ToString().Replace("_", " ");
+
+        public string WorkoutDayId { get; set; }
     }
 }

@@ -123,9 +123,13 @@
                                                     </thead>
                                                     <tbody>
 
-                                                        @for (var j = 0; j < day.Exercises.Count; j++)
+                                                         @{ 
+                                                             var exercises = day.Exercises.OrderBy(e => e.MuscleGroupTitle).ToList();
+                                                         }
+
+                                                        @for (var j = 0; j < exercises.Count; j++)
                                                         {
-                                                            var exercise = day.Exercises[j];
+                                                            var exercise = exercises[j];
 
                                                             <tr class="bg-light">
                                                                 <th scope="row">@(j + 1)</th>

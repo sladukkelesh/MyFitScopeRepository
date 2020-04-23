@@ -60,18 +60,7 @@
         public EditWorkoutDayViewModel GetWorkoutDayById(string workoutDayId)
             => this.workoutDaysRepository.All()
                                  .Where(wd => wd.Id == workoutDayId)
-                                 .Select(wd => new EditWorkoutDayViewModel
-                                 {
-                                     Id = wd.Id,
-                                     WeekDay = wd.WeekDay,
-                                     Exercises = wd.Exercises.Select(e => new EditWorkoutDayExerciseViewModel
-                                     {
-                                         Id = e.ExerciseId,
-                                         Name = e.Exercise.Name,
-                                         MuscleGroup = e.Exercise.MuscleGroup,
-                                     })
-                                     .ToList(),
-                                 })
+                                 .To<EditWorkoutDayViewModel>()
                                  .FirstOrDefault();
     }
 }

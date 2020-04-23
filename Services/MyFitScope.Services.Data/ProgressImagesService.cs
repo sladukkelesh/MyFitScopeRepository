@@ -45,7 +45,7 @@
 
             this.cloudinaryService.DeletePhoto(imageToDelete.PublicId);
 
-            imageToDelete.IsDeleted = true;
+            this.progressImagesRepository.HardDelete(imageToDelete);
 
             await this.progressImagesRepository.SaveChangesAsync();
         }

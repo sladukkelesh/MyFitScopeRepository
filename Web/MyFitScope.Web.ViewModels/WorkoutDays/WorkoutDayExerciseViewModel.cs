@@ -6,6 +6,8 @@
 
     public class WorkoutDayExerciseViewModel : IMapFrom<WorkoutDayExercise>
     {
+        public int Id { get; set; }
+
         public string ExerciseId { get; set; }
 
         public string ExerciseName { get; set; }
