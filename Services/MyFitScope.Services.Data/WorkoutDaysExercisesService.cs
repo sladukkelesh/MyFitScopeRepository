@@ -1,10 +1,13 @@
 ﻿namespace MyFitScope.Services.Data
 {
+    using System.Collections.Generic;
     using System.Linq;
     using System.Threading.Tasks;
 
     using MyFitScope.Data.Common.Repositories;
     using MyFitScope.Data.Models.FitnessModels;
+    using MyFitScope.Services.Mapping;
+    using MyFitScope.Web.ViewModels.WorkoutDaysExercises;
 
     public class WorkoutDaysExercisesService : IWorkoutDaysExercisesService
     {
@@ -38,5 +41,14 @@
 
             return targetToDelete.WorkoutDayId;
         }
+
+        public IEnumerable<WorkoutDaysExercisesOutputModel> GetByExerciseId(string exerciseId)
+        {
+            return this.workoutDayExerciseRepository.All()
+                                                    .Where(we => we.ExerciseId == exerciseId)
+                                                    .To<WorkoutDaysExercisesOutputModel>()
+                                                    .ToList();
+        }
+
     }
 }

@@ -40,15 +40,17 @@
         {
             var workoutDayToDelete = await this.workoutDaysRepository.GetByIdWithDeletedAsync(workoutDayId);
 
-            var exercisesConnectionsToDelete = this.workoutDaysExercisesRespository.All()
+            if (this.workoutDaysExercisesRespository.All().Any(we => we.WorkoutDayId == workoutDayId))
+            {
+                var exercisesConnectionsToDelete = this.workoutDaysExercisesRespository.All()
                                                    .Where(we => we.WorkoutDayId == workoutDayId)
-                                                   .To<WorkoutDaysExercisesToDeleteInputModel>()
+                                                   .To<WorkoutDaysExercisesOutputModel>()
                                                    .ToList();
 
-            foreach (var connection in exercisesConnectionsToDelete)
-            {
-                await this.workoutDaysExercisesService.RemoveExerciseFromWorkoutDayAsync(connection.ExerciseId, connection.WorkoutDayId);
-
+                foreach (var connection in exercisesConnectionsToDelete)
+                {
+                    await this.workoutDaysExercisesService.RemoveExerciseFromWorkoutDayAsync(connection.ExerciseId, connection.WorkoutDayId);
+                }
             }
 
             this.workoutDaysRepository.HardDelete(workoutDayToDelete);

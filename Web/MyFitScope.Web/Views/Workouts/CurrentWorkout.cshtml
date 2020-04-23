@@ -7,13 +7,14 @@
     this.Layout = "_LoggedInLayout";
 }
 
-<section>
+<section class="bg-light p-4 rcorners">
     @if (Model == null)
     {
         <h1>No current workout found</h1>
+        <hr />
         <p>You still don't have a current workout! Press the "Create Workout" button bellow to create one:</p>
         
-        <div>
+        <div class="mb-2">
             <a class="btn btn-primary" asp-controller="Workouts" asp-action="AddWorkout">Create Workout</a>
         </div>
 
@@ -24,7 +25,7 @@
     }
     else
     {
-    <article class="bg-light p-4 rcorners">
+    <article>
         <header class="text-center">
             <h1>Your current workout</h1>
             <hr />

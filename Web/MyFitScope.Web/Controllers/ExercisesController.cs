@@ -17,11 +17,13 @@
     {
         private readonly IExercisesService exercisesService;
         private readonly UserManager<ApplicationUser> userManager;
+        private readonly IWorkoutDaysExercisesService workoutDaysExercisesService;
 
-        public ExercisesController(IExercisesService exercisesService, UserManager<ApplicationUser> userManager)
+        public ExercisesController(IExercisesService exercisesService, UserManager<ApplicationUser> userManager, IWorkoutDaysExercisesService workoutDaysExercisesService)
         {
             this.exercisesService = exercisesService;
             this.userManager = userManager;
+            this.workoutDaysExercisesService = workoutDaysExercisesService;
         }
 
         [Authorize]
@@ -89,6 +91,7 @@
             return this.View(model);
         }
 
+        // This action works for Exercise Manager Muscle Group Menu (left part)
         [Authorize]
         public IActionResult GetMuscleGroups()
         {
@@ -99,14 +102,18 @@
                         })
                         .ToList();
 
-            result.Add(new ExerciseMuscleGroupOutputModel
+            if (!this.User.IsInRole("Admin"))
             {
-                GroupName = "Custom",
-            });
+                result.Add(new ExerciseMuscleGroupOutputModel
+                {
+                    GroupName = "Custom",
+                });
+            }
 
             return this.Ok(result);
         }
 
+        // This action generate the exercise links for every selected muscle group in Exercise Manager Menu
         [Authorize]
         public async Task<IActionResult> GetExercisesByMuscleGroup(string muscleGroup)
         {
@@ -127,6 +134,16 @@
         [Authorize]
         public async Task<IActionResult> DeleteExercise(string exerciseId)
         {
+            if (this.workoutDaysExercisesService.GetByExerciseId(exerciseId).Count() > 0)
+            {
+                var exerciseConnections = this.workoutDaysExercisesService.GetByExerciseId(exerciseId);
+
+                foreach (var connection in exerciseConnections)
+                {
+                    await this.workoutDaysExercisesService.RemoveExerciseFromWorkoutDayAsync(connection.ExerciseId, connection.WorkoutDayId);
+                }
+            }
+
             await this.exercisesService.DeleteExerciseAsync(exerciseId);
 
             return this.RedirectToAction("ExercisesListing");
