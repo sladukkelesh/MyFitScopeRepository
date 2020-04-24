@@ -14,6 +14,8 @@
 
     public class ExercisesService : IExercisesService
     {
+        private const string InvalidExerciseIdErrorMessage = "Exercise with ID: {0} does not exist.";
+
         private readonly IDeletableEntityRepository<Exercise> exercisesRepository;
 
         public ExercisesService(IDeletableEntityRepository<Exercise> exercisesRepository)
@@ -51,6 +53,12 @@
         {
             var exerciseToDelete = await this.exercisesRepository.GetByIdWithDeletedAsync(exerciseId);
 
+            if (exerciseToDelete == null)
+            {
+                throw new ArgumentNullException(
+                    string.Format(InvalidExerciseIdErrorMessage, exerciseId));
+            }
+
             exerciseToDelete.IsDeleted = true;
 
             await this.exercisesRepository.SaveChangesAsync();
@@ -59,6 +67,12 @@
         public async Task EditExerciseAsync(string exerciseId, string name, string videoUrl, MuscleGroup muscleGroup, string description)
         {
             var exerciseToEdit = await this.exercisesRepository.GetByIdWithDeletedAsync(exerciseId);
+
+            if (exerciseToEdit == null)
+            {
+                throw new ArgumentNullException(
+                    string.Format(InvalidExerciseIdErrorMessage, exerciseId));
+            }
 
             exerciseToEdit.Name = name;
             exerciseToEdit.VideoUrl = videoUrl;
@@ -71,10 +85,20 @@
         }
 
         public T GetExerciseById<T>(string exerciseId)
-             => this.exercisesRepository.All()
-                    .Where(e => e.Id == exerciseId)
-                    .To<T>()
-                    .FirstOrDefault();
+        {
+            var exercise = this.exercisesRepository.All()
+                                .Where(e => e.Id == exerciseId)
+                                .To<T>()
+                                .FirstOrDefault();
+
+            if (exercise == null)
+            {
+                throw new ArgumentNullException(
+                    string.Format(InvalidExerciseIdErrorMessage, exerciseId));
+            }
+
+            return exercise;
+        }
 
         public async Task<PaginatedList<ExerciseViewModel>> GetExercisesByCategoryAsync(bool isAdmin, string userName, string exerciseCategoryInput, int? pageIndex = null)
         {
@@ -111,7 +135,7 @@
             return await PaginatedList<ExerciseViewModel>.CreateAsync(result.To<ExerciseViewModel>(), pageIndex ?? GlobalConstants.PaginationDefaultPageIndex, GlobalConstants.PaginationPageSize);
         }
 
-        public async Task<PaginatedList<ExerciseViewModel>> GetExercisesByKeyWordAsync(string keyWord, int? pageIndex)
+        public async Task<PaginatedList<ExerciseViewModel>> GetExercisesByKeyWordAsync(string keyWord, int? pageIndex = null)
         {
             var result = this.exercisesRepository.All()
                              .Where(e => e.Name.Contains(keyWord));

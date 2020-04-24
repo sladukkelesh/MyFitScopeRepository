@@ -1,5 +1,6 @@
 ﻿namespace MyFitScope.Services.Data
 {
+    using System;
     using System.Collections.Generic;
     using System.Linq;
     using System.Threading.Tasks;
@@ -11,6 +12,8 @@
 
     public class WorkoutDaysExercisesService : IWorkoutDaysExercisesService
     {
+        private const string InvalidExerciseConnectionIdErrorMessage = "Exercise connection with exerciseID: {0}  and workoutID: {1} does not exist.";
+
         private readonly IRepository<WorkoutDayExercise> workoutDayExerciseRepository;
 
         public WorkoutDaysExercisesService(IRepository<WorkoutDayExercise> workoutDayExerciseRepository)
@@ -35,6 +38,12 @@
             var targetToDelete = this.workoutDayExerciseRepository.All()
                                      .Where(we => we.ExerciseId == exerciseId && we.WorkoutDayId == workoutDayId)
                                      .FirstOrDefault();
+
+            if (targetToDelete == null)
+            {
+                throw new ArgumentNullException(
+                    string.Format(InvalidExerciseConnectionIdErrorMessage, exerciseId, workoutDayId));
+            }
 
             this.workoutDayExerciseRepository.Delete(targetToDelete);
             await this.workoutDayExerciseRepository.SaveChangesAsync();

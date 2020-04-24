@@ -6,31 +6,32 @@
     this.ViewData["Title"] = "Exercise Details";
 }
 
-<section class="py-3">
-    <div class="container">
-        <h1 style="margin: 2%; text-align: center;">@Model.Name</h1>
+<section class="container col-md-9 bg-white rcorners p-4">
+    <h1 style="margin: 2%; text-align: center;">@Model.Name</h1>
 
-        <hr />
+    <hr />
 
-        <div>
-            <div class="text-center py-3">
-                <iframe id="ytplayer" type="text/html" width="640" height="360"
-                        src="@Model.EmbededVideoUrl"
-                        frameborder="0">
-                </iframe>
-            </div>
-            <hr />
-            <div class="">
-                <p><span class="font-weight-bold">Targeted Muscle Group:</span> @Model.MuscleGroupTitle</p>
-                <p><span class="font-weight-bold">Exercise Description:</span> @Html.Raw(Model.SanitizedDescription)</p>
-            </div>
-            @if (this.User.IsInRole("Admin") || Model.CreatorName == this.User.Identity.Name)
-            {
-                <div class="text-center mt-4 mb-4">
-                    <a class="btn btn-info" asp-controller="Exercises" asp-action="EditExercise" asp-route-exerciseId="@Model.Id">Edit</a>
-                    <a class="btn btn-danger ml-lg-5" asp-controller="Exercises" asp-action="DeleteExercise" asp-route-exerciseId="@Model.Id" onclick="ConfirmDelete('@string.Format(GlobalConstants.ExerciseConfirmDeleteMessage, Model.Name)')">Delete</a>
-                </div>
-            }
+    <div>
+        <div class="text-center py-3">
+            <iframe id="ytplayer" type="text/html" width="640" height="360"
+                    src="@Model.EmbededVideoUrl"
+                    frameborder="0">
+            </iframe>
         </div>
+        <hr />
+        <div class="">
+            <p><span class="font-weight-bold">Creator: </span> @Model.CreatorName</p>
+            <p><span class="font-weight-bold">Targeted Muscle Group:</span> @Model.MuscleGroupTitle</p>
+            <p><span class="font-weight-bold">Exercise Description:</span></p>
+            <p class="indent-text">@Html.Raw(Model.SanitizedDescription)</p>
+        </div>
+        @if (this.User.IsInRole("Admin") || Model.CreatorName == this.User.Identity.Name)
+        {
+            <hr />
+            <div class="text-center mt-4 mb-4">
+                <a class="btn btn-info" asp-controller="Exercises" asp-action="EditExercise" asp-route-exerciseId="@Model.Id">Edit</a>
+                <a class="btn btn-danger ml-lg-5" asp-controller="Exercises" asp-action="DeleteExercise" asp-route-exerciseId="@Model.Id" onclick="ConfirmDelete('@string.Format(GlobalConstants.ExerciseConfirmDeleteMessage, Model.Name)')">Delete</a>
+            </div>
+        }
     </div>
 </section>

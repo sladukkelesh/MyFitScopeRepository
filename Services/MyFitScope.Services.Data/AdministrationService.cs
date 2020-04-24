@@ -1,5 +1,6 @@
 ﻿namespace MyFitScope.Services.Data
 {
+    using System;
     using System.Collections.Generic;
     using System.Linq;
     using System.Threading.Tasks;
@@ -11,6 +12,9 @@
 
     public class AdministrationService : IAdministrationService
     {
+        private const string InvalidRoleIdErrorMessage = "Role with ID: {0} does not exist.";
+        private const string InvalidUserIdErrorMessage = "User with ID: {0} does not exist.";
+
         private readonly UserManager<ApplicationUser> userManager;
         private readonly RoleManager<ApplicationRole> roleManager;
 
@@ -74,9 +78,21 @@
         {
             var role = await this.roleManager.FindByIdAsync(roleId);
 
+            if (role == null)
+            {
+                throw new ArgumentNullException(
+                    string.Format(InvalidRoleIdErrorMessage, roleId));
+            }
+
             foreach (var user in users)
             {
                 var userObj = await this.userManager.FindByIdAsync(user.UserId);
+
+                if (userObj == null)
+                {
+                    throw new ArgumentNullException(
+                    string.Format(InvalidUserIdErrorMessage, user.UserId));
+                }
 
                 if (user.IsSelected && !(await this.userManager.IsInRoleAsync(userObj, role.Name)))
                 {

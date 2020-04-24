@@ -7,25 +7,38 @@
 
 <section class="container">
     <div class="row">
-        <div class="col-md-8 bg-white rcorners p-3">
-            @if (Model.WorkoutCategory == "All")
-            {
-                <h1 class="text-center">All Workouts</h1>
+        <div class="col-md-8 bg-white rcorners p-4">
+            @{
+                var tokens = Model.WorkoutCategory.Split("=", StringSplitOptions.RemoveEmptyEntries);
+                var resultType = tokens[0];
+                var resultValue = tokens[1];
             }
-            else if (Model.WorkoutCategory == "Custom")
+
+            @if (resultType == "search")
             {
-                @if (User.IsInRole("Admin"))
-                {
-                    <h1 class="text-center">Users custom created Workouts</h1>
-                }
-                else
-                {
-                    <h1 class="text-center">Your custom created Workouts</h1>
-                }
+                <h1 class="text-center">Search results for "@resultValue":</h1>
             }
             else
             {
-                <h1 class="text-center">Workouts of category "@Model.WorkoutCategory"</h1>
+                @if (Model.WorkoutCategory == "All")
+                {
+                    <h1 class="text-center">All Workouts</h1>
+                }
+                else if (Model.WorkoutCategory == "Custom")
+                {
+                    @if (User.IsInRole("Admin"))
+                    {
+                        <h1 class="text-center">Users custom created Workouts</h1>
+                    }
+                    else
+                    {
+                        <h1 class="text-center">Your custom created Workouts</h1>
+                    }
+                }
+                else
+                {
+                    <h1 class="text-center">Workouts of category "@resultValue"</h1>
+                }
             }
 
             <hr />
@@ -34,17 +47,22 @@
             {
                 foreach (var workout in Model.Workouts)
                 {
-                    <ul class="list-unstyled col-md-10">
-                        <li class="media">
-                            <div class="media-body">
-                                <a asp-controller="Workouts" asp-action="Details" asp-route-id="@workout.Id"><h5 class="mt-0 mb-1">@workout.Name</h5></a>
-                                <p>Created by: @workout.CreatorName</p>
-                                <p>Workout Type: @workout.WorkoutTypeTitle</p>
-                                <p>Difficulty: @workout.DifficultyTitle</p>
-                                <p>Description: @workout.ShortDescription</p>
-                            </div>
-                        </li>
-                    </ul>
+                    var background = "backgournds-" + workout.WorkoutTypeTitle.Replace(" ", "-").ToLower();
+                    var blurEffect = "content-" + workout.WorkoutTypeTitle.Replace(" ", "-").ToLower();
+                    
+                    <div class="row no-gutters border rounded overflow-hidden flex-md-row mb-4 shadow-sm h-md-250 position-relative">
+                        <div class="col d-flex flex-column position-static @background">
+                            <div class="@blurEffect">
+                                <strong class="d-inline-block mb-2 text-primary"><del>@workout.WorkoutTypeTitle</del></strong>
+                                <h3 class="mb-0 text-white">@workout.Name</h3>
+                                <div class="mb-1 text-white">Creator: @workout.CreatorName</div>
+                                <p class="card-text mb-auto text-white">@workout.ShortDescription</p>
+                                <div>
+                                    <a asp-controller="Workouts" asp-action="Details" asp-route-workoutId="@workout.Id" class="stretched-link">Continue reading</a>
+                                </div>
+                            </div>           
+                        </div>
+                    </div>
                 }
 
                 <!-- Pagination -->
@@ -78,15 +96,41 @@
             }
             else
             {
-                @if (Model.WorkoutCategory == "Custom")
+                @if (resultType == "search")
                 {
-                    <p>You have no Custom Workouts. You can create one <a asp-controller="Workouts" asp-action="AddWorkout">here</a>.</p>
+                    <p>Sorry, No exercise found...</p>
                 }
                 else
                 {
-                    <p>Sorry, we don't have any workouts in this category at this moment...</p>
+                    @if (Model.WorkoutCategory == "Custom")
+                    {
+                        <p>You have no Custom Workouts. You can create one <a asp-controller="Workouts" asp-action="AddWorkout">here</a>.</p>
+                    }
+                    else
+                    {
+                        <p>Sorry, we don't have any workouts in this category at this moment...</p>
+                    }
                 }
+
             }
         </div>
-    </div>   
+        <div class="col-md-4">
+            <!-- Search Widget -->
+            <div class="card my-4">
+                <h5 class="card-header bg-dark text-white">Search</h5>
+                <div class="card-body">
+                    <form method="get" asp-controller="Workouts" asp-action="WorkoutsListing">
+                        <div class="input-group form-group">
+                            <input type="text" class="form-control" name="workoutCategory" placeholder="Search for...">
+                            <span class="input-group-btn">
+                                <button type="submit" class="btn btn-secondary">Go!</button>
+                            </span>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
 </section>
+
+

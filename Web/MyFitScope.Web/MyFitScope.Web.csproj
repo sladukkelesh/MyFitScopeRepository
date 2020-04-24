@@ -13,6 +13,7 @@
 
   <PropertyGroup>
     <CodeAnalysisRuleSet>..\..\Rules.ruleset</CodeAnalysisRuleSet>
+    <SignAssembly>false</SignAssembly>
   </PropertyGroup>
   <ItemGroup>
     <AdditionalFiles Include="..\..\stylecop.json" />
@@ -47,9 +48,5 @@
     <ProjectReference Include="..\..\Services\MyFitScope.Services\MyFitScope.Services.csproj" />
     <ProjectReference Include="..\MyFitScope.Web.Infrastructure\MyFitScope.Web.Infrastructure.csproj" />
     <ProjectReference Include="..\MyFitScope.Web.ViewModels\MyFitScope.Web.ViewModels.csproj" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="wwwroot\Images\" />
   </ItemGroup>
 </Project>

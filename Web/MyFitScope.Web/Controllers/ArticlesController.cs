@@ -101,9 +101,14 @@
         [HttpPost]
         public async Task<IActionResult> EditArticle(EditArticleInputViewModel input)
         {
-             await this.articlesService.UpdateArticleAsync(input.Id, input.Title, input.ArticleCategory, input.ImageUrl, input.Content);
+            if (!this.ModelState.IsValid)
+            {
+                return this.View(input);
+            }
 
-             return this.RedirectToAction(nameof(this.Details), new { articleId = input.Id });
+            await this.articlesService.UpdateArticleAsync(input.Id, input.Title, input.ArticleCategory, input.ImageUrl, input.Content);
+
+            return this.RedirectToAction(nameof(this.Details), new { articleId = input.Id });
         }
     }
 }

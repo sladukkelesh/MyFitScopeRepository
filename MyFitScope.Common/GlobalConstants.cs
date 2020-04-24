@@ -39,5 +39,7 @@
         public const string CloudUsersImageFolder = "users_photos";
 
         public const string CloudProgressImageFolder = "progress_photos";
+
+        public const int ProgressTableHeaderColumnRowsCount = 9;
     }
 }

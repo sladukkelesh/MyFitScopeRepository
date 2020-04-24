@@ -1,5 +1,6 @@
 ﻿namespace MyFitScope.Services.Data
 {
+    using System;
     using System.Collections.Generic;
     using System.Linq;
     using System.Threading.Tasks;
@@ -14,6 +15,9 @@
 
     public class ProgressImagesService : IProgressImagesService
     {
+        private const string InvalidCloudinaryResponseParams = "Missing response from Cloudinary!";
+        private const string InvalidProgressImageIdErrorMessage = "Progress Image with ID: {0} does not exist.";
+
         private readonly IDeletableEntityRepository<ProgressImage> progressImagesRepository;
         private readonly ICloudinaryService cloudinaryService;
 
@@ -27,6 +31,11 @@
         {
             var fileName = userName + "_" + ShortId.Generate();
             var uploadPhotoResponse = await this.cloudinaryService.UploadPhotoAsync(file, fileName, GlobalConstants.CloudProgressImageFolder);
+
+            if (uploadPhotoResponse == null)
+            {
+                throw new ArgumentNullException(InvalidCloudinaryResponseParams);
+            }
 
             var progressImage = new ProgressImage
             {
@@ -42,6 +51,12 @@
         public async Task DeleteProgressImageAsync(string imageId)
         {
             var imageToDelete = await this.progressImagesRepository.GetByIdWithDeletedAsync(imageId);
+
+            if (imageToDelete == null)
+            {
+                throw new ArgumentNullException(
+                    string.Format(InvalidProgressImageIdErrorMessage, imageId));
+            }
 
             this.cloudinaryService.DeletePhoto(imageToDelete.PublicId);
 

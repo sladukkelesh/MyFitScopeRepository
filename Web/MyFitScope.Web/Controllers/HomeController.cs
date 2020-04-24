@@ -1,12 +1,9 @@
 ﻿namespace MyFitScope.Web.Controllers
 {
-    using System.Diagnostics;
-    using System.Threading.Tasks;
+    using Microsoft.AspNetCore.Http;
     using Microsoft.AspNetCore.Identity;
     using Microsoft.AspNetCore.Mvc;
     using MyFitScope.Data.Models;
-    using MyFitScope.Web.ViewModels;
-    using MyFitScope.Web.ViewModels.Users;
 
     public class HomeController : BaseController
     {
@@ -33,10 +30,14 @@
         }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
-        public IActionResult Error()
+        public IActionResult Error(int? statusCode = null)
         {
-            return this.View(
-                new ErrorViewModel { RequestId = Activity.Current?.Id ?? this.HttpContext.TraceIdentifier });
+            if (statusCode == StatusCodes.Status404NotFound)
+            {
+                return this.Redirect($"/Error/{StatusCodes.Status404NotFound}");
+            }
+
+            return this.Redirect($"/Error/{StatusCodes.Status500InternalServerError}");
         }
     }
 }

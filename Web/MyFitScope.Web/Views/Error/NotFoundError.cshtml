@@ -1,0 +1,49 @@
+﻿@model MyFitScope.Web.ViewModels.ErrorViewModel
+
+@{
+    ViewData["Title"] = "Oops!";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+<div class="container d-flex col-md-9 bg-white rcorners p-4">
+    <section id="titlebar">
+        <div class="container">
+            <div class="eight columns">
+                <h2>@ViewData["Title"]</h2>
+            </div>
+        </div>
+        <img class="error-image" width="350" src="https://speckyboy.com/wp-content/uploads/2019/04/404-page-web-design-inspiration-42.jpg" />
+    </section>
+    <div class="p-4">       
+        <h2>The page you're looking for doesn't exist!</h2>
+        <div class="margin-bottom-15"></div>
+        <h3>Check out one of these pages:</h3>
+        @if (this.User.Identity.IsAuthenticated)
+        {
+            <h5><a asp-controller="Workouts" asp-action="CurrentWorkout">Your current workout</a></h5>
+        }
+        else
+        {
+            <h5><a asp-controller="Workouts" asp-action="WorkoutsListing" asp-route-workoutCategory="All">Our workout programs</a></h5>
+        }
+        <h5><a asp-controller="Exercises" asp-action="ExercisesListing" asp-route-exerciseCategory="All">Exercises collection</a></h5>
+        <h5><a href="/">Go to Home Page</a></h5>
+        <div class="margin-bottom-45"></div>
+        <strong>Status code:</strong> <code>@this.Model.StatusCode</code>
+        @if (this.Model.ShowRequestId)
+        {
+            <br />
+            <strong>Request ID:</strong> <code>@this.Model.RequestId</code>
+        }
+        @if (this.Model.ShowRequestPath)
+        {
+            <br />
+            <strong>Request Path:</strong> <code>@this.Model.RequestPath</code>
+        }
+        <div class="margin-bottom-35"></div>
+    </div>
+    <div class="margin-top-50"></div>
+</div>
+
+

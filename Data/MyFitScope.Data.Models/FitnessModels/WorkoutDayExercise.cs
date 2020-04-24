@@ -6,6 +6,11 @@
 
     public class WorkoutDayExercise : BaseModel<int>
     {
+        public WorkoutDayExercise()
+        {
+            this.CreatedOn = DateTime.UtcNow;
+        }
+
         public string WorkoutDayId { get; set; }
 
         public virtual WorkoutDay WorkoutDay { get; set; }

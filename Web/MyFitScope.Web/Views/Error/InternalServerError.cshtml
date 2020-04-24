@@ -1,0 +1,33 @@
+﻿@model MyFitScope.Web.ViewModels.ErrorViewModel
+
+@{
+    ViewData["Title"] = "Oops!";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<section class="container col-md-8 bg-white rcorners p-4">
+    <section id="titlebar">
+        <div class="container">
+            <div class="eight columns">
+                <h2>@ViewData["Title"]</h2>
+            </div>
+        </div>
+    </section>
+
+    <div class="container">
+        <div class="sixteen columns">
+            <h3>Something went wrong!</h3>
+            <h3>Please try again later. If the error persists, contact the owner.</h3>
+            <div class="margin-bottom-45"></div>
+            <strong>Status code:</strong> <code>@this.Model.StatusCode</code>
+            @if (this.Model.ShowRequestId)
+            {
+                <br />
+                <strong>Request ID:</strong> <code>@this.Model.RequestId</code>
+            }
+            <div class="margin-bottom-35"></div>
+        </div>
+    </div>
+    <div class="margin-top-50"></div>
+</section>
+

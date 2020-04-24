@@ -1,11 +1,15 @@
 ﻿namespace MyFitScope.Web.Controllers
 {
+    using System;
+    using System.Linq;
     using System.Threading.Tasks;
 
+    using Ganss.XSS;
     using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Identity;
     using Microsoft.AspNetCore.Mvc;
     using MyFitScope.Data.Models;
+    using MyFitScope.Data.Models.FitnessModels.Enums;
     using MyFitScope.Services.Data;
     using MyFitScope.Web.ViewModels.Workouts;
 
@@ -56,22 +60,37 @@
 
         public async Task<IActionResult> WorkoutsListing(string workoutCategory, int? pageIndex = null)
         {
+            if (workoutCategory == null)
+            {
+                workoutCategory = "All";
+            }
+            else
+            {
+                workoutCategory = new HtmlSanitizer().Sanitize(workoutCategory);
+            }
+
             var userName = this.User.Identity.Name;
             var isAdmin = this.User.IsInRole("Admin");
 
-            var model = new WorkoutsListingViewModel
-            {
-                Workouts = await this.workoutsService.GetWorkoutsByCategoryAsync(isAdmin, userName, workoutCategory, pageIndex),
-            };
+            var model = new WorkoutsListingViewModel();
 
-            model.WorkoutCategory = workoutCategory;
+            if (Enum.GetNames(typeof(WorkoutType)).Any(ac => ac == workoutCategory) || workoutCategory == "All" || workoutCategory == "Custom")
+            {
+                model.Workouts = await this.workoutsService.GetWorkoutsByCategoryAsync(isAdmin, userName, workoutCategory, pageIndex);
+                model.WorkoutCategory = "listing=" + workoutCategory;
+            }
+            else
+            {
+                model.Workouts = await this.workoutsService.GetWorkoutsByKeyWordAsync(workoutCategory, pageIndex);
+                model.WorkoutCategory = "search=" + workoutCategory;
+            }
 
             return this.View(model);
         }
 
-        public IActionResult Details(string id)
+        public IActionResult Details(string workoutId)
         {
-            var model = this.workoutsService.GetWorkoutById<DetailsViewModel>(id);
+            var model = this.workoutsService.GetWorkoutById<DetailsViewModel>(workoutId);
 
             return this.View(model);
         }
@@ -106,6 +125,11 @@
         [Authorize]
         public async Task<IActionResult> EditWorkout(EditWorkoutInputViewModel input)
         {
+            if (!this.ModelState.IsValid)
+            {
+                return this.View(input);
+            }
+
             await this.workoutsService.EditWorkoutAsync(input.Id, input.Name, input.Difficulty, input.WorkoutType, input.Description);
 
             return this.RedirectToAction(nameof(this.Details), new { id = input.Id });

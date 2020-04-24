@@ -9,6 +9,7 @@
 
     public class WorkoutDaysController : BaseController
     {
+        private const string WeekDayMissing = "Week day field is required!";
         private readonly IWorkoutDaysService workoutDaysService;
 
         public WorkoutDaysController(IWorkoutDaysService workoutDaysService)
@@ -22,6 +23,8 @@
         {
             if (!this.ModelState.IsValid)
             {
+                this.TempData["error"] = WeekDayMissing;
+
                 return this.RedirectToAction("CurrentWorkout", "Workouts");
             }
 

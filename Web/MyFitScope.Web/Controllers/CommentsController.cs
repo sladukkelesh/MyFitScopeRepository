@@ -11,6 +11,9 @@
 
     public class CommentsController : BaseController
     {
+        private const string MissingCommentContentExeption = "Comment field is required!";
+        private const string InvalidCommentContentSize = "Comment size must be between 3 and 500 symbols!";
+
         private readonly ICommentsService commentsService;
         private readonly UserManager<ApplicationUser> userManager;
 
@@ -26,6 +29,15 @@
         {
             if (!this.ModelState.IsValid)
             {
+                if (string.IsNullOrEmpty(input.CommentContent))
+                {
+                    this.TempData["error"] = MissingCommentContentExeption;
+                }
+                else if (input.CommentContent.Length < 3 || input.CommentContent.Length > 500)
+                {
+                    this.TempData["error"] = InvalidCommentContentSize;
+                }
+
                 return this.RedirectToAction("Details", "Articles", new { articleId = input.ArticleId });
             }
 

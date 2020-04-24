@@ -161,6 +161,11 @@
         [HttpPost]
         public async Task<IActionResult> EditExercise(EditExerciseInputViewModel input)
         {
+            if (!this.ModelState.IsValid)
+            {
+                return this.View(input);
+            }
+
             await this.exercisesService.EditExerciseAsync(input.Id, input.Name, input.VideoUrl, input.MuscleGroup, input.Description);
 
             return this.RedirectToAction(nameof(this.Details), new { id = input.Id });

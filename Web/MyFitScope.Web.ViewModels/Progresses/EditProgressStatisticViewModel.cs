@@ -1,11 +1,17 @@
 ﻿namespace MyFitScope.Web.ViewModels.Progresses
 {
+    using System;
     using System.ComponentModel.DataAnnotations;
 
-    using Microsoft.AspNetCore.Http;
+    using MyFitScope.Data.Models.FitnessModels;
+    using MyFitScope.Services.Mapping;
 
-    public class CreateStatisticInputViewModel
+    public class EditProgressStatisticViewModel : IMapFrom<Progress>
     {
+        public string Id { get; set; }
+
+        public DateTime CreatedOn { get; set; }
+
         [Required]
         [Range(20, double.MaxValue, ErrorMessage = "The Weight value must be greater than 20kg")]
         public double Weight { get; set; }

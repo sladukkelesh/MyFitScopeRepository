@@ -11,6 +11,8 @@
 
     public class CommentsService : ICommentsService
     {
+        private const string InvalidCommentIdErrorMessage = "Comment with ID: {0} does not exist.";
+
         private readonly IDeletableEntityRepository<Comment> commentsRepository;
 
         public CommentsService(IDeletableEntityRepository<Comment> commentsRepository)
@@ -35,6 +37,12 @@
         public async Task DeleteCommentAsync(string commentId)
         {
             var commentToDelete = await this.commentsRepository.GetByIdWithDeletedAsync(commentId);
+
+            if (commentToDelete == null)
+            {
+                throw new ArgumentNullException(
+                    string.Format(InvalidCommentIdErrorMessage, commentId));
+            }
 
             commentToDelete.IsDeleted = true;
 

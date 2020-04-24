@@ -17,6 +17,8 @@
 
     public class WorkoutsService : IWorkoutsService
     {
+        private const string InvalidWorkoutIdErrorMessage = "Workout with ID: {0} does not exist.";
+
         private readonly UserManager<ApplicationUser> userManager;
         private readonly IDeletableEntityRepository<Workout> workoutsRepository;
         private readonly IDeletableEntityRepository<ApplicationUser> usersRepository;
@@ -58,6 +60,12 @@
         {
             var workoutToDelete = await this.workoutsRepository.GetByIdWithDeletedAsync(workoutId);
 
+            if (workoutToDelete == null)
+            {
+                throw new ArgumentNullException(
+                    string.Format(InvalidWorkoutIdErrorMessage, workoutId));
+            }
+
             workoutToDelete.IsDeleted = true;
 
             await this.workoutsRepository.SaveChangesAsync();
@@ -66,6 +74,12 @@
         public async Task EditWorkoutAsync(string workoutId, string name, Difficulty difficulty, WorkoutType workoutType, string description)
         {
             var workoutToEdit = await this.workoutsRepository.GetByIdWithDeletedAsync(workoutId);
+
+            if (workoutToEdit == null)
+            {
+                throw new ArgumentNullException(
+                    string.Format(InvalidWorkoutIdErrorMessage, workoutId));
+            }
 
             workoutToEdit.Name = name;
             workoutToEdit.Difficulty = difficulty;
@@ -78,10 +92,20 @@
         }
 
         public T GetWorkoutById<T>(string workoutId)
-            => this.workoutsRepository.All()
-                .Where(w => w.Id == workoutId)
-                .To<T>()
-                .FirstOrDefault();
+        {
+            var workout = this.workoutsRepository.All()
+                                .Where(w => w.Id == workoutId)
+                                .To<T>()
+                                .FirstOrDefault();
+
+            if (workout == null)
+            {
+                throw new ArgumentNullException(
+                    string.Format(InvalidWorkoutIdErrorMessage, workoutId));
+            }
+
+            return workout;
+        }
 
         public async Task<PaginatedList<WorkoutViewModel>> GetWorkoutsByCategoryAsync(bool isAdmin, string userName, string workoutCategory, int? pageIndex = null)
         {
@@ -111,6 +135,14 @@
             }
 
             return await PaginatedList<WorkoutViewModel>.CreateAsync(workouts.OrderByDescending(w => w.CreatedOn).To<WorkoutViewModel>(), pageIndex ?? GlobalConstants.PaginationDefaultPageIndex, GlobalConstants.PaginationPageSize);
+        }
+
+        public async Task<PaginatedList<WorkoutViewModel>> GetWorkoutsByKeyWordAsync(string keyWord, int? pageIndex)
+        {
+            var result = this.workoutsRepository.All()
+                             .Where(e => e.Name.Contains(keyWord));
+
+            return await PaginatedList<WorkoutViewModel>.CreateAsync(result.To<WorkoutViewModel>(), pageIndex ?? GlobalConstants.PaginationDefaultPageIndex, GlobalConstants.PaginationPageSize);
         }
 
         public async Task SetCurrentWorkoutAsync(string workoutId, ApplicationUser user)

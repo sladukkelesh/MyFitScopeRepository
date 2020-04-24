@@ -80,7 +80,7 @@
                 result.UpVotes = this.votesRepository.All()
                                                .Count(v => v.CommentId == objectId && v.VoteType == VoteType.UpVote);
                 result.DownVotes = this.votesRepository.All()
-                                            .Count(v => v.CommentId == objectId && v.VoteType == VoteType.DownVote);         
+                                            .Count(v => v.CommentId == objectId && v.VoteType == VoteType.DownVote);
             }
 
             if (votedObjectName == "Response")

@@ -16,19 +16,41 @@
             <h5 class="mt-0">@Model.UserUserName</h5>
             @Model.Content
 
+            @if(User.Identity.IsAuthenticated)
+            {
+
+            }
+
             <!-- Voting Section-->
             <ul class="list-inline d-sm-flex my-0 parent-vote-element">
                 <li class="list-inline-item g-mr-20">
-                    <a class="u-link-v5 g-color-gray-dark-v4 g-color-primary--hover" onclick="SendVote('Response', '@Model.Id', true)" href="#!">
+                    @if (User.Identity.IsAuthenticated)
+                    {
+                        <a class="u-link-v5 g-color-gray-dark-v4 g-color-primary--hover" onclick="SendVote('Response', '@Model.Id', true)" href="#!">
+                            <i class="fa fa-thumbs-up g-pos-rel g-top-1 g-mr-3"></i>
+                            <span class="vote-span">@Model.UpVotes</span>
+                        </a>
+                    }
+                    else
+                    {
                         <i class="fa fa-thumbs-up g-pos-rel g-top-1 g-mr-3"></i>
                         <span class="vote-span">@Model.UpVotes</span>
-                    </a>
+                    }
+
                 </li>
                 <li class="list-inline-item g-mr-20">
-                    <a class="u-link-v5 g-color-gray-dark-v4 g-color-primary--hover" onclick="SendVote('Response', '@Model.Id', false)" href="#!">
+                    @if (User.Identity.IsAuthenticated)
+                    {
+                        <a class="u-link-v5 g-color-gray-dark-v4 g-color-primary--hover" onclick="SendVote('Response', '@Model.Id', false)" href="#!">
+                            <i class="fa fa-thumbs-down g-pos-rel g-top-1 g-mr-3"></i>
+                            <span class="vote-span">@Model.DownVotes</span>
+                        </a>
+                    }
+                    else
+                    {
                         <i class="fa fa-thumbs-down g-pos-rel g-top-1 g-mr-3"></i>
                         <span class="vote-span">@Model.DownVotes</span>
-                    </a>
+                    }
                 </li>
                 @if (this.User.IsInRole("Admin"))
                 {

@@ -85,8 +85,51 @@ body {
     text-decoration: none;
 }
 
+/* Workout styles
+-------------------------------------------------- */
+div.backgournds-gym {
+    background-image: url('../Images/fit-index-background.jpg');
+    background-repeat: no-repeat;
+    background-size: cover;
+   
+}
 
+div.backgournds-homework {
+    background-image: url('../Images/homegym.jpg');
+    background-repeat: no-repeat;
+    background-size: cover;
+}
 
+div.backgournds-crossfit {
+    background-image: url('../Images/real-crossfit.jpg');
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
+div.backgournds-cardio {
+    background-image: url('../Images/real-cardio.jpg');
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+div.content-gym {
+    background-color: rgba(255, 255, 255, 0.2);
+    padding: 18px;
+}
+
+div.content-home-work {
+    background-color: rgba(0, 0, 0, 0.7);
+    padding: 18px;
+}
+
+div.content-crossfit {
+    background-color: rgba(0, 0, 0, 0.9);
+    padding: 18px;
+}
+
+div.content-cardio {
+    background-color: rgba(0, 0, 0, 0.8);
+    padding: 18px;
+}
 /* User Avatar styles
 -------------------------------------------------- */
 #uploadAvatarPhotoForm {
@@ -152,6 +195,8 @@ div.gallery {
 
 
 
+
+
 /* Common styles
 -------------------------------------------------- */
 .rcorners {
@@ -175,6 +220,8 @@ div.gallery {
 .indent-text {
     text-indent: 40px;
 }
+
+
 
 
 

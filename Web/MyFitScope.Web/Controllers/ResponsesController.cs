@@ -11,6 +11,9 @@
 
     public class ResponsesController : BaseController
     {
+        private const string MissingResponseContentExeption = "Response field is required!";
+        private const string InvalidResponseContentSize = "Response size must be between 3 and 500 symbols!";
+
         private readonly IResponsesService responsesService;
         private readonly UserManager<ApplicationUser> userManager;
 
@@ -26,6 +29,15 @@
         {
             if (!this.ModelState.IsValid)
             {
+                if (string.IsNullOrEmpty(input.ResponseContent))
+                {
+                    this.TempData["error"] = MissingResponseContentExeption;
+                }
+                else if (input.ResponseContent.Length < 3 || input.ResponseContent.Length > 500)
+                {
+                    this.TempData["error"] = InvalidResponseContentSize;
+                }
+
                 return this.RedirectToAction("Details", "Articles", new { articleId = input.ArticleId });
             }
 

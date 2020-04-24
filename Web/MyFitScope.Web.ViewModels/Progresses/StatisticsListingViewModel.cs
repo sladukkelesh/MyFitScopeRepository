@@ -1,9 +1,9 @@
 ﻿namespace MyFitScope.Web.ViewModels.Progresses
 {
-    using System.Collections.Generic;
+    using MyFitScope.Web.Infrastructure;
 
     public class StatisticsListingViewModel
     {
-        public List<StatisticOutputViewModel> Statistics { get; set; }
+        public PaginatedList<StatisticOutputViewModel> Statistics { get; set; }
     }
 }

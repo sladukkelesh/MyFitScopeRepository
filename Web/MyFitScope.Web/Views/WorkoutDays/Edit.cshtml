@@ -46,7 +46,7 @@
                     </thead>
                     <tbody>
                         @{ 
-                            var exercises = Model.Exercises.OrderBy(e => e.MuscleGroupTitle).ToList();
+                            var exercises = Model.Exercises.OrderBy(e => e.CreatedOn).ToList();
                         }
 
                         @for (var i = 0; i <exercises.Count; i++)

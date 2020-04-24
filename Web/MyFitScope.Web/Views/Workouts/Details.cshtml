@@ -6,77 +6,82 @@
     this.Layout = "_Layout";
 }
 
-<section class="row">
-    <article class="col-md-8 bg-white rcorners p-4">
-        <div>
-            <header class="text-center">
-                <h1>@Model.Name</h1>
-                <hr />
-            </header>
-            <section>
-                <p><span class="font-weight-bold">Creator:</span> @Model.CreatorName</p>
-                <p><span class="font-weight-bold">Difficulty:</span> @Model.DifficultyTitle</p>
-                <p><span class="font-weight-bold">Workout Category:</span> @Model.WorkoutTypeTitle</p>
-                <p><span class="font-weight-bold">Description:</span> @Html.Raw(Model.SanitizedDescription)</p>
-                <hr />
-            </section>
-            
+<section class="container col-md-9 bg-white rcorners p-4">
+    <div>
+        <header class="text-center">
+            <h1>@Model.Name</h1>
+            <hr />
+        </header>
+        <section>
+            <p><span class="font-weight-bold">Creator:</span> @Model.CreatorName</p>
+            <p><span class="font-weight-bold">Difficulty:</span> @Model.DifficultyTitle</p>
+            <p><span class="font-weight-bold">Workout Category:</span> @Model.WorkoutTypeTitle</p>
+            <p><span class="font-weight-bold">Description:</span> @Html.Raw(Model.SanitizedDescription)</p>
+            <hr />
+        </section>
 
-            @if (this.User.IsInRole("Admin") || Model.CreatorName == this.User.Identity.Name)
-            {
-                <div class="text-center mt-4 mb-4">
-                    <a class="btn btn-info" asp-controller="Workouts" asp-action="EditWorkout" asp-route-workoutId="@Model.Id">Edit</a>
-                    <a class="btn btn-danger ml-lg-5" asp-controller="Workouts" asp-action="DeleteWorkout" asp-route-workoutId="@Model.Id" onclick="ConfirmDelete('@string.Format(GlobalConstants.WorkoutConfirmDeleteMessage, Model.Name)')">Delete</a>
-                </div>
-            }
 
-            @if (User.Identity.IsAuthenticated)
+        @if (this.User.IsInRole("Admin") || Model.CreatorName == this.User.Identity.Name)
+        {
+            <div class="text-center mt-4 mb-4">
+                <a class="btn btn-info" asp-controller="Workouts" asp-action="EditWorkout" asp-route-workoutId="@Model.Id">Edit</a>
+                <a class="btn btn-danger ml-lg-5" asp-controller="Workouts" asp-action="DeleteWorkout" asp-route-workoutId="@Model.Id" onclick="ConfirmDelete('@string.Format(GlobalConstants.WorkoutConfirmDeleteMessage, Model.Name)')">Delete</a>
+            </div>
+        }
+
+        @if (User.Identity.IsAuthenticated)
+        {
+            <div>
+                <a class="btn btn-primary btn-block" asp-controller="Workouts" asp-action="SetAsCurrentWorkout" asp-route-workoutId="@Model.Id">Set As Current Workout</a>
+            </div>
+        }
+        <hr />
+    </div>
+
+    @if (Model.WorkoutDays.Count != 0)
+    {
+        <div id="workoutDays">
+            @foreach (var day in Model.WorkoutDays)
             {
                 <div>
-                    <a class="btn btn-primary btn-block" asp-controller="Workouts" asp-action="SetAsCurrentWorkout" asp-route-workoutId="@Model.Id">Set As Current Workout</a>
+                    <h3>@day.WeekDayTitle /@(day.Name != string.Empty ? day.Name : "Add execises to see muscle groups!")/</h3>
+
+                    @if (day.Exercises.Count != 0)
+                    {
+                        <table class="table table-striped">
+
+                            <thead>
+                                <tr>
+                                    <th scope="col">#</th>
+                                    <th scope="col">Muscle</th>
+                                    <th scope="col">Exercise</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @{
+                                    var exercises = day.Exercises.OrderBy(e => e.CreatedOn).ToList();
+                                }
+
+
+                                @for (var i = 0; i < exercises.Count; i++)
+                                {
+                                    <tr>
+                                        <th scope="row">@(i + 1)</th>
+                                        <td>@exercises[i].MuscleGroupTitle</td>
+                                        <td><a asp-controller="Exercises" asp-action="Details" asp-route-id="@exercises[i].ExerciseId">@exercises[i].ExerciseName</a></td>
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+                    }
                 </div>
             }
         </div>
-
-        @if (Model.WorkoutDays.Count != 0)
-        {
-            <div id="workoutDays">
-                @foreach (var day in Model.WorkoutDays)
-                {
-                    <div>
-                        <h3>@day.WeekDayTitle /@(day.Name != string.Empty ? day.Name : "Add execises to see muscle groups!")/</h3>
-
-                        @if (day.Exercises.Count != 0)
-                        {
-                            <table class="table table-striped">
-
-                                <thead>
-                                    <tr>
-                                        <th scope="col">#</th>
-                                        <th scope="col">Muscle</th>
-                                        <th scope="col">Exercise</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-
-                                    @for (var i = 0; i < day.Exercises.Count; i++)
-                                    {
-                                        <tr>
-                                            <th scope="row">@(i + 1)</th>
-                                            <td>@day.Exercises[i].MuscleGroupTitle</td>
-                                            <td><a asp-controller="Exercises" asp-action="Details" asp-route-id="@day.Exercises[i].ExerciseId">@day.Exercises[i].ExerciseName</a></td>
-                                        </tr>
-                                    }
-                                </tbody>
-                            </table>
-                        }
-                    </div>
-                }
-            </div>
-        }
-        else
-        {
-            <p>There are no workout days in this workout program!</p>
-        }
-    </article>  
+    }
+    else
+    {
+        <div class="alert alert-info" role="alert">
+            There are no workout days in this workout program!
+        </div>
+    }
 </section>

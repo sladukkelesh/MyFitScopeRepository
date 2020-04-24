@@ -16,6 +16,9 @@
 
     public class ArticlesService : IArticlesService
     {
+        private const string InvalidCloudinaryResponseParams = "Missing response from Cloudinary!";
+        private const string InvalidArticleIdErrorMessage = "Article with ID: {0} does not exist.";
+
         private readonly IDeletableEntityRepository<Article> articlesRepository;
         private readonly ICloudinaryService cloudinaryService;
 
@@ -28,6 +31,11 @@
         public async Task<string> CreateArticle(string articleTitle, ArticleCategory articleCategory, string articleContent, string userId, IFormFile photo)
         {
             var uploadPhotoResponse = await this.cloudinaryService.UploadPhotoAsync(photo, articleTitle.Replace(" ", "_") + "_image", GlobalConstants.CloudArticlesImageFolder);
+
+            if (uploadPhotoResponse == null)
+            {
+                throw new ArgumentNullException(InvalidCloudinaryResponseParams);
+            }
 
             var article = new Article
             {
@@ -49,16 +57,32 @@
         {
             var articleToDelete = await this.articlesRepository.GetByIdWithDeletedAsync(articleId);
 
+            if (articleToDelete == null)
+            {
+                throw new ArgumentNullException(
+                    string.Format(InvalidArticleIdErrorMessage, articleId));
+            }
+
             articleToDelete.IsDeleted = true;
 
             await this.articlesRepository.SaveChangesAsync();
         }
 
         public T GetArticleById<T>(string articleId)
-                    => this.articlesRepository.All()
+        {
+            var article = this.articlesRepository.All()
                             .Where(a => a.Id == articleId)
                             .To<T>()
                             .FirstOrDefault();
+
+            if (article == null)
+            {
+                throw new ArgumentNullException(
+                    string.Format(InvalidArticleIdErrorMessage, articleId));
+            }
+
+            return article;
+        }
 
         public async Task<PaginatedList<ArticleViewModel>> GetArticlesByCategoryAsync(string articleCategoryInput, int? pageIndex = null)
         {
@@ -84,6 +108,12 @@
         public async Task UpdateArticleAsync(string articleId, string articleTitle, ArticleCategory articleCategory, string articleImageUrl, string articleContent)
         {
             var articleToUpdate = await this.articlesRepository.GetByIdWithDeletedAsync(articleId);
+
+            if (articleToUpdate == null)
+            {
+                throw new ArgumentNullException(
+                    string.Format(InvalidArticleIdErrorMessage, articleId));
+            }
 
             articleToUpdate.Title = articleTitle;
             articleToUpdate.ArticleCategory = articleCategory;
