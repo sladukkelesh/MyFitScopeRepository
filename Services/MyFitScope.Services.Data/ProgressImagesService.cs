@@ -69,6 +69,7 @@
         {
             var result = this.progressImagesRepository.All()
                 .Where(pi => pi.UserId == userId)
+                .OrderByDescending(pi => pi.CreatedOn)
                 .To<ProgressImageViewModel>()
                 .ToList();
 

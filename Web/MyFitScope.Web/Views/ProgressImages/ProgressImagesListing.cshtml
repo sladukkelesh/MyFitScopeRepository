@@ -1,40 +1,87 @@
-﻿@using MyFitScope.Web.ViewModels.ProgressImages
+﻿@using MyFitScope.Common
+@using MyFitScope.Web.ViewModels.ProgressImages
 @model ProgressImagesListingViewModel
 @{
     this.ViewData["Title"] = "User Statistics";
     this.Layout = "_LoggedInLayout";
 }
 
-<div>
-    <form method="post" class="form-group" asp-controller="ProgressImages" asp-action="AddProgressImage" enctype="multipart/form-data">
-        <div class="form-group">
-            <label for="ProgressImageInputForm" class="upload-btn">
-                <i class="fa fa-upload"></i> Upload
-                <input id="ProgressImageInputForm" type="file" name="ProgressImage" class="form-control" />
-            </label>
-            <div class="margin-top-0"></div>
-            <span id="file-selected"></span>
-        </div>
-        <button type="submit" class="btn btn-primary">Submit</button>
-    </form>
-</div>
+<section class="bg-light p-4 rcorners">
+    <div class="text">
+        <form method="post" class="form-group" asp-controller="ProgressImages" asp-action="AddProgressImage" enctype="multipart/form-data">
+            <div class="form-group">
+                <label for="ProgressImageInputForm" class="upload-btn">
+                    <i class="fa fa-upload"></i> Upload Image
+                    <input id="ProgressImageInputForm" type="file" name="ProgressImage" class="form-control bg-dark text-white" />
+                </label>
+                <div class="margin-top-0"></div>
+                <span id="file-selected"></span>
+            </div>
+            <button type="submit" class="btn btn-primary">Send</button>
+        </form>
+    </div>
 
-<hr />
+    <hr />
 
-<h1>Your images are here</h1>
+    <h1 class="text-center">Your Progress Images:</h1>
 
-<hr />
-
-<div class="container">
-    @if (Model.Images.Count != 0)
-    {
-        for (var i = 0; i < Model.Images.Count; i++)
+    <hr />
+    <div class="bg-dark pt-4 pb-3">
+        @if (Model.Images.Count != 0)
         {
-            <div>
-                <img src="@Model.Images[i].Url" />
-                <p>@Model.Images[i].CreatedOn.ToString()</p>
-                <a asp-controller="ProgressImages" asp-action="DeleteProgressImage" asp-route-imageId="@Model.Images[i].Id">DeletePhoto</a>
+
+
+            @for (var row = 0; row < Math.Ceiling(Model.Images.Count / (double)3); row++)
+            {
+                var counter = 0;
+
+                <div class="gallery-container mb-3">
+                    @for (var pic = row * 3; pic < Model.Images.Count; pic++)
+                    {
+                        counter++;
+                        <div class="img co">
+                            <a target="_blank" href="#" data-toggle="modal" data-target="@("#exampleModalLong" + pic)">
+                                <img class="gallery" src="@Model.Images[pic].Url" alt="Progress Image">
+                            </a>
+                            <div class="desc">
+                                <p class="text-white">@Model.Images[pic].CreatedOn.ToShortDateString()</p>
+                                <a class="btn btn-danger btn-sm m-0" asp-controller="ProgressImages" asp-action="DeleteProgressImage" asp-route-imageId="@Model.Images[pic].Id" onclick="ConfirmDelete('@string.Format(GlobalConstants.ProgressImageConfirmDeleteMessage, Model.Images[pic].CreatedOn.ToShortDateString())')">DeletePhoto</a>
+                            </div>
+                        </div>
+
+                        <!-- Modal -->
+                        <div class="modal fade" id="@("exampleModalLong" + pic)" tabindex="-1" role="dialog" aria-labelledby="@("exampleModalLongTitle" + pic)" aria-hidden="true">
+                            <div class="modal-dialog" role="document">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title text-center" id="@("exampleModalLongTitle" + pic)">@Model.Images[pic].CreatedOn.ToShortDateString()</h5>
+                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                            <span aria-hidden="true">&times;</span>
+                                        </button>
+                                    </div>
+                                    <div class="modal-body text-center">
+                                        <img src="@Model.Images[pic].Url" style="width: 400px" />
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        if (counter == 3)
+                        {
+                            break;
+                        }
+                    }
+                </div>
+            }
+
+
+        }
+        else
+        {
+            <div class="alert alert-info" role="alert">
+                You have no Progress Images!
             </div>
         }
-    }
-</div>
+    </div>
+    
+</section>

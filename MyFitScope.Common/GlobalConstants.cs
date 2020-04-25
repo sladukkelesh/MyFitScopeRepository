@@ -30,6 +30,8 @@
 
         public const string ResponseConfirmDeleteMessage = "Confirm that you want to delete a response by \"{0}\"?";
 
+        public const string ProgressImageConfirmDeleteMessage = "Confirm that you want to delete an image from \"{0}\"?";
+
         public const int PaginationPageSize = 5;
 
         public const int PaginationDefaultPageIndex = 1;

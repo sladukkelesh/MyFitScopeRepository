@@ -47,8 +47,8 @@
             {
                 foreach (var workout in Model.Workouts)
                 {
-                    var background = "backgournds-" + workout.WorkoutTypeTitle.Replace(" ", "-").ToLower();
-                    var blurEffect = "content-" + workout.WorkoutTypeTitle.Replace(" ", "-").ToLower();
+                    var background = "backgournds-" + workout.WorkoutTypeTitle.ToLower();
+                    var blurEffect = "content-" + workout.WorkoutTypeTitle.ToLower();
                     
                     <div class="row no-gutters border rounded overflow-hidden flex-md-row mb-4 shadow-sm h-md-250 position-relative">
                         <div class="col d-flex flex-column position-static @background">
