@@ -10,6 +10,7 @@
     using MyFitScope.Data.Common.Repositories;
     using MyFitScope.Data.Models.FitnessModels;
     using MyFitScope.Services.Mapping;
+    using MyFitScope.Web.Infrastructure;
     using MyFitScope.Web.ViewModels.ProgressImages;
     using shortid;
 
@@ -65,15 +66,13 @@
             await this.progressImagesRepository.SaveChangesAsync();
         }
 
-        public ICollection<ProgressImageViewModel> GetAllImages(string userId)
+        public async Task<PaginatedList<ProgressImageViewModel>> GetAllImagesAsync(string userId, int? pageIndex = null)
         {
             var result = this.progressImagesRepository.All()
                 .Where(pi => pi.UserId == userId)
-                .OrderByDescending(pi => pi.CreatedOn)
-                .To<ProgressImageViewModel>()
-                .ToList();
+                .OrderByDescending(pi => pi.CreatedOn);
 
-            return result;
+            return await PaginatedList<ProgressImageViewModel>.CreateAsync(result.To<ProgressImageViewModel>(), pageIndex ?? GlobalConstants.PaginationDefaultPageIndex, GlobalConstants.PaginationPageSize + 1);
         }
     }
 }

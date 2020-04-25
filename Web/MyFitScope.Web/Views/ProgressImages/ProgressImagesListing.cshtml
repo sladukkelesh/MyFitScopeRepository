@@ -26,11 +26,10 @@
     <h1 class="text-center">Your Progress Images:</h1>
 
     <hr />
-    <div class="bg-dark pt-4 pb-3">
-        @if (Model.Images.Count != 0)
-        {
+    @if (Model.Images.Count != 0)
+    {
 
-
+        <div class="bg-dark pt-4 pb-3">
             @for (var row = 0; row < Math.Ceiling(Model.Images.Count / (double)3); row++)
             {
                 var counter = 0;
@@ -40,12 +39,13 @@
                     {
                         counter++;
                         <div class="img co">
+                            <!-- Modal trigger -->
                             <a target="_blank" href="#" data-toggle="modal" data-target="@("#exampleModalLong" + pic)">
                                 <img class="gallery" src="@Model.Images[pic].Url" alt="Progress Image">
                             </a>
                             <div class="desc">
                                 <p class="text-white">@Model.Images[pic].CreatedOn.ToShortDateString()</p>
-                                <a class="btn btn-danger btn-sm m-0" asp-controller="ProgressImages" asp-action="DeleteProgressImage" asp-route-imageId="@Model.Images[pic].Id" onclick="ConfirmDelete('@string.Format(GlobalConstants.ProgressImageConfirmDeleteMessage, Model.Images[pic].CreatedOn.ToShortDateString())')">DeletePhoto</a>
+                                <a class="btn btn-danger btn-sm m-0" asp-controller="ProgressImages" asp-action="DeleteProgressImage" asp-route-imageId="@Model.Images[pic].Id" onclick="ConfirmDelete('@string.Format(GlobalConstants.ProgressImageConfirmDeleteMessage, Model.Images[pic].CreatedOn.ToShortDateString())')">Delete Photo</a>
                             </div>
                         </div>
 
@@ -74,14 +74,40 @@
                 </div>
             }
 
+            <!-- Pagination -->
+            <nav class="text-center mt-4">
+                <ul class="pagination justify-content-center">
+                    @{
+                        var previousActive = Model.Images.HasPreviousPage ? string.Empty : " disabled";
+                        var nextActive = Model.Images.HasNextPage ? string.Empty : " disabled";
+                    }
 
-        }
-        else
-        {
-            <div class="alert alert-info" role="alert">
-                You have no Progress Images!
-            </div>
-        }
-    </div>
-    
+                    <li class="@("page-item" + previousActive)">
+                        <a class="page-link" asp-controller="ProgressImages" asp-action="ProgressImagesListing" asp-route-pageIndex="@(Model.Images.PageIndex - 1)">Previous</a>
+                    </li>
+
+                    @for (var i = 1; i <= Model.Images.TotalPages; i++)
+                    {
+                        var currentActive = Model.Images.PageIndex == i ? " active" : string.Empty;
+
+                        <li class="@("page-item" + currentActive)">
+                            <a class="page-link" asp-controller="ProgressImages" asp-action="ProgressImagesListing" asp-route-pageIndex="@i">@i</a>
+                        </li>
+
+                    }
+
+                    <li class="@("page-item" + nextActive)">
+                        <a class="page-link" asp-controller="ProgressImages" asp-action="ProgressImagesListing" asp-route-pageIndex="@(Model.Images.PageIndex + 1)">Next</a>
+                    </li>
+                </ul>
+            </nav>
+        </div>
+
+    }
+    else
+    {
+        <div class="alert alert-info" role="alert">
+            You have no Progress Images!
+        </div>
+    }
 </section>

@@ -1,9 +1,9 @@
 ﻿namespace MyFitScope.Web.ViewModels.ProgressImages
 {
-    using System.Collections.Generic;
+    using MyFitScope.Web.Infrastructure;
 
     public class ProgressImagesListingViewModel
     {
-        public List<ProgressImageViewModel> Images { get; set; }
+        public PaginatedList<ProgressImageViewModel> Images { get; set; }
     }
 }

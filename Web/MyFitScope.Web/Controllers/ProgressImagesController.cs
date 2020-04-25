@@ -39,13 +39,13 @@
         }
 
         [Authorize]
-        public IActionResult ProgressImagesListing()
+        public async Task<IActionResult> ProgressImagesListing(int? pageIndex = null)
         {
             var userId = this.userManager.GetUserId(this.User);
 
             var model = new ProgressImagesListingViewModel
             {
-                Images = this.progressImagesService.GetAllImages(userId).ToList(),
+                Images = await this.progressImagesService.GetAllImagesAsync(userId, pageIndex),
             };
 
             return this.View(model);

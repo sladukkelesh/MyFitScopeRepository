@@ -4,6 +4,7 @@
     using System.Threading.Tasks;
 
     using Microsoft.AspNetCore.Http;
+    using MyFitScope.Web.Infrastructure;
     using MyFitScope.Web.ViewModels.ProgressImages;
 
     public interface IProgressImagesService
@@ -12,6 +13,6 @@
 
         Task DeleteProgressImageAsync(string imageId);
 
-        ICollection<ProgressImageViewModel> GetAllImages(string userId);
+        Task<PaginatedList<ProgressImageViewModel>> GetAllImagesAsync(string userId, int? pageIndex);
     }
 }
