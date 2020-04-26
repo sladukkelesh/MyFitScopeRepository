@@ -20,5 +20,7 @@
         Task DeleteArticleAsync(string articleId);
 
         Task UpdateArticleAsync(string articleId, string articleTitle, ArticleCategory articleCategory, string articleImageUrl, string articleContent);
+
+        bool ArticleTitleAlreadyExists(string title);
     }
 }

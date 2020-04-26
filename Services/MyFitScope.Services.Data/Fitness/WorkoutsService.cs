@@ -151,5 +151,10 @@
 
             await this.usersRepository.SaveChangesAsync();
         }
+
+        public bool WorkoutNameAlreadyExists(string name)
+        {
+            return this.workoutsRepository.All().Any(e => e.Name == name);
+        }
     }
 }

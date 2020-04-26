@@ -36,8 +36,15 @@
         [HttpPost]
         public async Task<IActionResult> CreateExercise(CreateExerciseInputModel input)
         {
-            if (!this.ModelState.IsValid)
+            var nameAlreadyExists = this.exercisesService.ExerciseNameAlreadyExists(input.Name);
+
+            if (!this.ModelState.IsValid || nameAlreadyExists)
             {
+                if (nameAlreadyExists)
+                {
+                    this.TempData["error"] = string.Format("Exercise with name \"{0}\" already exists! Please, choose different name!", input.Name);
+                }
+
                 return this.View(input);
             }
 

@@ -1,5 +1,6 @@
 ﻿namespace MyFitScope.Web.ViewModels.Articles
 {
+    using System;
     using System.Collections.Generic;
 
     using Ganss.XSS;
@@ -10,6 +11,8 @@
     public class DetailsArticleViewModel : IMapFrom<Article>
     {
         public string Id { get; set; }
+
+        public DateTime CreatedOn { get; set; }
 
         public string UserId { get; set; }
 

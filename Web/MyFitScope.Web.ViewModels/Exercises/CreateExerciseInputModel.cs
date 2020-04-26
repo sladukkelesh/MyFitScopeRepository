@@ -13,7 +13,6 @@
         [MaxLength(50)]
         public string Name { get; set; }
 
-        [Required]
         [RegularExpression(@"^(http(s)?:\/\/)?((w){3}.)?youtu(be|.be)?(\.com)?\/.+", ErrorMessage = "Video Url must be a valid YouTube Url!")]
         [Display(Name = "Video Url")]
         public string VideoUrl { get; set; }

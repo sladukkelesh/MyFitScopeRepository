@@ -72,7 +72,9 @@
         [HttpPost]
         public async Task<IActionResult> CreateArticle(CreateArticleInputViewModel input)
         {
-            if (!this.ModelState.IsValid)
+            var titleAlreadyExists = this.articlesService.ArticleTitleAlreadyExists(input.ArticleTitle);
+
+            if (!this.ModelState.IsValid || titleAlreadyExists)
             {
                 return this.View(input);
             }

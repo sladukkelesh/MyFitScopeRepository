@@ -15,7 +15,10 @@
     }
 
     <div class="media-body">
-        <h5 class="mt-0">@Model.UserUserName</h5>
+        <div class="d-flex">
+            <h5 class="mt-0 mr-2">@Model.UserUserName</h5>
+            <p class="text-secondary"><time datetime="@Model.CreatedOn.ToString("O")"></time></p>
+        </div>       
         @Model.Content
 
             <ul class="list-inline d-sm-flex my-0 parent-vote-element">

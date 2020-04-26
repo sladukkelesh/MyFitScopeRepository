@@ -28,6 +28,11 @@
             this.cloudinaryService = cloudinaryService;
         }
 
+        public bool ArticleTitleAlreadyExists(string title)
+        {
+            return this.articlesRepository.All().Any(e => e.Title == title);
+        }
+
         public async Task<string> CreateArticle(string articleTitle, ArticleCategory articleCategory, string articleContent, string userId, IFormFile photo)
         {
             var uploadPhotoResponse = await this.cloudinaryService.UploadPhotoAsync(photo, articleTitle.Replace(" ", "_") + "_image", GlobalConstants.CloudArticlesImageFolder);

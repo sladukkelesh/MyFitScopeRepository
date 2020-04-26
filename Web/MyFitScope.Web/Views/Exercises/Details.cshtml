@@ -12,12 +12,22 @@
     <hr />
 
     <div>
-        <div class="text-center py-3">
-            <iframe id="ytplayer" type="text/html" width="640" height="360"
-                    src="@Model.EmbededVideoUrl"
-                    frameborder="0">
-            </iframe>
-        </div>
+        @if (Model.EmbededVideoUrl != null)
+        {
+            <div class="text-center py-3">
+                <iframe id="ytplayer" type="text/html" width="640" height="360"
+                        src="@Model.EmbededVideoUrl"
+                        frameborder="0">
+                </iframe>
+            </div>
+        }
+        else
+        {
+            <div class="alert alert-info" role="alert">
+                This exercise has no video!
+            </div>
+        }
+
         <hr />
         <div class="">
             <p><span class="font-weight-bold">Creator: </span> @Model.CreatorName</p>

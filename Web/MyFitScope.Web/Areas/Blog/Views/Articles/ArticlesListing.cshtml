@@ -47,7 +47,7 @@
         }
         else
         {
-            var articles = Model.Articles.OrderByDescending(a => a.CretedOn).ToList();
+            var articles = Model.Articles.OrderByDescending(a => a.CreatedOn).ToList();
 
             @foreach (var article in articles)
             {
@@ -59,7 +59,7 @@
                         <a asp-controller="Articles" asp-action="Details" asp-route-articleId="@article.Id" class="btn btn-primary">Read More &rarr;</a>
                     </div>
                     <div class="card-footer text-muted">
-                        Posted on @article.CretedOn.ToString() by @article.UserUserName
+                        Posted on <time datetime="@article.CreatedOn.ToString("O")"></time> by @article.UserUserName
                     </div>
                 </div>
             }

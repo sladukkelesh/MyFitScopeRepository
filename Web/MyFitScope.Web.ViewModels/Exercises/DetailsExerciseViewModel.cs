@@ -19,7 +19,17 @@
         public string VideoUrl { get; set; }
 
         public string EmbededVideoUrl
-            => "https://www.youtube.com/embed/" + this.VideoUrl.Split("=", StringSplitOptions.RemoveEmptyEntries)[1];
+        {
+            get
+            {
+                if (this.VideoUrl != null)
+                {
+                    return "https://www.youtube.com/embed/" + this.VideoUrl.Split("=", StringSplitOptions.RemoveEmptyEntries)[1];
+                }
+
+                return null;
+            }
+        }
 
         public MuscleGroup MuscleGroup { get; set; }
 

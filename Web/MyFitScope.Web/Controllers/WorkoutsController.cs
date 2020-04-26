@@ -36,7 +36,9 @@
         [Authorize]
         public async Task<IActionResult> AddWorkout(CreateWorkoutInputModel input)
         {
-            if (!this.ModelState.IsValid)
+            var nameAlreadyExists = this.workoutsService.WorkoutNameAlreadyExists(input.Name);
+
+            if (!this.ModelState.IsValid || nameAlreadyExists)
             {
                 return this.View(input);
             }

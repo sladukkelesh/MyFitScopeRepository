@@ -84,6 +84,11 @@
             await this.exercisesRepository.SaveChangesAsync();
         }
 
+        public bool ExerciseNameAlreadyExists(string name)
+        {
+            return this.exercisesRepository.All().Any(e => e.Name == name);
+        }
+
         public T GetExerciseById<T>(string exerciseId)
         {
             var exercise = this.exercisesRepository.All()

@@ -21,7 +21,17 @@
         public string VideoUrl { get; set; }
 
         public string ThumbnailUrl
-            => "https://img.youtube.com/vi/" + this.VideoUrl.Split("=", StringSplitOptions.RemoveEmptyEntries)[1] + "/sddefault.jpg";
+        {
+            get
+            {
+                if (this.VideoUrl != null)
+                {
+                    return "https://img.youtube.com/vi/" + this.VideoUrl.Split("=", StringSplitOptions.RemoveEmptyEntries)[1] + "/sddefault.jpg";
+                }
+
+                return "https://w7.pngwing.com/pngs/712/530/png-transparent-silhouette-illustration-of-weight-lifter-fitness-centre-computer-icons-physical-exercise-expander-fitness-trainer-fitness-room-gym-gymnastic-health-512-angle-white-physical-fitness-thumbnail.png";
+            }
+        }
 
         public MuscleGroup MuscleGroup { get; set; }
 

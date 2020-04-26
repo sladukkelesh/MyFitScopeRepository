@@ -11,9 +11,9 @@
     {
         public string Id { get; set; }
 
-        public string UserUserName { get; set; }
+        public DateTime CreatedOn { get; set; }
 
-        public DateTime CretedOn { get; set; }
+        public string UserUserName { get; set; }
 
         public string Title { get; set; }
 

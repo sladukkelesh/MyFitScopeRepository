@@ -20,5 +20,7 @@
         Task DeleteExerciseAsync(string exerciseId);
 
         Task EditExerciseAsync(string exerciseId, string name, string videoUrl, MuscleGroup muscleGroup, string description);
+
+        bool ExerciseNameAlreadyExists(string name);
     }
 }
