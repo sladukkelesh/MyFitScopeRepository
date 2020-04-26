@@ -47,19 +47,17 @@
 
         public async Task<IEnumerable<UsersInRoleViewModel>> ListUsersInRoleAsync(string roleId, string roleName)
         {
-
             var result = new List<UsersInRoleViewModel>();
 
-            foreach (var user in this.userManager.Users)
+            foreach (var user in this.userManager.Users.ToList())
             {
-                var model = new UsersInRoleViewModel
-                {
-                    RoleId = roleId,
-                    UserId = user.Id,
-                    UserName = user.UserName,
-                };
+                var model = new UsersInRoleViewModel();
 
-                if (await this.userManager.IsInRoleAsync(user, roleName))
+                model.RoleId = roleId;
+                model.UserId = user.Id;
+                model.UserName = user.UserName;
+
+                if (await this.IsInRoleAsync(user, roleName))
                 {
                     model.IsSelected = true;
                 }
@@ -103,6 +101,11 @@
                     await this.userManager.RemoveFromRoleAsync(userObj, role.Name);
                 }
             }
+        }
+
+        private async Task<bool> IsInRoleAsync(ApplicationUser user, string roleName)
+        {
+            return await this.userManager.IsInRoleAsync(user, roleName);
         }
     }
 }
