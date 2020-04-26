@@ -16,8 +16,6 @@
             this.Exercises = new HashSet<WorkoutDayExercise>();
         }
 
-        public string Name { get; set; } // Auto generated!
-
         [Required]
         public WeekDay WeekDay { get; set; }
 

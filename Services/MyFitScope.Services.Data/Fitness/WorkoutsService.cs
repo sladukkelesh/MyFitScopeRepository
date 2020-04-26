@@ -22,12 +22,14 @@
         private readonly UserManager<ApplicationUser> userManager;
         private readonly IDeletableEntityRepository<Workout> workoutsRepository;
         private readonly IDeletableEntityRepository<ApplicationUser> usersRepository;
+        private readonly IUsersService usersService;
 
-        public WorkoutsService(UserManager<ApplicationUser> userManager, IDeletableEntityRepository<Workout> workoutsRepository, IDeletableEntityRepository<ApplicationUser> usersRepository)
+        public WorkoutsService(UserManager<ApplicationUser> userManager, IDeletableEntityRepository<Workout> workoutsRepository, IDeletableEntityRepository<ApplicationUser> usersRepository, IUsersService usersService)
         {
             this.userManager = userManager;
             this.workoutsRepository = workoutsRepository;
             this.usersRepository = usersRepository;
+            this.usersService = usersService;
         }
 
         public async Task CreateWorkoutAsync(string name, Difficulty difficulty, WorkoutType workoutType, string description, ApplicationUser user)
@@ -56,7 +58,7 @@
             await this.workoutsRepository.SaveChangesAsync();
         }
 
-        public async Task DeleteWorkoutAsync(string workoutId)
+        public async Task DeleteWorkoutAsync(string workoutId, string userId)
         {
             var workoutToDelete = await this.workoutsRepository.GetByIdWithDeletedAsync(workoutId);
 
@@ -66,8 +68,9 @@
                     string.Format(InvalidWorkoutIdErrorMessage, workoutId));
             }
 
-            workoutToDelete.IsDeleted = true;
+            await this.usersService.RemoveWorkoutFromUserAsync(userId);
 
+            workoutToDelete.IsDeleted = true;
             await this.workoutsRepository.SaveChangesAsync();
         }
 
@@ -97,13 +100,6 @@
                                 .Where(w => w.Id == workoutId)
                                 .To<T>()
                                 .FirstOrDefault();
-
-            if (workout == null)
-            {
-                throw new ArgumentNullException(
-                    string.Format(InvalidWorkoutIdErrorMessage, workoutId));
-            }
-
             return workout;
         }
 

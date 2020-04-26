@@ -1,6 +1,7 @@
 ﻿namespace MyFitScope.Services.Data
 {
     using System;
+    using System.Linq;
     using System.Threading.Tasks;
 
     using Microsoft.AspNetCore.Http;
@@ -20,6 +21,22 @@
         {
             this.cloudinaryService = cloudinaryService;
             this.usersRepository = usersRepository;
+        }
+
+        public async Task RemoveWorkoutFromUserAsync(string userId)
+        {
+            var user = this.usersRepository.All()
+                                .Where(u => u.Id == userId)
+                                .FirstOrDefault();
+
+            if (user == null)
+            {
+                throw new ArgumentNullException(
+                    string.Format(InvalidUserIdErrorMessage, userId));
+            }
+
+            user.WorkoutId = null;
+            await this.usersRepository.SaveChangesAsync();
         }
 
         public async Task UpdateAvatarPhotoAsync(string loggedInUserId, IFormFile file)

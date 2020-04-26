@@ -8,5 +8,7 @@
     public interface IUsersService
     {
         Task UpdateAvatarPhotoAsync(string loggedInUserId, IFormFile file);
+
+        Task RemoveWorkoutFromUserAsync(string userId);
     }
 }

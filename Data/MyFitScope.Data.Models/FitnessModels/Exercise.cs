@@ -17,16 +17,24 @@
 
         public ExerciseSettings ExerciseSettings { get; set; }
 
+        [Required]
+        [MaxLength(50)]
         public string Name { get; set; }
 
         public bool IsCustom { get; set; }
 
+        [Required]
+        [MaxLength(50)]
         public string CreatorName { get; set; }
 
+        [RegularExpression(@"^(http(s)?:\/\/)?((w){3}.)?youtu(be|.be)?(\.com)?\/.+")]
         public string VideoUrl { get; set; }
 
+        [Required]
         public MuscleGroup MuscleGroup { get; set; }
 
+        [Required]
+        [MaxLength(2000)]
         public string Description { get; set; }
 
         public ICollection<WorkoutDayExercise> WorkoutDays { get; set; }

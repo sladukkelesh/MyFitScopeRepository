@@ -18,16 +18,19 @@
         }
 
         [Required]
-        [MaxLength(50)]
+        [MaxLength(100)]
         public string Name { get; set; }
 
         [Required]
+        [MaxLength(50)]
         public string CreatorName { get; set; }
 
         public bool IsCustom { get; set; }
 
+        [Required]
         public Difficulty Difficulty { get; set; }
 
+        [Required]
         public WorkoutType WorkoutType { get; set; }
 
         [Required]

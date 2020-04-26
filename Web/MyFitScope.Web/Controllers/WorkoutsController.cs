@@ -110,9 +110,11 @@
         [Authorize]
         public async Task<IActionResult> DeleteWorkout(string workoutId)
         {
-            await this.workoutsService.DeleteWorkoutAsync(workoutId);
+            var loggedInUser = await this.GetLoggedInUserAsync();
 
-            return this.RedirectToAction(nameof(this.WorkoutsListing), new { workoutCategory = "All" });
+            await this.workoutsService.DeleteWorkoutAsync(workoutId, loggedInUser.Id);
+
+            return this.RedirectToAction(nameof(this.CurrentWorkout));
         }
 
         [Authorize]
