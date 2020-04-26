@@ -7,7 +7,7 @@
 
     using MyFitScope.Data.Models.BlogModels;
 
-    public class ArticleSeeder : ISeeder
+    internal class ArticleSeeder : ISeeder
     {
         public async Task SeedAsync(ApplicationDbContext dbContext, IServiceProvider serviceProvider)
         {

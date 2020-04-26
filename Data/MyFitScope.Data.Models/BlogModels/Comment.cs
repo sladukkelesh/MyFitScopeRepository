@@ -2,7 +2,7 @@
 {
     using System;
     using System.Collections.Generic;
-
+    using System.ComponentModel.DataAnnotations;
     using MyFitScope.Data.Common.Models;
 
     public class Comment : BaseDeletableModel<string>
@@ -17,14 +17,18 @@
             this.NegativeVotes = 0;
         }
 
+        [Required]
         public string UserId { get; set; }
 
         public virtual ApplicationUser User { get; set; }
 
+        [Required]
         public string ArticleId { get; set; }
 
         public virtual Article Article { get; set; }
 
+        [Required]
+        [MaxLength(500)]
         public string Content { get; set; }
 
         public int PositiveVotes { get; set; }

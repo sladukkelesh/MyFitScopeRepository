@@ -12,6 +12,10 @@
 
         public const string AdministratorRoleName = "Administrator";
 
+        public const string AdminRoleName = "Admin";
+
+        public const string UserRoleName = "User";
+
         public const string ArticleCategoryTypeName = "MyFitScope.Data.Models.BlogModels.Enums.ArticleCategory";
 
         public const string ExerciseCategoryTypeName = "MyFitScope.Data.Models.FitnessModels.Enums.MuscleGroup";

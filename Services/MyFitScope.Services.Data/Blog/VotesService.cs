@@ -35,7 +35,6 @@
                 {
                     vote = new Vote
                     {
-                        Id = Guid.NewGuid().ToString(),
                         UserId = userId,
                         CommentId = votedObjectId,
                         VoteType = isUpVote ? VoteType.UpVote : VoteType.DownVote,
