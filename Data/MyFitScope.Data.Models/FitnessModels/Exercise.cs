@@ -2,7 +2,7 @@
 {
     using System;
     using System.Collections.Generic;
-
+    using System.ComponentModel.DataAnnotations;
     using MyFitScope.Data.Common.Models;
     using MyFitScope.Data.Models.FitnessModels.Enums;
 
@@ -23,11 +23,11 @@
 
         public string CreatorName { get; set; }
 
-        public string VideoUrl { get; set; } //-------> Not required!
+        public string VideoUrl { get; set; }
 
         public MuscleGroup MuscleGroup { get; set; }
 
-        public string Description { get; set; } //--------> Required!
+        public string Description { get; set; }
 
         public ICollection<WorkoutDayExercise> WorkoutDays { get; set; }
     }

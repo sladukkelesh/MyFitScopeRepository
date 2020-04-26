@@ -13,11 +13,13 @@
             this.CreatedOn = DateTime.UtcNow;
         }
 
+        [Required]
         public string UserId { get; set; }
 
         public virtual ApplicationUser User { get; set; }
 
         [Required]
+        [Range(20, double.MaxValue)]
         public double Weight { get; set; }
 
         public double? Biceps { get; set; }
