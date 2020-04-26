@@ -16,6 +16,8 @@
 
         public string CreatorName { get; set; }
 
+        public DateTime CreatedOn { get; set; }
+
         public string VideoUrl { get; set; }
 
         public string ThumbnailUrl

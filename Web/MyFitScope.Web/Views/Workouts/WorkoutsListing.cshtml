@@ -20,11 +20,11 @@
             }
             else
             {
-                @if (Model.WorkoutCategory == "All")
+                @if (resultValue == "All")
                 {
                     <h1 class="text-center">All Workouts</h1>
                 }
-                else if (Model.WorkoutCategory == "Custom")
+                else if (resultValue == "Custom")
                 {
                     @if (User.IsInRole("Admin"))
                     {
@@ -45,7 +45,9 @@
 
             @if (Model.Workouts.Count != 0)
             {
-                foreach (var workout in Model.Workouts)
+                var workouts = Model.Workouts.OrderByDescending(w => w.CreatedOn).ToList();
+
+                foreach (var workout in workouts)
                 {
                     var background = "backgournds-" + workout.WorkoutTypeTitle.ToLower();
                     var blurEffect = "content-" + workout.WorkoutTypeTitle.ToLower();

@@ -132,7 +132,7 @@
 
             await this.workoutsService.EditWorkoutAsync(input.Id, input.Name, input.Difficulty, input.WorkoutType, input.Description);
 
-            return this.RedirectToAction(nameof(this.Details), new { id = input.Id });
+            return this.RedirectToAction(nameof(this.CurrentWorkout));
         }
 
         private async Task<ApplicationUser> GetLoggedInUserAsync()

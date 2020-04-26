@@ -1,5 +1,6 @@
 ﻿namespace MyFitScope.Web.ViewModels.Workouts
 {
+    using System;
     using System.Net;
     using System.Text.RegularExpressions;
 
@@ -12,6 +13,8 @@
         public string Id { get; set; }
 
         public string Name { get; set; }
+
+        public DateTime CreatedOn { get; set; }
 
         public string CreatorName { get; set; }
 

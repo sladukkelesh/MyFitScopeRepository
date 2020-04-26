@@ -1,8 +1,11 @@
 ﻿@using MyFitScope.Common
+@using MyFitScope.Data.Models
 @using MyFitScope.Web.ViewModels.Workouts
+@using Microsoft.AspNetCore.Identity
+@inject UserManager<ApplicationUser> UserManager
 @model DetailsViewModel
 
-@{ 
+@{
     this.Layout = "_Layout";
 }
 
@@ -20,62 +23,103 @@
             <hr />
         </section>
 
-
-        @if (this.User.IsInRole("Admin") || Model.CreatorName == this.User.Identity.Name)
-        {
-            <div class="text-center mt-4 mb-4">
-                <a class="btn btn-info" asp-controller="Workouts" asp-action="EditWorkout" asp-route-workoutId="@Model.Id">Edit</a>
-                <a class="btn btn-danger ml-lg-5" asp-controller="Workouts" asp-action="DeleteWorkout" asp-route-workoutId="@Model.Id" onclick="ConfirmDelete('@string.Format(GlobalConstants.WorkoutConfirmDeleteMessage, Model.Name)')">Delete</a>
-            </div>
+        @{
+            var loggedInUser = await UserManager.GetUserAsync(User);
         }
-
         @if (User.Identity.IsAuthenticated)
         {
-            <div>
-                <a class="btn btn-primary btn-block" asp-controller="Workouts" asp-action="SetAsCurrentWorkout" asp-route-workoutId="@Model.Id">Set As Current Workout</a>
-            </div>
+            if (loggedInUser.WorkoutId != Model.Id)
+            {
+                <div>
+                    <a class="btn btn-primary btn-block" asp-controller="Workouts" asp-action="SetAsCurrentWorkout" asp-route-workoutId="@Model.Id">Set As Current Workout</a>
+                </div>
+            }
+            else
+            {
+                <div class="alert alert-info" role="alert">
+                    This workout is already set as your current.
+                </div>
+            }
+
+            <hr />
         }
-        <hr />
+
     </div>
 
     @if (Model.WorkoutDays.Count != 0)
     {
         <div id="workoutDays">
-            @foreach (var day in Model.WorkoutDays)
-            {
-                <div>
-                    <h3>@day.WeekDayTitle /@(day.Name != string.Empty ? day.Name : "Add execises to see muscle groups!")/</h3>
+            <div class="accordion" id="accordionExample">
+                @{
+                    var workoutDays = Model.WorkoutDays.OrderBy(w => w.WeekDay).ToList();
+                }
 
-                    @if (day.Exercises.Count != 0)
-                    {
-                        <table class="table table-striped">
+                @for (var i = 0; i < workoutDays.Count; i++)
+                {
+                    var day = workoutDays[i];
 
-                            <thead>
-                                <tr>
-                                    <th scope="col">#</th>
-                                    <th scope="col">Muscle</th>
-                                    <th scope="col">Exercise</th>
-                                </tr>
-                            </thead>
-                            <tbody>
+                    <div class="card">
+                        <div class="card-header d-flex justify-content-between" id="@("heading" + i)">
+                            <h3 class="mb-0">
                                 @{
-                                    var exercises = day.Exercises.OrderBy(e => e.CreatedOn).ToList();
+                                    var buttonCollapseValue = i > 0 ? " collased" : string.Empty;
                                 }
+                                <button class="@("btn btn-link text-decoration-none" + buttonCollapseValue)" type="button" data-toggle="collapse" data-target="@("#collapse" + i)" aria-expanded="true" aria-controls="@("collapse" + i)">
+                                    <h3>@day.WeekDayTitle @(day.Name != string.Empty ? "- " + day.Name : string.Empty)</h3>
+                                </button>
+                            </h3>
+                        </div>
+
+                        @{
+                            var collapseValue = i > 0 ? "collapse" : "collapse show";
+                        }
+
+                        <div id="@("collapse" + i)" class="@collapseValue" aria-labelledby="@("heading"+ i)" data-parent="#accordionExample">
+                            <div class="card-body bg-dark">
+                                <div>
 
 
-                                @for (var i = 0; i < exercises.Count; i++)
-                                {
-                                    <tr>
-                                        <th scope="row">@(i + 1)</th>
-                                        <td>@exercises[i].MuscleGroupTitle</td>
-                                        <td><a asp-controller="Exercises" asp-action="Details" asp-route-id="@exercises[i].ExerciseId">@exercises[i].ExerciseName</a></td>
-                                    </tr>
-                                }
-                            </tbody>
-                        </table>
-                    }
-                </div>
-            }
+
+                                    @if (day.Exercises.Count != 0)
+                                    {
+                                        <table class="table table-striped">
+
+                                            <thead>
+                                                <tr class="bg-light">
+                                                    <th scope="col">#</th>
+                                                    <th scope="col">Muscle</th>
+                                                    <th scope="col">Exercise</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+
+                                                @{
+                                                    var exercises = day.Exercises.OrderBy(e => e.CreatedOn).ToList();
+                                                }
+
+                                                @for (var j = 0; j < exercises.Count; j++)
+                                                {
+                                                    var exercise = exercises[j];
+
+                                                    <tr class="bg-light">
+                                                        <th scope="row">@(j + 1)</th>
+                                                        <td>@exercise.MuscleGroupTitle</td>
+                                                        <td><a asp-controller="Exercises" asp-action="Details" asp-route-id="@exercise.ExerciseId">@exercise.ExerciseName</a></td>
+                                                    </tr>
+                                                }
+                                            </tbody>
+                                        </table>
+                                    }
+                                    else
+                                    {
+                                        <p class="text-center text-white">No exercises added for this day!</p>
+                                    }
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                }
+            </div>
         </div>
     }
     else

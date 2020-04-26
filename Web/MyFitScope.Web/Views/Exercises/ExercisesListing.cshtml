@@ -47,7 +47,9 @@
 
             @if (Model.Exercises.Count != 0)
             {
-                foreach (var exercise in Model.Exercises)
+                var exercises = Model.Exercises.OrderByDescending(e => e.CreatedOn).ToList();
+
+                foreach (var exercise in exercises)
                 {
                     <ul class="list-unstyled col-md-12 border border-light">
                         <li class="media">

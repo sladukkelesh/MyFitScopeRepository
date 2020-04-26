@@ -47,7 +47,9 @@
         }
         else
         {
-            @foreach (var article in Model.Articles)
+            var articles = Model.Articles.OrderByDescending(a => a.CretedOn).ToList();
+
+            @foreach (var article in articles)
             {
                 <div class="card mb-4 rcorners">
                     <img src="@article.ImageUrl" class="card-img-top r-top-corners" alt="@article.Title">
