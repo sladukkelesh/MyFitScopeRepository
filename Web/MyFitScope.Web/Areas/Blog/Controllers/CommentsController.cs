@@ -9,6 +9,7 @@
     using MyFitScope.Services.Data;
     using MyFitScope.Web.ViewModels.Comments;
 
+    [Area("Blog")]
     public class CommentsController : BaseController
     {
         private const string MissingCommentContentExeption = "Comment field is required!";

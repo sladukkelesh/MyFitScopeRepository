@@ -10,6 +10,7 @@
         public Comment()
         {
             this.Id = Guid.NewGuid().ToString();
+            this.CreatedOn = DateTime.UtcNow;
             this.Responses = new HashSet<Response>();
             this.Votes = new HashSet<Vote>();
             this.PositiveVotes = 0;

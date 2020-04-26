@@ -72,7 +72,9 @@
 
             @if (Model.Responses.Count() != 0)
             {
-                foreach (var response in Model.Responses)
+                var responses = Model.Responses.OrderByDescending(r => r.CreatedOn).ToList();
+
+                foreach (var response in responses)
                 {
 
                     <partial name="_ResponsePartial" model="@response" />

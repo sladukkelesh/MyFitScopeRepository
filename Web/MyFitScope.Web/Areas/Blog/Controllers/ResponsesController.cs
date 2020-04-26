@@ -9,6 +9,7 @@
     using MyFitScope.Services.Data;
     using MyFitScope.Web.ViewModels.Responses;
 
+    [Area("Blog")]
     public class ResponsesController : BaseController
     {
         private const string MissingResponseContentExeption = "Response field is required!";

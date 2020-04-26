@@ -12,6 +12,7 @@
         public WorkoutDay()
         {
             this.Id = Guid.NewGuid().ToString();
+            this.CreatedOn = DateTime.UtcNow;
             this.Exercises = new HashSet<WorkoutDayExercise>();
         }
 

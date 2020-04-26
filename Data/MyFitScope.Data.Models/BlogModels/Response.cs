@@ -10,6 +10,7 @@
         public Response()
         {
             this.Id = Guid.NewGuid().ToString();
+            this.CreatedOn = DateTime.UtcNow;
             this.Votes = new HashSet<Vote>();
         }
 

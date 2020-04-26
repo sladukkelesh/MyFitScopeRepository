@@ -3,6 +3,7 @@
     using System;
     using System.Linq;
     using System.Threading.Tasks;
+
     using Ganss.XSS;
     using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Identity;
@@ -13,6 +14,7 @@
     using MyFitScope.Services.Data;
     using MyFitScope.Web.ViewModels.Articles;
 
+    [Area("Blog")]
     public class ArticlesController : BaseController
     {
         private readonly IArticlesService articlesService;

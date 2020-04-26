@@ -74,7 +74,11 @@
         }
 
         <!-- Comments and Responses Section -->
-        @foreach (var comment in Model.Comments)
+        @{ 
+            var comments = Model.Comments.OrderByDescending(c => c.CreatedOn).ToList();
+        }
+
+        @foreach (var comment in comments)
         {
 
             <partial name="_CommentPartial" model="@comment" />
@@ -114,7 +118,7 @@
             responseForm.style.marginTop = "10px";
             responseForm.setAttribute("id", "responseInputForm");
             responseForm.setAttribute("method", "post");
-            responseForm.setAttribute("action", "/Responses/AddResponse");
+            responseForm.setAttribute("action", "/Blog/Responses/AddResponse");
 
             let formDiv = document.createElement("div");
             formDiv.classList.add("form-group");
