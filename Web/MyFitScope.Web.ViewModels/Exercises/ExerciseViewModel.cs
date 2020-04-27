@@ -46,7 +46,7 @@
             {
                 var description = WebUtility.HtmlDecode(Regex.Replace(this.Description, @"<[^>]+>", string.Empty));
 
-                return description.Length > 200 ? description.Substring(0, 200) + "..." : description;
+                return description.Length > 200 ? description.Substring(0, 100) + "..." : description;
             }
         }
     }

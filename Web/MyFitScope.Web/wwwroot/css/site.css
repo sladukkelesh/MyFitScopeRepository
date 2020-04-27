@@ -103,26 +103,26 @@ section.home-loggedIn-page {
     }
     /* Workout styles
 -------------------------------------------------- */
-    div.backgournds-gym {
-        background-image: url('../Images/fit-index-background.jpg');
-        background-repeat: no-repeat;
-        background-size: cover;
-    }
-
-div.backgournds-homework {
-    background-image: url('../Images/homegym.jpg');
+div.backgrounds-gym {
+    background-image: url('https://res.cloudinary.com/myfitscope-cloud/image/upload/v1588015635/static_files/fit-index-background_ogawuc.jpg');
     background-repeat: no-repeat;
     background-size: cover;
 }
 
-div.backgournds-crossfit {
-    background-image: url('../Images/real-crossfit.jpg');
+div.backgrounds-home {
+    background-image: url('https://res.cloudinary.com/myfitscope-cloud/image/upload/v1588014124/static_files/homegym_zivmyw.jpg');
     background-repeat: no-repeat;
     background-size: cover;
 }
 
-div.backgournds-cardio {
-    background-image: url('../Images/real-cardio.jpg');
+div.backgrounds-crossfit {
+    background-image: url('https://res.cloudinary.com/myfitscope-cloud/image/upload/v1588014133/static_files/real-crossfit_jvhepr.jpg');
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
+div.backgrounds-cardio {
+    background-image: url('https://res.cloudinary.com/myfitscope-cloud/image/upload/v1588014116/static_files/real-cardio_vsjvrm.jpg');
     background-repeat: no-repeat;
     background-size: cover;
 }
@@ -131,7 +131,7 @@ div.content-gym {
     padding: 18px;
 }
 
-div.content-home-work {
+div.content-home {
     background-color: rgba(0, 0, 0, 0.7);
     padding: 18px;
 }

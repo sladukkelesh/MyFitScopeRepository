@@ -19,7 +19,7 @@
 
         Task DeleteArticleAsync(string articleId);
 
-        Task UpdateArticleAsync(string articleId, string articleTitle, ArticleCategory articleCategory, string articleImageUrl, string articleContent);
+        Task UpdateArticleAsync(string articleId, string articleTitle, ArticleCategory articleCategory, IFormFile photo, string articleContent);
 
         bool ArticleTitleAlreadyExists(string title);
     }

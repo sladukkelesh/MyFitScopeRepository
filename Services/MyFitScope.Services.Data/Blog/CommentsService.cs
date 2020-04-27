@@ -20,7 +20,7 @@
             this.commentsRepository = commentsRepository;
         }
 
-        public async Task CreateComment(string commentContent, string articleId, string userId)
+        public async Task CreateCommentAsync(string commentContent, string articleId, string userId)
         {
             var comment = new Comment
             {

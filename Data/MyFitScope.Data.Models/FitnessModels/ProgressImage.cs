@@ -2,6 +2,7 @@
 {
     using System;
     using System.ComponentModel.DataAnnotations;
+
     using MyFitScope.Data.Common.Models;
 
     public class ProgressImage : BaseDeletableModel<string>

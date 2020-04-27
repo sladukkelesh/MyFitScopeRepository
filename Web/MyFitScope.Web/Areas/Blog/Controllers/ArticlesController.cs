@@ -110,7 +110,7 @@
                 return this.View(input);
             }
 
-            await this.articlesService.UpdateArticleAsync(input.Id, input.Title, input.ArticleCategory, input.ImageUrl, input.Content);
+            await this.articlesService.UpdateArticleAsync(input.Id, input.Title, input.ArticleCategory, input.ArticleImage, input.Content);
 
             return this.RedirectToAction(nameof(this.Details), new { articleId = input.Id });
         }

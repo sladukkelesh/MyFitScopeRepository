@@ -110,7 +110,7 @@
             return await PaginatedList<ArticleViewModel>.CreateAsync(result.To<ArticleViewModel>(), pageIndex ?? GlobalConstants.PaginationDefaultPageIndex, GlobalConstants.PaginationPageSize);
         }
 
-        public async Task UpdateArticleAsync(string articleId, string articleTitle, ArticleCategory articleCategory, string articleImageUrl, string articleContent)
+        public async Task UpdateArticleAsync(string articleId, string articleTitle, ArticleCategory articleCategory, IFormFile photo, string articleContent)
         {
             var articleToUpdate = await this.articlesRepository.GetByIdWithDeletedAsync(articleId);
 
@@ -120,9 +120,23 @@
                     string.Format(InvalidArticleIdErrorMessage, articleId));
             }
 
+            if (photo != null)
+            {
+                this.cloudinaryService.DeletePhoto(articleToUpdate.ImagePublicId);
+
+                var uploadPhotoResponse = await this.cloudinaryService.UploadPhotoAsync(photo, articleTitle.Replace(" ", "_") + "_image", GlobalConstants.CloudUsersImageFolder);
+
+                if (uploadPhotoResponse == null)
+                {
+                    throw new ArgumentNullException(InvalidCloudinaryResponseParams);
+                }
+
+                articleToUpdate.ImageUrl = uploadPhotoResponse.PhotoUrl;
+                articleToUpdate.ImagePublicId = uploadPhotoResponse.PublicId;
+            }
+
             articleToUpdate.Title = articleTitle;
             articleToUpdate.ArticleCategory = articleCategory;
-            articleToUpdate.ImageUrl = articleImageUrl;
             articleToUpdate.Content = articleContent;
             articleToUpdate.ModifiedOn = DateTime.UtcNow;
 

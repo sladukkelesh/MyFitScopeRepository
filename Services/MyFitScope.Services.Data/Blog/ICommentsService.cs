@@ -4,7 +4,7 @@
 
     public interface ICommentsService
     {
-        Task CreateComment(string commentContent, string articleId, string userId);
+        Task CreateCommentAsync(string commentContent, string articleId, string userId);
 
         Task DeleteCommentAsync(string commentId);
     }

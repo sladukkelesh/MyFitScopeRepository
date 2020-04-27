@@ -1,7 +1,7 @@
 ﻿namespace MyFitScope.Web.ViewModels.Articles
 {
     using System.ComponentModel.DataAnnotations;
-
+    using Microsoft.AspNetCore.Http;
     using MyFitScope.Data.Models.BlogModels;
     using MyFitScope.Data.Models.BlogModels.Enums;
     using MyFitScope.Services.Mapping;
@@ -27,7 +27,6 @@
         [Display(Name = "Content")]
         public string Content { get; set; }
 
-        [Required]
-        public string ImageUrl { get; set; }
+        public IFormFile ArticleImage { get; set; }
     }
 }

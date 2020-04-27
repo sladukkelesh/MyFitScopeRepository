@@ -49,13 +49,25 @@
 
                 foreach (var workout in workouts)
                 {
-                    var background = "backgournds-" + workout.WorkoutTypeTitle.ToLower();
-                    var blurEffect = "content-" + workout.WorkoutTypeTitle.ToLower();
-                    
+                    var workoutCategpry = workout.WorkoutTypeTitle.ToLower();
+                    var background = string.Empty;
+                    var blurEffect = string.Empty;
+
+                    if (workoutCategpry == "home work")
+                    {
+                        background = "backgrounds-home";
+                        blurEffect = "content-home";
+                    }
+                    else
+                    {
+                        background = "backgrounds-" + workoutCategpry;
+                        blurEffect = "content-" + workoutCategpry;
+                    }
+
                     <div class="row no-gutters border rounded overflow-hidden flex-md-row mb-4 shadow-sm h-md-250 position-relative">
                         <div class="col d-flex flex-column position-static @background">
                             <div class="@blurEffect">
-                                <strong class="d-inline-block mb-2 text-primary"><del>@workout.WorkoutTypeTitle</del></strong>
+                                <strong class="d-inline-block mb-2 text-primary">@workout.WorkoutTypeTitle</strong>
                                 <h3 class="mb-0 text-white">@workout.Name</h3>
                                 <div class="mb-1 text-white">Creator: @workout.CreatorName</div>
                                 <p class="card-text mb-auto text-white">@workout.ShortDescription</p>

@@ -44,7 +44,7 @@
 
             string userId = this.userManager.GetUserId(this.User);
 
-            await this.commentsService.CreateComment(input.CommentContent, input.ArticleId, userId);
+            await this.commentsService.CreateCommentAsync(input.CommentContent, input.ArticleId, userId);
 
             return this.RedirectToAction("Details", "Articles", new { articleId = input.ArticleId });
         }
