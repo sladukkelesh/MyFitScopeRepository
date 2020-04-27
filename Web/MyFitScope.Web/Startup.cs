@@ -101,6 +101,7 @@
             // Common services
             services.AddTransient<ICloudinaryService, CloudinaryService>();
             services.AddTransient<IUsersService, UsersService>();
+            services.AddApplicationInsightsTelemetry();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -124,14 +125,14 @@
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
-                //app.UseStatusCodePagesWithRedirects("/Home/Error?statusCode={0}");
+                app.UseStatusCodePagesWithRedirects("/Home/Error?statusCode={0}");
                 app.UseDatabaseErrorPage();
             }
             else
             {
-                app.UseDeveloperExceptionPage();
-                //app.UseStatusCodePagesWithRedirects("/Home/Error?statusCode={0}");
-                //app.UseExceptionHandler("/Home/Error");
+                //app.UseDeveloperExceptionPage();
+                app.UseStatusCodePagesWithRedirects("/Home/Error?statusCode={0}");
+                app.UseExceptionHandler("/Home/Error");
                 app.UseHsts();
             }
 

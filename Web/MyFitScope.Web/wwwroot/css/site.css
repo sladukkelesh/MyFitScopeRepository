@@ -85,14 +85,29 @@ body {
     text-decoration: none;
 }
 
-/* Workout styles
+/* home loggedIn page styles
 -------------------------------------------------- */
-div.backgournds-gym {
-    background-image: url('../Images/fit-index-background.jpg');
+section.home-loggedIn-page {
+    background-image: url("https://vidafitness.com/wp-content/uploads/2015/04/bg-training.jpg");
     background-repeat: no-repeat;
     background-size: cover;
-   
+    padding-top: 200px;
 }
+
+#homeLoggedInPageContent {
+    background-color: rgba(0, 0, 0, 0.6);
+}
+
+    #homeLoggedInPageContent p {
+        font-size: 20px;
+    }
+    /* Workout styles
+-------------------------------------------------- */
+    div.backgournds-gym {
+        background-image: url('../Images/fit-index-background.jpg');
+        background-repeat: no-repeat;
+        background-size: cover;
+    }
 
 div.backgournds-homework {
     background-image: url('../Images/homegym.jpg');
