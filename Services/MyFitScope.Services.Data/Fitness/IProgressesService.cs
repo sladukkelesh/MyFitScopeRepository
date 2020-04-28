@@ -18,6 +18,6 @@
 
         Task UpdateStatisticAsync(string statisticId, double weight, double? biceps, double? chest, double? stomach, double? hips, double? thigh, double? calf);
 
-        bool StatisticExists(DateTime currentDate);
+        bool StatisticExists(DateTime currentDate, string userId);
     }
 }

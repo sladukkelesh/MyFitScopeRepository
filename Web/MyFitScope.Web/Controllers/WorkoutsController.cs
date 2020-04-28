@@ -40,6 +40,11 @@
 
             if (!this.ModelState.IsValid || nameAlreadyExists)
             {
+                if (nameAlreadyExists)
+                {
+                    this.TempData["error"] = string.Format("Workout with name \"{0}\" already exists! Please, choose a different name!", input.Name);
+                }
+
                 return this.View(input);
             }
 

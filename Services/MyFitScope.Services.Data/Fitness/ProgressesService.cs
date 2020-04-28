@@ -81,9 +81,9 @@
             return statistic;
         }
 
-        public bool StatisticExists(DateTime currentDate)
+        public bool StatisticExists(DateTime currentDate, string userId)
         {
-            return this.progressesRepository.All().Any(p => DateTime.Equals(p.CreatedOn.Date, currentDate.Date));
+            return this.progressesRepository.All().Any(p => p.UserId == userId && DateTime.Equals(p.CreatedOn.Date, currentDate.Date));
         }
 
         public async Task UpdateStatisticAsync(string statisticId, double weight, double? biceps, double? chest, double? stomach, double? hips, double? thigh, double? calf)

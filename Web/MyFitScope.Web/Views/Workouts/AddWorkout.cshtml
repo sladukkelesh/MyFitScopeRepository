@@ -19,6 +19,13 @@
             });
         </script>
 
+        @if (TempData["error"] != null)
+        {
+            <div class="alert alert-danger" role="alert">
+                <i class="fas fa-exclamation-triangle mr-2"></i>@TempData["error"]!
+            </div>
+        }
+
         <h2 class="mb-0 p-3 text-center text-white bg-dark r-top-corners">Create your own Workout</h2>
         <form method="post" class="form-group bg-light p-4 mt-0 r-bottom-corners" asp-controller="Workouts" asp-action="AddWorkout">
             <div class="form-group">
@@ -41,6 +48,6 @@
             </div>
             <div class="text-center">
                 <button type="submit" class="btn btn-primary">Create Workout</button>
-            </div>           
+            </div>
         </form>
     </section>

@@ -12,8 +12,8 @@
         public string Id { get; set; }
 
         [Required]
-        [MinLength(5)]
-        [MaxLength(30)]
+        [MinLength(5, ErrorMessage = "Name cannot be smaller than 5 symbols!")]
+        [MaxLength(50, ErrorMessage = "Name cannot be greater than 50 symbols!")]
         public string Name { get; set; }
 
         [Required]
@@ -26,8 +26,8 @@
         public MuscleGroup MuscleGroup { get; set; }
 
         [Required]
-        [MinLength(5)]
-        [MaxLength(1000)]
+        [MinLength(5, ErrorMessage = "Description cannot be smaller than 5 symbols!")]
+        [MaxLength(2000, ErrorMessage = "Desription cannot be greater than 2000 symbols!")]
         public string Description { get; set; }
     }
 }

@@ -76,6 +76,11 @@
 
             if (!this.ModelState.IsValid || titleAlreadyExists)
             {
+                if (titleAlreadyExists)
+                {
+                    this.TempData["error"] = string.Format("Article with title \"{0}\" already exists! Please, choose another title!", input.ArticleTitle);
+                }
+
                 return this.View(input);
             }
 

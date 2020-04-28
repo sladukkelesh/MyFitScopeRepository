@@ -9,8 +9,8 @@
     public class CreateWorkoutInputModel
     {
         [Required]
-        [MaxLength(100)]
-        [MinLength(5)]
+        [MaxLength(100, ErrorMessage = "Name cannot be greater than 50 symbols!")]
+        [MinLength(5, ErrorMessage = "Name cannot be smaller than 5 symbols!")]
         public string Name { get; set; }
 
         [Required]
@@ -20,8 +20,8 @@
         public WorkoutType WorkoutType { get; set; }
 
         [Required]
-        [MaxLength(2000)]
-        [MinLength(10)]
+        [MaxLength(2000, ErrorMessage = "Description cannot be greater than 2000 symbols!")]
+        [MinLength(10, ErrorMessage = "Description cannot be smaller than 10 symbols!")]
         public string Description { get; set; }
     }
 }

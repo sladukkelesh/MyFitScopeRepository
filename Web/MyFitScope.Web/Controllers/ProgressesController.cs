@@ -47,13 +47,13 @@
                 return this.View(input);
             }
 
+            var userId = this.userManager.GetUserId(this.User);
+
             // Uncomment to have the right action behaviour
-            // if (this.progressesService.StatisticExists(DateTime.UtcNow))
+            // if (this.progressesService.StatisticExists(DateTime.UtcNow, userId))
             // {
             //    this.TempData["error"] = "You can add only 1 Progress Statistic per day!";
             // }
-            var userId = this.userManager.GetUserId(this.User);
-
             await this.progressesService.CreateStatisticAsync(userId, input.Weight, input.Biceps, input.Chest, input.Stomach, input.Hips, input.Thigh, input.Calf);
 
             return this.RedirectToAction(nameof(this.Statistics));

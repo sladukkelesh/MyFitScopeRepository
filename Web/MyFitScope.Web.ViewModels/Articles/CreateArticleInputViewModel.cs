@@ -8,8 +8,8 @@
     public class CreateArticleInputViewModel
     {
         [Required]
-        [MaxLength(200)]
-        [MinLength(3)]
+        [MaxLength(200, ErrorMessage = "Article Title cannot be greater than 200 symbols!")]
+        [MinLength(3, ErrorMessage = "Article Title cannot be smaller than 3 symbols!")]
         [Display(Name = "Title")]
         public string ArticleTitle { get; set; }
 
@@ -18,8 +18,8 @@
         public ArticleCategory ArticleCategory { get; set; }
 
         [Required]
-        [MaxLength(20000)]
-        [MinLength(3)]
+        [MaxLength(20000, ErrorMessage = "Article Content cannot be greater than 20000 symbols!")]
+        [MinLength(3, ErrorMessage = "Article Title cannot be smaller than 3 symbols!")]
         [Display(Name = "Content")]
         public string ArticleContent { get; set; }
 

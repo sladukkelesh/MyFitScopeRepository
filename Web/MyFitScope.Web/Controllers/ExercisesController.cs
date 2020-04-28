@@ -42,7 +42,7 @@
             {
                 if (nameAlreadyExists)
                 {
-                    this.TempData["error"] = string.Format("Exercise with name \"{0}\" already exists! Please, choose different name!", input.Name);
+                    this.TempData["error"] = string.Format("Exercise with name \"{0}\" already exists! Please, choose a different name!", input.Name);
                 }
 
                 return this.View(input);

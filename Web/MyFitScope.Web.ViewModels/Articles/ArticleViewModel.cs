@@ -5,6 +5,7 @@
     using System.Text.RegularExpressions;
 
     using MyFitScope.Data.Models.BlogModels;
+    using MyFitScope.Data.Models.BlogModels.Enums;
     using MyFitScope.Services.Mapping;
 
     public class ArticleViewModel : IMapFrom<Article>
@@ -14,6 +15,11 @@
         public DateTime CreatedOn { get; set; }
 
         public string UserUserName { get; set; }
+
+        public ArticleCategory ArticleCategory { get; set; }
+
+        public string CategoryTitle
+            => this.ArticleCategory.ToString().Replace("_", " ");
 
         public string Title { get; set; }
 
