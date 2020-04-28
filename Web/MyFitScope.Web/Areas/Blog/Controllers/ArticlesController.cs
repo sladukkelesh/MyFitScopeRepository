@@ -19,13 +19,11 @@
     {
         private readonly IArticlesService articlesService;
         private readonly UserManager<ApplicationUser> userManager;
-        private readonly ApplicationDbContext db;
 
-        public ArticlesController(IArticlesService articlesService, UserManager<ApplicationUser> userManager, ApplicationDbContext db)
+        public ArticlesController(IArticlesService articlesService, UserManager<ApplicationUser> userManager)
         {
             this.articlesService = articlesService;
             this.userManager = userManager;
-            this.db = db;
         }
 
         public async Task<IActionResult> ArticlesListing(string articleCategory, int? pageIndex = null)
