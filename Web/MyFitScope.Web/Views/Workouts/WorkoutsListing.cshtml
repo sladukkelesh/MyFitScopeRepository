@@ -69,12 +69,12 @@
                             <div class="@blurEffect">
                                 <strong class="d-inline-block mb-2 text-primary">@workout.WorkoutTypeTitle</strong>
                                 <h3 class="mb-0 text-white">@workout.Name</h3>
-                                <div class="mb-1 text-white">Creator: @workout.CreatorName</div>
+                                <div class="mb-1 text-white">Created by: @workout.CreatorName</div>
                                 <p class="card-text mb-auto text-white">@workout.ShortDescription</p>
                                 <div>
                                     <a asp-controller="Workouts" asp-action="Details" asp-route-workoutId="@workout.Id" class="stretched-link">Continue reading</a>
                                 </div>
-                            </div>           
+                            </div>
                         </div>
                     </div>
                 }
@@ -116,9 +116,17 @@
                 }
                 else
                 {
-                    @if (Model.WorkoutCategory == "Custom")
+                    @if (resultValue == "Custom")
                     {
-                        <p>You have no Custom Workouts. You can create one <a asp-controller="Workouts" asp-action="AddWorkout">here</a>.</p>
+                        if (User.IsInRole("Admin"))
+                        {
+                            <p>No Custom Workouts yet...</p>
+                        }
+                        else
+                        {
+                            <p>You have no Custom Workouts. You can create one <a asp-controller="Workouts" asp-action="AddWorkout">here</a>.</p>
+                        }
+
                     }
                     else
                     {

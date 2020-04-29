@@ -105,7 +105,15 @@
                 {
                     @if (resultValue == "Custom")
                     {
-                        <p>You have no Custom Exercises. You can create one <a asp-controller="Exercises" asp-action="CreateExercise">here</a>.</p>
+                        if (User.IsInRole("Admin"))
+                        {
+                            <p>No Custom Exercises yet...</p>
+                        }
+                        else
+                        {
+                            <p>You have no Custom Exercises. You can create one <a asp-controller="Exercises" asp-action="CreateExercise">here</a>.</p>
+                        }
+
                     }
                     else
                     {
