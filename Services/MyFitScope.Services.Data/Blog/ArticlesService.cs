@@ -105,7 +105,8 @@
         {
             var result = this.articlesRepository.All();
 
-            result = result.Where(a => a.Title.ToLower().Contains(keyWord.ToLower()));
+            result = result.Where(a => a.Title.ToLower().Contains(keyWord.ToLower())
+                           || a.Content.ToLower().Contains(keyWord.ToLower()));
 
             return await PaginatedList<ArticleViewModel>.CreateAsync(result.To<ArticleViewModel>(), pageIndex ?? GlobalConstants.PaginationDefaultPageIndex, GlobalConstants.PaginationPageSize);
         }
