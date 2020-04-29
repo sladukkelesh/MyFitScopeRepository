@@ -136,7 +136,7 @@
         public async Task<PaginatedList<WorkoutViewModel>> GetWorkoutsByKeyWordAsync(string keyWord, int? pageIndex)
         {
             var result = this.workoutsRepository.All()
-                             .Where(e => e.Name.Contains(keyWord));
+                             .Where(e => e.Name.ToLower().Contains(keyWord.ToLower()));
 
             return await PaginatedList<WorkoutViewModel>.CreateAsync(result.To<WorkoutViewModel>(), pageIndex ?? GlobalConstants.PaginationDefaultPageIndex, GlobalConstants.PaginationPageSize);
         }
