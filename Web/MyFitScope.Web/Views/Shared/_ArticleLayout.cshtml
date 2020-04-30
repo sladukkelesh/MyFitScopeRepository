@@ -35,7 +35,19 @@
                 <div class="card-body">
                     <div class="row">
                         <div class="col-lg-12">
-                                <vc:dropdown-links url="/Blog/Articles/ArticlesListing?articleCategory=" enum-name=@GlobalConstants.ArticleCategoryTypeName></vc:dropdown-links>         
+                            <vc:dropdown-links url="/Blog/Articles/ArticlesListing?articleCategory=" enum-name=@GlobalConstants.ArticleCategoryTypeName></vc:dropdown-links>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Most Commented Articles Widget -->
+            <div class="card my-4">
+                <h5 class="card-header text-white bg-dark">Most Commented Articles</h5>
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <vc:most-commented-articles></vc:most-commented-articles>
                         </div>
                     </div>
                 </div>

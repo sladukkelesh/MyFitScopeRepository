@@ -18,8 +18,10 @@
     using MyFitScope.Data.Repositories;
     using MyFitScope.Data.Seeding;
     using MyFitScope.Services.Data;
+    using MyFitScope.Services.Data.Component;
     using MyFitScope.Services.Mapping;
     using MyFitScope.Services.Messaging;
+    using MyFitScope.Web.ViewComponents;
     using MyFitScope.Web.ViewModels;
 
     public class Startup
@@ -83,7 +85,6 @@
             // Blog services
             services.AddTransient<IArticlesService, ArticlesService>();
             services.AddTransient<ICommentsService, CommentsService>();
-            services.AddTransient<INavbarDropdownLinksServices, NavBarDropdownLinksServices>();
             services.AddTransient<IResponsesService, ResponsesService>();
             services.AddTransient<IVotesService, VotesService>();
 
@@ -97,6 +98,10 @@
 
             // Administration services
             services.AddTransient<IAdministrationService, AdministrationService>();
+
+            // Component Services
+            services.AddTransient<INavbarDropdownLinksServices, NavBarDropdownLinksServices>();
+            services.AddTransient<IMostCommentedArticlesServices, MostCommentedArticlesServices>();
 
             // Common services
             services.AddTransient<ICloudinaryService, CloudinaryService>();
@@ -130,8 +135,9 @@
             }
             else
             {
-                app.UseStatusCodePagesWithRedirects("/Home/Error?statusCode={0}");
-                app.UseExceptionHandler("/Home/Error");
+                app.UseDeveloperExceptionPage();
+                //app.UseStatusCodePagesWithRedirects("/Home/Error?statusCode={0}");
+                //app.UseExceptionHandler("/Home/Error");
                 app.UseHsts();
             }
 

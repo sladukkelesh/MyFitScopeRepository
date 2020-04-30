@@ -36,7 +36,7 @@
                             <div class="margin-top-0"></div>
                             <span id="file-selected"></span>
                         </div>
-                        <button type="submit" class="btn btn-primary">Submit</button>
+                        <button type="submit" class="btn btn-primary">Send</button>
                     </form>
                 </div>
             </div>
@@ -48,10 +48,9 @@
                     <li class="nav-item bg-dark"><a class="nav-link text-white manage-nav-links" asp-controller="Exercises" asp-action="CreateExercise"><i class="fas fa-tools mr-1"></i> Create Exercise</a></li>
                     <li class="nav-item bg-dark"><a class="nav-link text-white manage-nav-links" asp-controller="Workouts" asp-action="AddWorkout"><i class="fas fa-tools mr-1"></i> Create Workout</a></li>
                 </ul>
-            </div>          
+            </div>
         </div>
         <!-- /#sidebar-wrapper -->
-
         <!-- Page Content -->
         <div class="col-md-9">
             @this.RenderBody()
@@ -62,7 +61,7 @@
 </div>
 
 @this.RenderSection("Scripts", required: false)
-@section Scripts{ 
+@section Scripts{
     <script>
         $("#menu-toggle").click(function (e) {
             e.preventDefault();

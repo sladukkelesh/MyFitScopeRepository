@@ -1,0 +1,8 @@
+﻿@using MyFitScope.Web.ViewModels.MostCommentedArticles
+@model MostCommentedArticlesLinksViewModel
+
+@foreach (var articleLink in Model.Links)
+{
+
+    <a class="nav-link text-primary" asp-area="Blog" asp-controller="Articles" asp-action="Details" asp-route-articleId="@articleLink.Id">@articleLink.Title</a>
+}
