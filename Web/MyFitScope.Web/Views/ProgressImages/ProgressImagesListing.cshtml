@@ -44,7 +44,7 @@
                                 <img class="gallery" src="@Model.Images[pic].Url" alt="Progress Image">
                             </a>
                             <div class="desc">
-                                <p class="text-white">@Model.Images[pic].CreatedOn.ToShortDateString()</p>
+                                <p class="text-white">@Model.Images[pic].CreatedOnString</p>
                                 <a class="btn btn-danger btn-sm m-0" asp-controller="ProgressImages" asp-action="DeleteProgressImage" asp-route-imageId="@Model.Images[pic].Id" onclick="ConfirmDelete('@string.Format(GlobalConstants.ProgressImageConfirmDeleteMessage, Model.Images[pic].CreatedOn.ToShortDateString())')">Delete Photo</a>
                             </div>
                         </div>
@@ -54,7 +54,7 @@
                             <div class="modal-dialog" role="document">
                                 <div class="modal-content">
                                     <div class="modal-header">
-                                        <h5 class="modal-title text-center" id="@("exampleModalLongTitle" + pic)">@Model.Images[pic].CreatedOn.ToShortDateString()</h5>
+                                        <h5 class="modal-title text-center" id="@("exampleModalLongTitle" + pic)">@Model.Images[pic].CreatedOnString</h5>
                                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                             <span aria-hidden="true">&times;</span>
                                         </button>
