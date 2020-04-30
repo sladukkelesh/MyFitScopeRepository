@@ -14,7 +14,7 @@
         {
             get
             {
-                var muscleGroups = this.Exercises.Select(e => e.MuscleGroupTitle).Distinct().ToList();
+                var muscleGroups = this.Exercises.Select(e => e.MuscleGroupTitle).Distinct().OrderBy(x => x).ToList();
 
                 return string.Join(", ", muscleGroups);
             }
