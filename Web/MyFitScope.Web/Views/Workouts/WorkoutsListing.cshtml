@@ -45,7 +45,7 @@
 
             @if (Model.Workouts.Count != 0)
             {
-                var workouts = Model.Workouts.OrderByDescending(w => w.CreatedOn).ToList();
+                var workouts = Model.Workouts.ToList();
 
                 foreach (var workout in workouts)
                 {

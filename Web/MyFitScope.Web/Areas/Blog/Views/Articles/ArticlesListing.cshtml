@@ -47,7 +47,7 @@
         }
         else
         {
-            var articles = Model.Articles.OrderByDescending(a => a.CreatedOn).ToList();
+            var articles = Model.Articles.ToList();
 
             @foreach (var article in articles)
             {

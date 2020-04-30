@@ -98,7 +98,7 @@
                     result = result.Where(a => a.ArticleCategory == (ArticleCategory)Enum.Parse(typeof(ArticleCategory), articleCategoryInput));
             }
 
-            return await PaginatedList<ArticleViewModel>.CreateAsync(result.To<ArticleViewModel>(), pageIndex ?? GlobalConstants.PaginationDefaultPageIndex, GlobalConstants.PaginationPageSize);
+            return await PaginatedList<ArticleViewModel>.CreateAsync(result.OrderByDescending(r => r.CreatedOn).To<ArticleViewModel>(), pageIndex ?? GlobalConstants.PaginationDefaultPageIndex, GlobalConstants.PaginationPageSize);
         }
 
         public async Task<PaginatedList<ArticleViewModel>> GetArticlesByKeyWordAsync(string keyWord = null, int? pageIndex = null)
@@ -108,7 +108,7 @@
             result = result.Where(a => a.Title.ToLower().Contains(keyWord.ToLower())
                            || a.Content.ToLower().Contains(keyWord.ToLower()));
 
-            return await PaginatedList<ArticleViewModel>.CreateAsync(result.To<ArticleViewModel>(), pageIndex ?? GlobalConstants.PaginationDefaultPageIndex, GlobalConstants.PaginationPageSize);
+            return await PaginatedList<ArticleViewModel>.CreateAsync(result.OrderByDescending(r => r.CreatedOn).To<ArticleViewModel>(), pageIndex ?? GlobalConstants.PaginationDefaultPageIndex, GlobalConstants.PaginationPageSize);
         }
 
         public async Task UpdateArticleAsync(string articleId, string articleTitle, ArticleCategory articleCategory, IFormFile photo, string articleContent)

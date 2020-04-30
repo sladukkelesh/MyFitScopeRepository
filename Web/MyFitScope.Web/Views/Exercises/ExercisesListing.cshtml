@@ -47,7 +47,7 @@
 
             @if (Model.Exercises.Count != 0)
             {
-                var exercises = Model.Exercises.OrderByDescending(e => e.CreatedOn).ToList();
+                var exercises = Model.Exercises.ToList();
 
                 foreach (var exercise in exercises)
                 {

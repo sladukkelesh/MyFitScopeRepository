@@ -137,7 +137,7 @@
                 result = result.Where(e => e.IsCustom == false);
             }
 
-            return await PaginatedList<ExerciseViewModel>.CreateAsync(result.To<ExerciseViewModel>(), pageIndex ?? GlobalConstants.PaginationDefaultPageIndex, GlobalConstants.PaginationPageSize);
+            return await PaginatedList<ExerciseViewModel>.CreateAsync(result.OrderByDescending(r => r.CreatedOn).To<ExerciseViewModel>(), pageIndex ?? GlobalConstants.PaginationDefaultPageIndex, GlobalConstants.PaginationPageSize);
         }
 
         public async Task<PaginatedList<ExerciseViewModel>> GetExercisesByKeyWordAsync(string keyWord, int? pageIndex = null)
@@ -146,7 +146,7 @@
                              .Where(e => e.Name.ToLower().Contains(keyWord.ToLower())
                              || e.Description.ToLower().Contains(keyWord.ToLower()));
 
-            return await PaginatedList<ExerciseViewModel>.CreateAsync(result.To<ExerciseViewModel>(), pageIndex ?? GlobalConstants.PaginationDefaultPageIndex, GlobalConstants.PaginationPageSize);
+            return await PaginatedList<ExerciseViewModel>.CreateAsync(result.OrderByDescending(r => r.CreatedOn).To<ExerciseViewModel>(), pageIndex ?? GlobalConstants.PaginationDefaultPageIndex, GlobalConstants.PaginationPageSize);
         }
     }
 }

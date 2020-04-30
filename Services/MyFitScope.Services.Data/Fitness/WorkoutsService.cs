@@ -139,7 +139,7 @@
                              .Where(e => e.Name.ToLower().Contains(keyWord.ToLower())
                              || e.Description.ToLower().Contains(keyWord.ToLower()));
 
-            return await PaginatedList<WorkoutViewModel>.CreateAsync(result.To<WorkoutViewModel>(), pageIndex ?? GlobalConstants.PaginationDefaultPageIndex, GlobalConstants.PaginationPageSize);
+            return await PaginatedList<WorkoutViewModel>.CreateAsync(result.OrderByDescending(r => r.CreatedOn).To<WorkoutViewModel>(), pageIndex ?? GlobalConstants.PaginationDefaultPageIndex, GlobalConstants.PaginationPageSize);
         }
 
         public async Task SetCurrentWorkoutAsync(string workoutId, ApplicationUser user)
