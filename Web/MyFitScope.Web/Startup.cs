@@ -3,6 +3,7 @@
     using System.Reflection;
 
     using CloudinaryDotNet;
+
     using Microsoft.AspNetCore.Builder;
     using Microsoft.AspNetCore.Hosting;
     using Microsoft.AspNetCore.Http;
@@ -11,6 +12,7 @@
     using Microsoft.Extensions.Configuration;
     using Microsoft.Extensions.DependencyInjection;
     using Microsoft.Extensions.Hosting;
+
     using MyFitScope.Data;
     using MyFitScope.Data.Common;
     using MyFitScope.Data.Common.Repositories;
@@ -121,7 +123,11 @@
 
                 if (env.IsDevelopment())
                 {
-                    dbContext.Database.Migrate();
+                    dbContext.Database.EnsureDeleted();
+
+                    dbContext.Database.EnsureCreated();
+
+                    // dbContext.Database.Migrate();
                 }
 
                 new ApplicationDbContextSeeder().SeedAsync(dbContext, serviceScope.ServiceProvider).GetAwaiter().GetResult();

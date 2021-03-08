@@ -25,8 +25,18 @@
 
             var seeders = new List<ISeeder>
                           {
-                              //new RolesSeeder(),
-                              //new SettingsSeeder(),
+                              // User Data:
+                              new RolesSeeder(),
+                              new UsersSeeder(),
+
+                              // Blog Data:
+                              new ArticlesSeeder(),
+                              new CommentsSeeder(),
+                              new ResponsesSeeder(),
+
+                              // Fitness Data
+
+                              // new SettingsSeeder(),
                           };
 
             foreach (var seeder in seeders)

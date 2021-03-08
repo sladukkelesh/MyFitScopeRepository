@@ -8,7 +8,7 @@
     using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Identity;
     using Microsoft.AspNetCore.Mvc;
-    using MyFitScope.Data;
+
     using MyFitScope.Data.Models;
     using MyFitScope.Data.Models.BlogModels.Enums;
     using MyFitScope.Services.Data;
