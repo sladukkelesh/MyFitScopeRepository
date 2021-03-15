@@ -18,5 +18,8 @@
         public string ExerciseId { get; set; }
 
         public virtual Exercise Exercise { get; set; }
+
+        // Property "Position" --> keep the position of exercise in workoutDay exercises collection!
+        public int Position { get; set; }
     }
 }
