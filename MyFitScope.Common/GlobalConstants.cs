@@ -10,9 +10,14 @@
 
         public const string BrandPostFix = "Scope";
 
+        // Roles Constants:
         public const string AdministratorRoleName = "Administrator";
 
         public const string UserRoleName = "User";
+
+        // Data Seeder Constants:
+        public const int EntitiesCount = 3;
+
 
         public const string ArticleCategoryTypeName = "MyFitScope.Data.Models.BlogModels.Enums.ArticleCategory";
 

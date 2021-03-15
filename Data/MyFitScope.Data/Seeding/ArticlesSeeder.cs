@@ -7,6 +7,8 @@
     using MyFitScope.Data.Models.BlogModels;
     using MyFitScope.Data.Models.BlogModels.Enums;
 
+    using static MyFitScope.Common.GlobalConstants;
+
     internal class ArticlesSeeder : ISeeder
     {
         public async Task SeedAsync(ApplicationDbContext dbContext, IServiceProvider serviceProvider)
@@ -18,7 +20,7 @@
 
             var userId = dbContext.Users.FirstOrDefault().Id;
 
-            for (int i = 1; i <= 3; i++)
+            for (int i = 1; i <= EntitiesCount; i++)
             {
                 await dbContext.Articles.AddAsync(new Article
                 {

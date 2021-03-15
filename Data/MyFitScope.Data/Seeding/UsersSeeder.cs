@@ -8,6 +8,8 @@
     using Microsoft.Extensions.DependencyInjection;
     using MyFitScope.Data.Models;
 
+    using static MyFitScope.Common.GlobalConstants;
+
     internal class UsersSeeder : ISeeder
     {
         public async Task SeedAsync(ApplicationDbContext dbContext, IServiceProvider serviceProvider)
@@ -19,7 +21,7 @@
 
             var userManager = serviceProvider.GetRequiredService<UserManager<ApplicationUser>>();
 
-            for (int i = 1; i <= 3; i++)
+            for (int i = 1; i <= EntitiesCount; i++)
             {
                 var newUser = new ApplicationUser()
                 {
