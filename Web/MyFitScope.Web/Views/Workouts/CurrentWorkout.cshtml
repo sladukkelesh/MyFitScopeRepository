@@ -55,7 +55,7 @@
                 </div>
             </div>
 
-            @if (this.User.IsInRole("Admin") || Model.IsCustom == true)
+            @if (this.User.IsInRole(GlobalConstants.AdministratorRoleName) || Model.IsCustom == true)
             {
                 <div>
                     <div class="text-center mt-4 mb-4">
@@ -99,7 +99,7 @@
                                             <h3>@day.WeekDayTitle @(day.Name != string.Empty ? "- " + day.Name : string.Empty)</h3>
                                         </button>
                                     </h3>
-                                    @if (User.IsInRole("Admin") || Model.CreatorName == User.Identity.Name)
+                                    @if (User.IsInRole(GlobalConstants.AdministratorRoleName) || Model.CreatorName == User.Identity.Name)
                                     {
                                         <div class="d-flex">
                                             <div class="my-auto">
@@ -144,7 +144,7 @@
                                                             var exercise = exercises[j];
 
                                                             <tr class="bg-light">
-                                                                <th scope="row">@(j + 1)</th>
+                                                                <th scope="row">@exercise.Position</th>
                                                                 <td>@exercise.MuscleGroupTitle</td>
                                                                 <td><a asp-controller="Exercises" asp-action="Details" asp-route-id="@exercise.ExerciseId">@exercise.ExerciseName</a></td>
                                                             </tr>

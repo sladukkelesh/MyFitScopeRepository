@@ -4,6 +4,7 @@
     {
         public const string SystemName = "MyFitScope";
 
+        // System Brand Logo Constants:
         public const string BrandPrefix = "My";
 
         public const string BrandMainFix = "Fit";
@@ -39,16 +40,19 @@
 
         public const string ProgressImageConfirmDeleteMessage = "Confirm that you want to delete an image from \"{0}\"?";
 
+        // Pagination Constants:
         public const int PaginationPageSize = 5;
 
         public const int PaginationDefaultPageIndex = 1;
 
+        // Cloud Image Folder Constants:
         public const string CloudArticlesImageFolder = "articles_photos";
 
         public const string CloudUsersImageFolder = "users_photos";
 
         public const string CloudProgressImageFolder = "progress_photos";
 
+        // Progress Constants:
         public const int ProgressTableHeaderColumnRowsCount = 9;
     }
 }

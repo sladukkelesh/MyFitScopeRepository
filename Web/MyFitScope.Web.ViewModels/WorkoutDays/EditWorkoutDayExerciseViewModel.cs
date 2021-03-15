@@ -16,6 +16,8 @@
 
         public string ExerciseName { get; set; }
 
+        public int Position { get; set; }
+
         public MuscleGroup ExerciseMuscleGroup { get; set; }
 
         public string MuscleGroupTitle

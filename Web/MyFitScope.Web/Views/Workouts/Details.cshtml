@@ -95,7 +95,7 @@
                                             <tbody>
 
                                                 @{
-                                                    var exercises = day.Exercises.OrderBy(e => e.CreatedOn).ToList();
+                                                    var exercises = day.Exercises.OrderBy(e => e.Position).ToList();
                                                 }
 
                                                 @for (var j = 0; j < exercises.Count; j++)
@@ -103,7 +103,7 @@
                                                     var exercise = exercises[j];
 
                                                     <tr class="bg-light">
-                                                        <th scope="row">@(j + 1)</th>
+                                                        <th scope="row">@exercise.Position</th>
                                                         <td>@exercise.MuscleGroupTitle</td>
                                                         <td><a asp-controller="Exercises" asp-action="Details" asp-route-id="@exercise.ExerciseId">@exercise.ExerciseName</a></td>
                                                     </tr>

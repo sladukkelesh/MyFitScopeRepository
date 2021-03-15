@@ -47,16 +47,18 @@
                     </thead>
                     <tbody>
                         @{ 
-                            var exercises = Model.Exercises.OrderBy(e => e.CreatedOn).ToList();
+                            var exercises = Model.Exercises.OrderBy(e => e.Position).ToList();
                         }
 
                         @for (var i = 0; i <exercises.Count; i++)
                         {
+                            var exercise = exercises[i];
+
                             <tr>
-                                <th scope="row">@(i + 1)</th>
-                                <td>@exercises[i].MuscleGroupTitle</td>
-                                <td><a asp-controller="Exercises" asp-action="Details" asp-route-id="@exercises[i].Id">@exercises[i].ExerciseName</a></td>
-                                <td><a class="btn btn-danger btn-sm" asp-controller="WorkoutDaysExercises" asp-action="RemoveExercise" asp-route-exerciseId="@exercises[i].ExerciseId" asp-route-workoutDayId="@exercises[i].WorkoutDayId">Remove</a></td>
+                                <th scope="row">@exercise.Position</th>
+                                <td>@exercise.MuscleGroupTitle</td>
+                                <td><a asp-controller="Exercises" asp-action="Details" asp-route-id="@exercise.Id">@exercise.ExerciseName</a></td>
+                                <td><a class="btn btn-danger btn-sm" asp-controller="WorkoutDaysExercises" asp-action="RemoveExercise" asp-route-exerciseId="@exercise.ExerciseId" asp-route-workoutDayId="@exercise.WorkoutDayId">Remove</a></td>
                             </tr>
                         }
                     </tbody>
