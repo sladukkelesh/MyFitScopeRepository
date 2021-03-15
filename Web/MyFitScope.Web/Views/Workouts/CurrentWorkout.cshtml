@@ -136,7 +136,7 @@
                                                     <tbody>
 
                                                         @{
-                                                            var exercises = day.Exercises.OrderBy(e => e.CreatedOn).ToList();
+                                                            var exercises = day.Exercises.OrderBy(e => e.Position).ToList();
                                                         }
 
                                                         @for (var j = 0; j < exercises.Count; j++)

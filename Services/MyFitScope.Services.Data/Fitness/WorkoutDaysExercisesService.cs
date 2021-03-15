@@ -27,6 +27,7 @@
             {
                 ExerciseId = exerciseId,
                 WorkoutDayId = workoutDayId,
+                Position = this.GenerateExercisePosition(workoutDayId),
             };
 
             await this.workoutDayExerciseRepository.AddAsync(workoutDayExercise);
@@ -45,6 +46,8 @@
                     string.Format(InvalidExerciseConnectionIdErrorMessage, exerciseId, workoutDayId));
             }
 
+            this.UpdateExercisesPositions(targetToDelete.Position, workoutDayId);
+
             this.workoutDayExerciseRepository.Delete(targetToDelete);
             await this.workoutDayExerciseRepository.SaveChangesAsync();
 
@@ -59,5 +62,22 @@
                                                     .ToList();
         }
 
+        private int GenerateExercisePosition(string workoutDayId)
+            => this.workoutDayExerciseRepository.All()
+                                 .Where(wd => wd.WorkoutDayId == workoutDayId)
+                                 .Count() + 1;
+
+        private void UpdateExercisesPositions(int exercisePosition, string workoutDayId)
+        {
+            var exercises = this.workoutDayExerciseRepository.All()
+                                .Where(wde => wde.WorkoutDayId == workoutDayId)
+                                .OrderBy(e => e.Position)
+                                .ToList();
+
+            for (int i = exercisePosition; i < exercises.Count; i++)
+            {
+                exercises[i].Position--;
+            }
+        }
     }
 }
