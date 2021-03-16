@@ -43,6 +43,7 @@
                             <th scope="col">Muscle</th>
                             <th scope="col">Exercise</th>
                             <th scope="col">Remove</th>
+                            <th scope="col">Swap</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -57,8 +58,26 @@
                             <tr>
                                 <th scope="row">@exercise.Position</th>
                                 <td>@exercise.MuscleGroupTitle</td>
-                                <td><a asp-controller="Exercises" asp-action="Details" asp-route-id="@exercise.Id">@exercise.ExerciseName</a></td>
+                                <td><a asp-controller="Exercises" asp-action="Details" asp-route-id="@exercise.ExerciseId">@exercise.ExerciseName</a></td>
                                 <td><a class="btn btn-danger btn-sm" asp-controller="WorkoutDaysExercises" asp-action="RemoveExercise" asp-route-exerciseId="@exercise.ExerciseId" asp-route-workoutDayId="@exercise.WorkoutDayId">Remove</a></td>
+                                <td>
+                                    <div class="dropdown">
+                                        <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                            Swap with...
+                                        </button>
+                                        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                            @for (int j = 0; j < exercises.Count; j++)
+                                            {
+                                                if (j + 1 == exercise.Position)
+                                                {
+                                                    continue;
+                                                }
+
+                                                <a class="dropdown-item" asp-controller="WorkoutDaysExercises" asp-action="SwapExercisePosition" asp-route-currentExerciseId="@exercise.ExerciseId" asp-route-targetExerciseId="@exercises[j].ExerciseId" asp-route-workoutDayId="@Model.Id">@exercises[j].Position</a>
+                                            }
+                                        </div>
+                                    </div>
+                                </td>
                             </tr>
                         }
                     </tbody>

@@ -11,20 +11,34 @@
     {
         public string Id { get; set; }
 
-        public string Name
+        public string MuscleGroupsNames
         {
             get
             {
-                var muscleGroups = this.Exercises.Select(e => e.MuscleGroupTitle).Distinct().OrderBy(x => x).ToList();
+                var muscleGroups = this.Exercises.OrderBy(e => e.Position).Select(e => e.MuscleGroupTitle).Distinct().ToList();
 
                 return string.Join(", ", muscleGroups);
             }
         }
 
-        public WeekDay WeekDay { get; set; }
+        public string WorkoutDayTitle
+        {
+            get
+            {
 
-        public string WeekDayTitle
-            => this.WeekDay.ToString();
+                return this.WeekDayName + (this.MuscleGroupsNames != string.Empty ? " - " + this.MuscleGroupsNames : string.Empty);
+            }
+        }
+
+        public string WeekDayName
+        {
+            get
+            {
+                return this.WeekDay.ToString();
+            }
+        }
+
+        public WeekDay WeekDay { get; set; }
 
         public List<WorkoutDayExerciseViewModel> Exercises { get; set; }
     }

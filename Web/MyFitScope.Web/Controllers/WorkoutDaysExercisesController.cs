@@ -24,6 +24,7 @@
         {
             var exerciseAlreadyIn = this.WorkoutDayAlreadyContainsExercise(input.WorkoutDayId, input.ExerciseId);
 
+            // "exerciseAlreadyIn should be BOOL type! add error message in Global constants!!!!!
             if (!string.IsNullOrEmpty(exerciseAlreadyIn))
             {
                 this.TempData["error"] = exerciseAlreadyIn;
@@ -39,9 +40,18 @@
         [Authorize]
         public async Task<IActionResult> RemoveExercise(string exerciseId, string workoutDayId)
         {
+            // maybe we have to check if exercise actually exists???
             var workoutDayIdResult = await this.workoutDayExerciseService.RemoveExerciseFromWorkoutDayAsync(exerciseId, workoutDayId);
 
             return this.RedirectToAction("Edit", "WorkoutDays", new { workoutDayId = workoutDayIdResult });
+        }
+
+        public async Task<IActionResult> SwapExercisePosition(string currentExerciseId, string targetExerciseId, string workoutDayId)
+        {
+            // maybe we have to check if current and target exercises actually exists???
+            await this.workoutDayExerciseService.SwapExercisesAsync(currentExerciseId, targetExerciseId, workoutDayId);
+
+            return this.RedirectToAction("Edit", "WorkoutDays", new { workoutDayId = workoutDayId });
         }
 
         private string WorkoutDayAlreadyContainsExercise(string workoutDayId, string exerciseId)

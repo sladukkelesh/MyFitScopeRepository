@@ -8,8 +8,6 @@
 
     public class EditWorkoutDayExerciseViewModel : IMapFrom<WorkoutDayExercise>
     {
-        public int Id { get; set; }
-
         public DateTime CreatedOn { get; set; }
 
         public string ExerciseId { get; set; }

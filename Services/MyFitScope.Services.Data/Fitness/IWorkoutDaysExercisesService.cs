@@ -9,6 +9,8 @@
     {
         Task AddExerciseToWorkoutDayAsync(string exerciseId, string workoutDayId);
 
+        Task SwapExercisesAsync(string currentExerciseId, string targetExerciseId, string workoutDayId);
+
         Task<string> RemoveExerciseFromWorkoutDayAsync(string exerciseId, string workoutDayId);
 
         IEnumerable<WorkoutDaysExercisesOutputModel> GetByExerciseId(string exerciseId);

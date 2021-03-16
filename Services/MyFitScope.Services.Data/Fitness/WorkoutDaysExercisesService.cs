@@ -34,6 +34,25 @@
             await this.workoutDayExerciseRepository.SaveChangesAsync();
         }
 
+        public async Task SwapExercisesAsync(string currentExerciseId, string targetExerciseId, string workoutDayId)
+        {
+            var currentExercise = this.workoutDayExerciseRepository
+                                      .All()
+                                      .Where(e => e.ExerciseId == currentExerciseId && e.WorkoutDayId == workoutDayId)
+                                      .FirstOrDefault();
+
+            var targetExerise = this.workoutDayExerciseRepository
+                                    .All()
+                                    .Where(e => e.ExerciseId == targetExerciseId && e.WorkoutDayId == workoutDayId)
+                                    .FirstOrDefault();
+
+            var temp = currentExercise.Position;
+            currentExercise.Position = targetExerise.Position;
+            targetExerise.Position = temp;
+
+            await this.workoutDayExerciseRepository.SaveChangesAsync();
+        }
+
         public async Task<string> RemoveExerciseFromWorkoutDayAsync(string exerciseId, string workoutDayId)
         {
             var targetToDelete = this.workoutDayExerciseRepository.All()
@@ -55,17 +74,15 @@
         }
 
         public IEnumerable<WorkoutDaysExercisesOutputModel> GetByExerciseId(string exerciseId)
-        {
-            return this.workoutDayExerciseRepository.All()
-                                                    .Where(we => we.ExerciseId == exerciseId)
-                                                    .To<WorkoutDaysExercisesOutputModel>()
-                                                    .ToList();
-        }
+            => this.workoutDayExerciseRepository.All()
+                                                .Where(we => we.ExerciseId == exerciseId)
+                                                .To<WorkoutDaysExercisesOutputModel>()
+                                                .ToList();
 
         private int GenerateExercisePosition(string workoutDayId)
             => this.workoutDayExerciseRepository.All()
-                                 .Where(wd => wd.WorkoutDayId == workoutDayId)
-                                 .Count() + 1;
+                                                .Where(wd => wd.WorkoutDayId == workoutDayId)
+                                                .Count() + 1;
 
         private void UpdateExercisesPositions(int exercisePosition, string workoutDayId)
         {
