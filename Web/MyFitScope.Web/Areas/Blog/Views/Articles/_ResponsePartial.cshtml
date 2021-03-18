@@ -30,7 +30,7 @@
             <li class="list-inline-item g-mr-20">
                 @if (User.Identity.IsAuthenticated)
                 {
-                    <a class="u-link-v5 g-color-gray-dark-v4 g-color-primary--hover" onclick="SendVote('Response', '@Model.Id', true)" href="#!">
+                    <a class="u-link-v5 g-color-gray-dark-v4 g-color-primary--hover text-decoration-none" onclick="SendVote('Response', '@Model.Id', true)" href="#!">
                         <i class="fa fa-thumbs-up g-pos-rel g-top-1 g-mr-3"></i>
                         <span class="vote-span">@Model.UpVotes</span>
                     </a>
@@ -45,7 +45,7 @@
             <li class="list-inline-item g-mr-20">
                 @if (User.Identity.IsAuthenticated)
                 {
-                    <a class="u-link-v5 g-color-gray-dark-v4 g-color-primary--hover" onclick="SendVote('Response', '@Model.Id', false)" href="#!">
+                    <a class="u-link-v5 g-color-gray-dark-v4 g-color-primary--hover text-decoration-none" onclick="SendVote('Response', '@Model.Id', false)" href="#!">
                         <i class="fa fa-thumbs-down g-pos-rel g-top-1 g-mr-3"></i>
                         <span class="vote-span">@Model.DownVotes</span>
                     </a>
@@ -56,7 +56,7 @@
                     <span class="vote-span">@Model.DownVotes</span>
                 }
             </li>
-            @if (this.User.IsInRole("Admin"))
+            @if (this.User.IsInRole("Administrator"))
             {
                 <li class="list-inline-item ml-auto">
                     <a class="btn btn-sm btn-danger ml-lg-5" asp-controller="Responses" asp-action="DeleteResponse" asp-route-responseId="@Model.Id" asp-route-articleId="@Model.ArticleId" onclick="ConfirmDelete('@string.Format(GlobalConstants.ResponseConfirmDeleteMessage, Model.UserUserName)')">Delete</a>

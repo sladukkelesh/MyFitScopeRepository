@@ -49,7 +49,7 @@
             return this.RedirectToAction("Details", "Articles", new { articleId = input.ArticleId });
         }
 
-        [Authorize(Roles = "Admin")]
+        [Authorize(Roles = "Administrator")]
         public async Task<IActionResult> DeleteComment(string commentId, string articleId)
         {
             await this.commentsService.DeleteCommentAsync(commentId);

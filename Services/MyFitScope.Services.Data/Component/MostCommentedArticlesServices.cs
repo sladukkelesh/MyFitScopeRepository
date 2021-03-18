@@ -20,7 +20,7 @@
         public IEnumerable<MostCommentedArticleViewModel> GetMostCommentedArticles()
                => this.articlesRepository.All()
                                 .Where(a => a.Comments.Count > 0)
-                                .OrderByDescending(a => a.Comments.Count)
+                                .OrderByDescending(a => (a.Comments.Count() + a.Comments.SelectMany(c => c.Responses).Count()))
                                 .To<MostCommentedArticleViewModel>()
                                 .Take(5)
                                 .ToList();

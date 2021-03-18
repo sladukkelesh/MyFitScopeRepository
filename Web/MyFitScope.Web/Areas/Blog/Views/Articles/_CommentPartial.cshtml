@@ -21,55 +21,64 @@
         </div>       
         @Model.Content
 
-            <ul class="list-inline d-sm-flex my-0 parent-vote-element">
-                <li class="list-inline-item g-mr-20">
-                    @if (User.Identity.IsAuthenticated)
-                    {
-                        <a class="u-link-v5 g-color-gray-dark-v4 g-color-primary--hover" onclick="SendVote('Comment', '@Model.Id', true)" href="#!">
-                            <i class="fa fa-thumbs-up g-pos-rel g-top-1 g-mr-3"></i>
-                            <span class="vote-span">@Model.UpVotes</span>
-                        </a>
-                    }
-                    else
-                    {
-                        <i class="fa fa-thumbs-up g-pos-rel g-top-1 g-mr-3"></i>
-                        <span class="vote-span">@Model.UpVotes</span>
-                    }
+    <ul class="list-inline d-sm-flex my-0 parent-vote-element">
+        <li class="list-inline-item g-mr-20">
+            @if (User.Identity.IsAuthenticated)
+            {
+                <a class="u-link-v5 g-color-gray-dark-v4 g-color-primary--hover text-decoration-none" onclick="SendVote('Comment', '@Model.Id', true)" href="#!">
+                    <i class="fa fa-thumbs-up g-pos-rel g-top-1 g-mr-3"></i>
+                    <span class="vote-span">@Model.UpVotes</span>
+                </a>
+            }
+            else
+            {
+                <i class="fa fa-thumbs-up g-pos-rel g-top-1 g-mr-3"></i>
+                <span class="vote-span">@Model.UpVotes</span>
+            }
 
-                </li>
-                <li class="list-inline-item g-mr-20">
-                    @if (User.Identity.IsAuthenticated)
-                    {
-                        <a class="u-link-v5 g-color-gray-dark-v4 g-color-primary--hover" onclick="SendVote('Comment', '@Model.Id', false)" href="#!">
-                            <i class="fa fa-thumbs-down g-pos-rel g-top-1 g-mr-3"></i>
-                            <span class="vote-span">@Model.DownVotes</span>
-                        </a>
-                    }
-                    else
-                    {
-                        <i class="fa fa-thumbs-down g-pos-rel g-top-1 g-mr-3"></i>
-                        <span class="vote-span">@Model.DownVotes</span>
-                    }
+        </li>
+        <li class="list-inline-item g-mr-20">
+            @if (User.Identity.IsAuthenticated)
+            {
+                <a class="u-link-v5 g-color-gray-dark-v4 g-color-primary--hover text-decoration-none" onclick="SendVote('Comment', '@Model.Id', false)" href="#!">
+                    <i class="fa fa-thumbs-down g-pos-rel g-top-1 g-mr-3"></i>
+                    <span class="vote-span">@Model.DownVotes</span>
+                </a>
+            }
+            else
+            {
+                <i class="fa fa-thumbs-down g-pos-rel g-top-1 g-mr-3"></i>
+                <span class="vote-span">@Model.DownVotes</span>
+            }
 
-                </li>
-                @if (User.Identity.IsAuthenticated)
+        </li>
+        @if (Model.Responses.Count() > 0)
+        {
+            <li class="list-inline-item ml-3">
+                <a class="text-decoration-none" href="#!" onclick="ToggleResponses('@Model.Id')">
+                    <i class="fas fa-comments"></i> (@Model.Responses.Count())
+                </a>       
+            </li>
+        }
+
+        @if (User.Identity.IsAuthenticated)
+        {
+            <li class="list-inline-item ml-auto">
+                <a class="u-link-v5 g-color-gray-dark-v4 g-color-primary--hover replay-comment text-decoration-none" onclick="AddResponseInputForm(); ShowResponses('@Model.Id')" href="#!">
+                    <i class="fa fa-reply g-pos-rel g-top-1 g-mr-3"></i>
+                    Reply
+                </a>
+                @if (this.User.IsInRole("Admin"))
                 {
-                    <li class="list-inline-item ml-auto">
-                        <a class="u-link-v5 g-color-gray-dark-v4 g-color-primary--hover replay-comment" onclick="AddResponseInputForm()" href="#!">
-                            <i class="fa fa-reply g-pos-rel g-top-1 g-mr-3"></i>
-                            Reply
-                        </a>
-                        @if (this.User.IsInRole("Admin"))
-                        {
-                            <a class="btn btn-sm btn-danger ml-3 text-white" asp-controller="Comments" asp-action="DeleteComment" asp-route-commentId="@Model.Id" asp-route-articleId="@Model.ArticleId" onclick="ConfirmDelete('@string.Format(GlobalConstants.CommentConfirmDeleteMessage, Model.UserUserName)')">Delete</a>
-                        }
-                    </li>
+                    <a class="btn btn-sm btn-danger ml-3 text-white" asp-controller="Comments" asp-action="DeleteComment" asp-route-commentId="@Model.Id" asp-route-articleId="@Model.ArticleId" onclick="ConfirmDelete('@string.Format(GlobalConstants.CommentConfirmDeleteMessage, Model.UserUserName)')">Delete</a>
                 }
+            </li>
+        }
 
-            </ul>
+    </ul>
 
 
-        <div class="parent-div">
+        <div class="parent-div responses-collapse" id="@Model.Id">
 
             <input type="hidden" name="parentCommentId" value="@Model.Id" />
 
@@ -87,6 +96,5 @@
         </div>
     </div>
 </div>
-
 
 

@@ -1,13 +1,10 @@
 ﻿namespace MyFitScope.Services.Data
 {
     using System;
-    using System.Linq;
     using System.Threading.Tasks;
 
     using MyFitScope.Data.Common.Repositories;
     using MyFitScope.Data.Models.BlogModels;
-    using MyFitScope.Services.Mapping;
-    using MyFitScope.Web.ViewModels.Comments;
 
     public class CommentsService : ICommentsService
     {

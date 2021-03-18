@@ -2,7 +2,7 @@
 {
     using System;
     using System.Collections.Generic;
-
+    using System.Linq;
     using Ganss.XSS;
     using MyFitScope.Data.Models.BlogModels;
     using MyFitScope.Services.Mapping;
@@ -29,6 +29,14 @@
 
         public string CommentUrl
             => "/Comments/AddComment";
+
+        public int TotalCommentsCount
+        {
+            get
+            {
+                return this.Comments.Count() + this.Comments.SelectMany(c => c.Responses).Count();
+            }
+        }
 
         public IEnumerable<CommentViewModel> Comments { get; set; }
     }
