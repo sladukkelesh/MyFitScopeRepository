@@ -76,7 +76,7 @@
                 </div>
             }
 
-
+            <!-- Workout Days List -->
             @if (Model.WorkoutDays.Count != 0)
             {
                 <div id="workoutDays">
@@ -121,9 +121,10 @@
                                         <div>
 
 
-
+                                            <!-- Exercises List inside current workout day -->
                                             @if (day.Exercises.Count != 0)
                                             {
+
                                                 <table class="table table-striped">
 
                                                     <thead>

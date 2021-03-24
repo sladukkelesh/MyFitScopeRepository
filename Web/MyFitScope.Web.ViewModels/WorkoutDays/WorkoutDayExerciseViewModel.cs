@@ -10,8 +10,6 @@
     {
         public int Id { get; set; }
 
-        public DateTime CreatedOn { get; set; }
-
         public string ExerciseId { get; set; }
 
         public string ExerciseName { get; set; }

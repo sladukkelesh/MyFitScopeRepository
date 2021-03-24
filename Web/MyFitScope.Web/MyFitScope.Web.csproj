@@ -16,6 +16,13 @@
     <SignAssembly>false</SignAssembly>
     <ApplicationInsightsResourceId>/subscriptions/f46198a3-02d0-4052-a8b6-303795e8740c/resourcegroups/myfitscope/providers/microsoft.insights/components/myfitscope</ApplicationInsightsResourceId>
   </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Remove="ValidationAttributes\**" />
+    <Content Remove="ValidationAttributes\**" />
+    <EmbeddedResource Remove="ValidationAttributes\**" />
+    <None Remove="ValidationAttributes\**" />
+  </ItemGroup>
   <ItemGroup>
     <AdditionalFiles Include="..\..\stylecop.json" />
   </ItemGroup>

@@ -5,6 +5,7 @@
     using MyFitScope.Data.Models.FitnessModels;
     using MyFitScope.Data.Models.FitnessModels.Enums;
     using MyFitScope.Services.Mapping;
+    using MyFitScope.Web.Infrastructure.ValidationAttributes;
 
     public class EditExerciseInputViewModel : IMapFrom<Exercise>
     {
@@ -16,8 +17,7 @@
         [MaxLength(50, ErrorMessage = "Name cannot be greater than 50 symbols!")]
         public string Name { get; set; }
 
-        [Required]
-        [RegularExpression(@"^(http(s)?:\/\/)?((w){3}.)?youtu(be|.be)?(\.com)?\/.+", ErrorMessage = "Video Url must be a valid YouTube Url!")]
+        [YouTubeUrlValidation]
         [Display(Name = "Video Url")]
         public string VideoUrl { get; set; }
 

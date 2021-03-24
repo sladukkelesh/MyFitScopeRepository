@@ -7,7 +7,12 @@ for details on configuring this project to bundle and minify static web assets. 
 }
 
 div.dropdown-menu a:hover {
+    color: white !important;
     background-color: grey;
+    padding-left: 20px;
+    margin: 0 5px;
+    border: none;
+    border-radius: 5px;
 }
 
 a.navbar-brand {

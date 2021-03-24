@@ -79,11 +79,13 @@
 
             if (Enum.GetNames(typeof(MuscleGroup)).Any(ac => ac == exerciseCategory) || exerciseCategory == "All" || exerciseCategory == "Custom")
             {
+                // If we come from "Exercises Nav Menu":
                 model.Exercises = await this.exercisesService.GetExercisesByCategoryAsync(isAdmin, userName, exerciseCategory, pageIndex);
                 model.ExerciseCategory = "listing=" + exerciseCategory;
             }
             else
             {
+                // If we come from "Search Bar":
                 model.Exercises = await this.exercisesService.GetExercisesByKeyWordAsync(exerciseCategory, pageIndex);
                 model.ExerciseCategory = "search=" + exerciseCategory;
             }
