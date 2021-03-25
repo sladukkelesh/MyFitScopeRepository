@@ -21,7 +21,7 @@
 </head>
 <body>
     <header>
-        <nav class="navbar navbar-expand-sm navbar-light bg-dark border-bottom box-shadow mb-3">
+        <nav class="navbar navbar-expand-sm navbar-light border-bottom box-shadow mb-3">
             <div class="container">
                 <a class="navbar-brand text-light" asp-area="" asp-controller="Home" asp-action="Index">@GlobalConstants.BrandPrefix<span class="brandMainPart">@GlobalConstants.BrandMainFix</span>@GlobalConstants.BrandPostFix</a>
                 <button class="navbar-toggler bg-light" type="button" data-toggle="collapse" data-target=".navbar-collapse" aria-controls="navbarSupportedContent"
@@ -66,7 +66,7 @@
                             <div class="dropdown-menu">
                                 <vc:dropdown-links url="/Blog/Articles/ArticlesListing?articleCategory=" enum-name=@GlobalConstants.ArticleCategoryTypeName></vc:dropdown-links>
                                 <div class="dropdown-divider"></div>
-                                <a class="nav-link text-dark" asp-area="Blog" asp-controller="Articles" asp-action="ArticlesListing" asp-route-articleCategory="All">All</a>
+                                <a class="nav-link" asp-area="Blog" asp-controller="Articles" asp-action="ArticlesListing" asp-route-articleCategory="All">All</a>
 
                                 @if (this.User.IsInRole(GlobalConstants.AdministratorRoleName))
                                 {
@@ -98,7 +98,7 @@
         </main>
     </div>
 
-    <footer class="border-top footer text-light bg-dark">
+    <footer class="border-top footer text-light bg-dark text-center">
         <div class="container">
             &copy; @DateTime.Now.Year - @GlobalConstants.SystemName - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
         </div>
