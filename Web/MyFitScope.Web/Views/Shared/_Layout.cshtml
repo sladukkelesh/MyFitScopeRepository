@@ -32,11 +32,11 @@
                     <partial name="_LoginPartial" />
                     <ul class="navbar-nav flex-grow-1">
                         <li class="nav-item">
-                            <a class="nav-link text-light nav-bar-title-anchor" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
+                            <a class="nav-link nav-bar-title-anchor" id="#Home" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
                         </li>
 
                         <li class="nav-item dropdown">
-                            <a class="nav-link dropdown-toggle text-white nav-bar-title-anchor" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Workouts</a>
+                            <a class="nav-link dropdown-toggle nav-bar-title-anchor" id="#Workouts" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Workouts</a>
                             <div class="dropdown-menu">
                                 <vc:dropdown-links url="/Workouts/WorkoutsListing?workoutCategory=" enum-name=@GlobalConstants.WorkoutCategoryTypeName></vc:dropdown-links>
                                 <div class="dropdown-divider"></div>
@@ -49,7 +49,7 @@
                         </li>
 
                         <li class="nav-item dropdown">
-                            <a class="nav-link dropdown-toggle text-white nav-bar-title-anchor" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Exercises</a>
+                            <a class="nav-link dropdown-toggle nav-bar-title-anchor" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Exercises</a>
                             <div class="dropdown-menu">
                                 <vc:dropdown-links url="/Exercises/ExercisesListing?exerciseCategory=" enum-name=@GlobalConstants.ExerciseCategoryTypeName></vc:dropdown-links>
                                 <div class="dropdown-divider"></div>
@@ -62,7 +62,7 @@
                         </li>
 
                         <li class="nav-item dropdown">
-                            <a class="nav-link dropdown-toggle text-white nav-bar-title-anchor" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Blog</a>
+                            <a class="nav-link dropdown-toggle nav-bar-title-anchor" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Blog</a>
                             <div class="dropdown-menu">
                                 <vc:dropdown-links url="/Blog/Articles/ArticlesListing?articleCategory=" enum-name=@GlobalConstants.ArticleCategoryTypeName></vc:dropdown-links>
                                 <div class="dropdown-divider"></div>
@@ -78,10 +78,10 @@
                         @if (this.User.IsInRole(GlobalConstants.AdministratorRoleName))
                         {
                             <li class="nav-item dropdown">
-                                <a class="nav-link dropdown-toggle text-white nav-bar-title-anchor" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Administration</a>
+                                <a class="nav-link dropdown-toggle nav-bar-title-anchor" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Administration</a>
                                 <div class="dropdown-menu">
-                                    <a class="nav-link text-dark" asp-area="Administration" asp-controller="Administration" asp-action="AddRole">Add Role</a>
-                                    <a class="nav-link text-dark" asp-area="Administration" asp-controller="Administration" asp-action="AllRoles">Roles</a>
+                                    <a class="nav-link" asp-area="Administration" asp-controller="Administration" asp-action="AddRole">Add Role</a>
+                                    <a class="nav-link" asp-area="Administration" asp-controller="Administration" asp-action="AllRoles">Roles</a>
                                 </div>
                             </li>
                         }

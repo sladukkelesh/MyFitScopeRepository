@@ -24,4 +24,4 @@ function ConfirmDelete(confirmMessage) {
 
 function ToggleAddWorkoutDayInputForm(toggleElement) {
     $(toggleElement).toggle();
-}
+} 

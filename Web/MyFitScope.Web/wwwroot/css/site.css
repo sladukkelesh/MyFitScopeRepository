@@ -4,15 +4,26 @@ for details on configuring this project to bundle and minify static web assets. 
 nav {
     background-color: #242527 !important;
 }
+
     nav ul li a {
         color: white !important;
-        padding-left: 20px !important;
-        padding-right: 20px !important;
+        padding-left: 25px !important;
+        padding-right: 25px !important;
+        border-radius: 5px;
+        margin: 5px 5px;
     }
 
-    nav ul li a:hover {
-        background-color: #3a3b3d !important;
-    }
+        nav ul li a:not(.nav-link-active):hover {
+            background-color: #3a3b3d !important;
+        }
+
+.nav-link-active {
+    color: deepskyblue !important;
+    font-weight: bold;
+    background-color: transparent;
+    border-radius: 0;
+    border-bottom: 3px solid deepskyblue;
+}
 
 .brandMainPart {
     text-decoration: solid;
@@ -21,17 +32,18 @@ nav {
 
 div.dropdown-menu {
     border-radius: 13px;
-    padding: 4px 0;
+    padding: 4px 4px;
     background-color: dimgray;
     box-shadow: 0 4px 8px 0 rgba(224, 220, 206, 0.2), 0 6px 20px 0 rgba(224, 220, 206, 0.19);
 }
+    div.dropdown-menu a {
+        padding: 5px 18px !important;
+        margin: 0;
+    }
 
-div.dropdown-menu a:hover {
-    padding-left: 30px;
-    margin: 0 4px;
-    border: none;
-    border-radius: 13px;
-}
+    div.dropdown-menu a:hover {
+        border-radius: 13px;
+    }
 
 a.navbar-brand {
     white-space: normal;
@@ -40,10 +52,6 @@ a.navbar-brand {
     font-size: 30px
 }
 
-a.nav-bar-title-anchor:hover, button.nav-bar-title-anchor:hover, a.manage-nav-links:hover{
-border-radius: 5px;
-background-color: #1D2124;
-}
 /* Sticky footer styles
 -------------------------------------------------- */
 html {
