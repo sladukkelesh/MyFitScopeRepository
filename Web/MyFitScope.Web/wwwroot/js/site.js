@@ -24,23 +24,33 @@ function ConfirmDelete(confirmMessage) {
 
 function ToggleAddWorkoutDayInputForm(toggleElement) {
     $(toggleElement).toggle();
-} 
+}
 
+// Set "nav-link-active" to current active links from navbar menu:
 $(document).ready(function () {
     let currentLocation = location.href;
-    let navBarUl = (document.getElementsByClassName("navbar-nav flex-grow-1"))[0];
-    let links = navBarUl.querySelectorAll("a");
+    let navBarUl = (document.getElementsByClassName("navbar-nav"));
 
+    // "Login" and "Register" are not in the same ".navbar-nav" element as other navbar links!
+    for (let i = 0; i < navBarUl.length; i++) {
+        let links = navBarUl[i].querySelectorAll("a");
+
+        SetActiveClassToElement(currentLocation, links, "nav-link-active");
+    }
+});
+
+function SetActiveClassToElement(locationHref, links, className) {
     for (let i = 0; i < links.length; i++) {
-        if (links[i].href === currentLocation) {
-            let currentElement = links[i];
+        let currentElement = links[i];
+
+        if (currentElement.href === locationHref) {
 
             while (currentElement.tagName.toLowerCase() !== "li") {
                 currentElement = currentElement.parentNode;
             }
 
-            currentElement.children[0].classList.add("nav-link-active");
+            currentElement.children[0].classList.add(className);
             break;
         }
     }
-});
+}

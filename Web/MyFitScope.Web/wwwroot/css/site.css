@@ -9,20 +9,17 @@ header nav {
         color: white !important;
         padding-left: 25px !important;
         padding-right: 25px !important;
-        border-radius: 5px;
+        border-radius: 10px;
         margin: 5px 5px;
     }
 
         header nav ul li a:not(.nav-link-active):hover {
-            background-color: #3a3b3d !important;
+            background-color: rgb(87, 85, 85) !important;
         }
 
 .nav-link-active {
-    color: deepskyblue !important;
-    font-weight: bold;
-    background-color: transparent;
-    border-radius: 0;
-    border-bottom: 3px solid deepskyblue;
+    background-color: #0275d8 !important;
+    border-radius: 8px;
 }
 
 .brandMainPart {
@@ -31,10 +28,10 @@ header nav {
 }
 
 div.dropdown-menu {
-    border-radius: 13px;
-    padding: 4px 4px;
-    background-color: dimgray;
-    box-shadow: 0 4px 8px 0 rgba(224, 220, 206, 0.2), 0 6px 20px 0 rgba(224, 220, 206, 0.19);
+    border-radius: 10px;
+    padding: 6px 6px;
+    background-color: #242527;
+    box-shadow: 0 4px 8px 0 rgba(255, 255, 255, 0.6);
 }
     div.dropdown-menu a {
         padding: 5px 18px !important;
@@ -42,7 +39,7 @@ div.dropdown-menu {
     }
 
     div.dropdown-menu a:hover {
-        border-radius: 13px;
+        border-radius: 10px;
     }
 
 a.navbar-brand {
