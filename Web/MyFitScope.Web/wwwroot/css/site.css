@@ -1,11 +1,11 @@
 ﻿/* Please see documentation at https://docs.microsoft.com/aspnet/core/client-side/bundling-and-minification
 for details on configuring this project to bundle and minify static web assets. */
 
-nav {
+header nav {
     background-color: #242527 !important;
 }
 
-    nav ul li a {
+    header nav ul li a {
         color: white !important;
         padding-left: 25px !important;
         padding-right: 25px !important;
@@ -13,7 +13,7 @@ nav {
         margin: 5px 5px;
     }
 
-        nav ul li a:not(.nav-link-active):hover {
+        header nav ul li a:not(.nav-link-active):hover {
             background-color: #3a3b3d !important;
         }
 

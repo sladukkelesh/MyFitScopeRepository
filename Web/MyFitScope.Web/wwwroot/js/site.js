@@ -25,3 +25,22 @@ function ConfirmDelete(confirmMessage) {
 function ToggleAddWorkoutDayInputForm(toggleElement) {
     $(toggleElement).toggle();
 } 
+
+$(document).ready(function () {
+    let currentLocation = location.href;
+    let navBarUl = (document.getElementsByClassName("navbar-nav flex-grow-1"))[0];
+    let links = navBarUl.querySelectorAll("a");
+
+    for (let i = 0; i < links.length; i++) {
+        if (links[i].href === currentLocation) {
+            let currentElement = links[i];
+
+            while (currentElement.tagName.toLowerCase() !== "li") {
+                currentElement = currentElement.parentNode;
+            }
+
+            currentElement.children[0].classList.add("nav-link-active");
+            break;
+        }
+    }
+});

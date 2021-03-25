@@ -49,21 +49,22 @@
     {
         var articles = Model.Articles.ToList();
 
-        <div class="row">
             @foreach (var article in articles)
             {
                 <!-- Article Card -->
-                <div class="col-md-5">
-                    <div class="single-blog">
-                        <p class="blog-meta">By Admin <span>September 24, 2018</span></p>
-                        <img src="@article.ImageUrl" />
-                        <h2><a href="#">Learn how to make a website</a></h2>
-                        <p class="blog-text">t is a long established fact that a reader will be distracted by the readable...</p>
-                        <p><a href="#" class="read-more-btn">Read More</a> <span>Comments: (8)</span></p>
+                <div class="card mb-4 rcorners">
+                    <img src="@article.ImageUrl" class="card-img-top r-top-corners" alt="@article.Title">
+                    <div class="card-body bg-dark text-white">
+                        <h2 class="card-title pb-2 border-bottom border-light">@article.Title</h2>
+                        <p>Category: @article.CategoryTitle</p>
+                        <p class="card-text indent-text">@article.ShortContent</p>
+                        <a asp-controller="Articles" asp-action="Details" asp-route-articleId="@article.Id" class="btn btn-primary">Read More &rarr;</a>
+                    </div>
+                    <div class="card-footer text-muted">
+                        Posted on <time datetime="@article.CreatedOn.ToString("O")"></time> by @article.UserUserName
                     </div>
                 </div>
             }
-        </div>
 
 
 
@@ -76,7 +77,7 @@
                 }
 
                 <li class="@("page-item" + previousActive)">
-                    <a class="page-link" asp-controller="Articles" asp-action="ArticlesListing" asp-route-articleCategory="@resultValue" asp-route-pageIndex="@(Model.Articles.PageIndex - 1)">Previous</a>
+                    <a class="page-link text-dark" asp-controller="Articles" asp-action="ArticlesListing" asp-route-articleCategory="@resultValue" asp-route-pageIndex="@(Model.Articles.PageIndex - 1)">Previous</a>
                 </li>
 
                 @for (var i = 1; i <= Model.Articles.TotalPages; i++)
@@ -90,7 +91,7 @@
                 }
 
                 <li class="@("page-item" + nextActive)">
-                    <a class="page-link" asp-controller="Articles" asp-action="ArticlesListing" asp-route-articleCategory="@resultValue" asp-route-pageIndex="@(Model.Articles.PageIndex + 1)">Next</a>
+                    <a class="page-link text-dark" asp-controller="Articles" asp-action="ArticlesListing" asp-route-articleCategory="@resultValue" asp-route-pageIndex="@(Model.Articles.PageIndex + 1)">Next</a>
                 </li>
             </ul>
         </nav>
