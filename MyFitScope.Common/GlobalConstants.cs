@@ -17,6 +17,7 @@
         public const string UserRoleName = "User";
 
         // Data Seeder Constants:
+        public const int UsersEntitiesCount = 3;
         public const int EntitiesCount = 3;
 
 

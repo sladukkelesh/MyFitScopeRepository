@@ -12,6 +12,7 @@
 
     internal class UsersSeeder : ISeeder
     {
+        // Creates one "admin" (pass: adminpass) and two regular users (pass: user{2 or 3}pass):
         public async Task SeedAsync(ApplicationDbContext dbContext, IServiceProvider serviceProvider)
         {
             if (dbContext.Users.Any())
@@ -21,16 +22,18 @@
 
             var userManager = serviceProvider.GetRequiredService<UserManager<ApplicationUser>>();
 
-            for (int i = 1; i <= EntitiesCount; i++)
+            for (int i = 1; i <= UsersEntitiesCount; i++)
             {
+                var userName = (i > 1) ? $"user{i}" : "admin";
+
                 var newUser = new ApplicationUser()
                 {
                     CreatedOn = DateTime.Now,
-                    UserName = $"user{i}@abv.bg",
-                    Email = $"user{i}@abv.bg",
+                    UserName = $"{userName}@gmail.bg",
+                    Email = $"{userName}@gmail.bg",
                 };
 
-                var result = await userManager.CreateAsync(newUser, $"user{i}pass");
+                var result = await userManager.CreateAsync(newUser, $"{userName}pass");
 
                 if (!result.Succeeded)
                 {
@@ -38,7 +41,7 @@
                 }
                 else
                 {
-                    await userManager.AddToRoleAsync(newUser, "Administrator");
+                    await userManager.AddToRoleAsync(newUser, (i > 1) ? UserRoleName : AdministratorRoleName);
                 }
             }
         }
