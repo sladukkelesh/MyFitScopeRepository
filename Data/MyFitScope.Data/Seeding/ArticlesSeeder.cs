@@ -4,10 +4,9 @@
     using System.Linq;
     using System.Threading.Tasks;
 
+    using MyFitScope.Common;
     using MyFitScope.Data.Models.BlogModels;
     using MyFitScope.Data.Models.BlogModels.Enums;
-
-    using static MyFitScope.Common.GlobalConstants;
 
     internal class ArticlesSeeder : ISeeder
     {
@@ -20,18 +19,18 @@
 
             var userId = dbContext.Users.FirstOrDefault().Id;
 
-            for (int i = 1; i <= EntitiesCount; i++)
+            for (int i = 1; i <= GlobalConstants.ArticlesEntitiesCount; i++)
             {
                 await dbContext.Articles.AddAsync(new Article
                 {
                     UserId = userId,
                     ArticleCategory = (ArticleCategory)i,
                     Title = $"Article {i}",
-                    Content = $"Content for Article {i}",
-                    ImageUrl = "https://res.cloudinary.com/myfitscope-cloud/image/upload/v1615231683/data_seeder/Some_public_ID.jpg",
+                    Content = GlobalConstants.ArticleContent,
+                    ImageUrl = GlobalConstants.ArticleImageUrl,
 
-                    // To add publicId manually --> "image_folder(on Cloudinary)/Image_name.(image extension)"!!!
-                    ImagePublicId = "data_seeder/Some_public_ID.jpg",
+                    // To add publicId manually --> "{image folder(on Cloudinary)}/{image name}.{image extension}"!!!
+                    ImagePublicId = GlobalConstants.ArticleImagePublicId,
                 });
             }
         }

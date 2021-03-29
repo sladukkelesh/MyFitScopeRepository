@@ -4,6 +4,7 @@
     using System.Linq;
     using System.Threading.Tasks;
 
+    using MyFitScope.Common;
     using MyFitScope.Data.Models.BlogModels;
 
     internal class ResponsesSeeder : ISeeder
@@ -29,7 +30,7 @@
                         UserId = userId,
                         ArticleId = article.Id,
                         CommentId = comment.Id,
-                        Content = "Test content for this response",
+                        Content = GlobalConstants.ResponseContent,
                     });
                 }
             }

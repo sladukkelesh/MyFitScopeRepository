@@ -6,9 +6,8 @@
 
     using Microsoft.AspNetCore.Identity;
     using Microsoft.Extensions.DependencyInjection;
+    using MyFitScope.Common;
     using MyFitScope.Data.Models;
-
-    using static MyFitScope.Common.GlobalConstants;
 
     internal class UsersSeeder : ISeeder
     {
@@ -22,7 +21,7 @@
 
             var userManager = serviceProvider.GetRequiredService<UserManager<ApplicationUser>>();
 
-            for (int i = 1; i <= UsersEntitiesCount; i++)
+            for (int i = 1; i <= GlobalConstants.UsersEntitiesCount; i++)
             {
                 var userName = (i > 1) ? $"user{i}" : "admin";
 
@@ -41,7 +40,7 @@
                 }
                 else
                 {
-                    await userManager.AddToRoleAsync(newUser, (i > 1) ? UserRoleName : AdministratorRoleName);
+                    await userManager.AddToRoleAsync(newUser, (i > 1) ? GlobalConstants.UserRoleName : GlobalConstants.AdministratorRoleName);
                 }
             }
         }

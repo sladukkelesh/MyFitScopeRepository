@@ -1,10 +1,10 @@
 ﻿namespace MyFitScope.Data.Seeding
 {
     using System;
-    using System.Collections.Generic;
     using System.Linq;
     using System.Threading.Tasks;
 
+    using MyFitScope.Common;
     using MyFitScope.Data.Models.BlogModels;
 
     internal class CommentsSeeder : ISeeder
@@ -26,7 +26,7 @@
                 {
                     ArticleId = article.Id,
                     UserId = userId,
-                    Content = "Test content for this comment.",
+                    Content = GlobalConstants.CommentContent,
                 });
             }
         }
