@@ -53,12 +53,7 @@
 
             await this.exercisesService.CreateExerciseAsync(input.Name, input.VideoUrl, input.MuscleGroup, input.Description, creatorName, isAdmin);
 
-            if (isAdmin)
-            {
-                return this.RedirectToAction(nameof(this.ExercisesListing), new { exerciseCategory = "All" });
-            }
-
-            return this.RedirectToAction(nameof(this.ExercisesListing), new { exerciseCategory = "Custom" });
+            return this.RedirectToAction(nameof(this.ExercisesListing), new { exerciseCategory = isAdmin ? "All" : "Custom" });
         }
 
         public async Task<IActionResult> ExercisesListing(string exerciseCategory, int? pageIndex = null)

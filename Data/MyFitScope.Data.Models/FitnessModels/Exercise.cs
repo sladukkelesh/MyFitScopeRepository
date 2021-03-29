@@ -15,8 +15,6 @@
             this.WorkoutDays = new HashSet<WorkoutDayExercise>();
         }
 
-        public ExerciseSettings ExerciseSettings { get; set; }
-
         [Required]
         [MaxLength(50)]
         public string Name { get; set; }

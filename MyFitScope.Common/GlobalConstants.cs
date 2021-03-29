@@ -33,16 +33,20 @@
                                                 "Various versions have evolved over the years, sometimes by accident, " +
                                                 "sometimes on purpose (injected humour and the like).";
 
-        public const int CommentsEntitiesCount = 3;
         public const string CommentContent = "There are many variations of passages of Lorem Ipsum available, " +
                                                 "but the majority have suffered alteration in some form, by injected humour, or randomised words which don't " +
                                                 "look even slightly believable.";
 
-        public const int ResponsesEntitiesCount = 3;
         public const string ResponseContent = "All the Lorem Ipsum generators on the Internet tend to repeat predefined chunks as necessary";
 
-        public const int EntitiesCount = 3;
+        public const int ExercisesEntitiesCount = 11; // Count depents from "MuscleGroup" Enum Values - one Exercise for each mucle group!
+        public const string ExerciseVideoUrl = "https://www.youtube.com/watch?v=XNTj8RZVcrE&t=66s";
+        public const string ExerciseDescription = "It is a long established fact that a reader will be distracted " +
+                                                    "by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that " +
+                                                    "it has a more-or-less normal distribution of letters, as opposed to using 'Content here, content here', " +
+                                                    "making it look like readable English.";
 
+        public const int EntitiesCount = 3;
 
         public const string ArticleCategoryTypeName = "MyFitScope.Data.Models.BlogModels.Enums.ArticleCategory";
 

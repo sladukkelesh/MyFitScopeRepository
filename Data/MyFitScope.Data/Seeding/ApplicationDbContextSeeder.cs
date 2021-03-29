@@ -35,6 +35,7 @@
                               new ResponsesSeeder(),
 
                               // Fitness Data
+                              new ExercisesSeeder(),
 
                               // new SettingsSeeder(),
                           };

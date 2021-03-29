@@ -7,8 +7,6 @@
 
     public class CreateExerciseInputModel
     {
-        public ExerciseSettings ExerciseSettings { get; set; }
-
         [Required]
         [MinLength(5, ErrorMessage = "Name cannot be smaller than 5 symbols!")]
         [MaxLength(50, ErrorMessage = "Name cannot be greater than 50 symbols!")]
