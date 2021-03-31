@@ -36,7 +36,7 @@
 
                               // Fitness Data
                               new ExercisesSeeder(),
-
+                              new WorkoutsSeeder(),
                               // new SettingsSeeder(),
                           };
 
