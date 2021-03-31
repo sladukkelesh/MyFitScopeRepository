@@ -1,7 +1,6 @@
 ﻿namespace MyFitScope.Web.Areas.Administration.Controllers
 {
     using System.Collections.Generic;
-    using System.Linq;
     using System.Threading.Tasks;
 
     using Microsoft.AspNetCore.Authorization;
@@ -13,18 +12,16 @@
     using MyFitScope.Web.Controllers;
     using MyFitScope.Web.ViewModels.Administration.Administration;
 
-    [Authorize(Roles = "Admin")]
+    [Authorize(Roles = GlobalConstants.AdministratorRoleName)]
     [Area("Administration")]
     public class AdministrationController : BaseController
     {
         private readonly RoleManager<ApplicationRole> roleManager;
-        private readonly UserManager<ApplicationUser> userManager;
         private readonly IAdministrationService administrationService;
 
-        public AdministrationController(RoleManager<ApplicationRole> roleManager, UserManager<ApplicationUser> userManager, IAdministrationService administrationService)
+        public AdministrationController(RoleManager<ApplicationRole> roleManager, IAdministrationService administrationService)
         {
             this.roleManager = roleManager;
-            this.userManager = userManager;
             this.administrationService = administrationService;
         }
 

@@ -7,13 +7,6 @@
 
     public class HomeController : BaseController
     {
-        private readonly UserManager<ApplicationUser> userManager;
-
-        public HomeController(UserManager<ApplicationUser> userManager)
-        {
-            this.userManager = userManager;
-        }
-
         public IActionResult Index()
         {
             if (this.User.Identity.IsAuthenticated)

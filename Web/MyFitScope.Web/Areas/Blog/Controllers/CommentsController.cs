@@ -5,6 +5,8 @@
     using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Identity;
     using Microsoft.AspNetCore.Mvc;
+
+    using MyFitScope.Common;
     using MyFitScope.Data.Models;
     using MyFitScope.Services.Data;
     using MyFitScope.Web.ViewModels.Comments;
@@ -49,7 +51,7 @@
             return this.RedirectToAction("Details", "Articles", new { articleId = input.ArticleId });
         }
 
-        [Authorize(Roles = "Administrator")]
+        [Authorize(Roles = GlobalConstants.AdministratorRoleName)]
         public async Task<IActionResult> DeleteComment(string commentId, string articleId)
         {
             await this.commentsService.DeleteCommentAsync(commentId);

@@ -48,7 +48,7 @@
     <p>@Html.Raw(Model.SanitizedContent)</p>
 
     <!-- Edit/Delete buttons-->
-    @if (this.User.IsInRole("Admin"))
+    @if (this.User.IsInRole(GlobalConstants.AdministratorRoleName))
     {
         <div class="text-center mt-4 mb-4">
             <a class="btn btn-info" asp-controller="Articles" asp-action="EditArticle" asp-route-articleId="@Model.Id">Edit</a>

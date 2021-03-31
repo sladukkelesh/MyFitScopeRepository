@@ -5,6 +5,8 @@
     using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Identity;
     using Microsoft.AspNetCore.Mvc;
+
+    using MyFitScope.Common;
     using MyFitScope.Data.Models;
     using MyFitScope.Services.Data;
     using MyFitScope.Web.ViewModels.Responses;
@@ -49,7 +51,7 @@
             return this.RedirectToAction("Details", "Articles", new { articleId = input.ArticleId });
         }
 
-        [Authorize(Roles = "Admin")]
+        [Authorize(Roles = GlobalConstants.AdministratorRoleName)]
         public async Task<IActionResult> DeleteResponse(string responseId, string articleId)
         {
             await this.responsesService.DeleteResponseAsync(responseId);

@@ -74,7 +74,7 @@
                     <i class="fa fa-reply g-pos-rel g-top-1 g-mr-3"></i>
                     Reply
                 </a>
-                @if (this.User.IsInRole("Admin"))
+                @if (this.User.IsInRole(GlobalConstants.AdministratorRoleName))
                 {
                     <a class="btn btn-sm btn-danger ml-3 text-white" asp-controller="Comments" asp-action="DeleteComment" asp-route-commentId="@Model.Id" asp-route-articleId="@Model.ArticleId" onclick="ConfirmDelete('@string.Format(GlobalConstants.CommentConfirmDeleteMessage, Model.UserUserName)')">Delete</a>
                 }

@@ -8,6 +8,7 @@
     using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Identity;
     using Microsoft.AspNetCore.Mvc;
+
     using MyFitScope.Data.Models;
     using MyFitScope.Data.Models.FitnessModels.Enums;
     using MyFitScope.Services.Data;

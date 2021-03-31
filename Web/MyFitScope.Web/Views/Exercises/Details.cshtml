@@ -35,7 +35,7 @@
             <p><span class="font-weight-bold">Exercise Description:</span></p>
             <p class="indent-text">@Html.Raw(Model.SanitizedDescription)</p>
         </div>
-        @if (this.User.IsInRole("Admin") || Model.CreatorName == this.User.Identity.Name)
+        @if (this.User.IsInRole(GlobalConstants.AdministratorRoleName) || Model.CreatorName == this.User.Identity.Name)
         {
             <hr />
             <div class="text-center mt-4 mb-4">

@@ -119,7 +119,7 @@
                 {
                     @if (resultValue == "Custom")
                     {
-                        if (User.IsInRole("Admin"))
+                        if (User.IsInRole(GlobalConstants.AdministratorRoleName))
                         {
                             <p>No Custom Workouts yet...</p>
                         }

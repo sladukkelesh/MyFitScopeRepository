@@ -9,6 +9,7 @@
     using Microsoft.AspNetCore.Identity;
     using Microsoft.AspNetCore.Mvc;
 
+    using MyFitScope.Common;
     using MyFitScope.Data.Models;
     using MyFitScope.Data.Models.BlogModels.Enums;
     using MyFitScope.Services.Data;
@@ -60,13 +61,13 @@
             return this.View(model);
         }
 
-        [Authorize(Roles = "Admin")]
+        [Authorize(Roles = GlobalConstants.AdministratorRoleName)]
         public IActionResult CreateArticle()
         {
             return this.View();
         }
 
-        [Authorize(Roles = "Admin")]
+        [Authorize(Roles = GlobalConstants.AdministratorRoleName)]
         [HttpPost]
         public async Task<IActionResult> CreateArticle(CreateArticleInputViewModel input)
         {
@@ -88,7 +89,7 @@
             return this.RedirectToAction(nameof(this.Details), new { articleId });
         }
 
-        [Authorize(Roles = "Admin")]
+        [Authorize(Roles = GlobalConstants.AdministratorRoleName)]
         public async Task<IActionResult> DeleteArticle(string articleId)
         {
             await this.articlesService.DeleteArticleAsync(articleId);
@@ -96,7 +97,7 @@
             return this.RedirectToAction("ArticlesListing", new { articleCategory = "All" });
         }
 
-        [Authorize(Roles="Admin")]
+        [Authorize(Roles = GlobalConstants.AdministratorRoleName)]
         public IActionResult EditArticle(string articleId)
         {
             var model = this.articlesService.GetArticleById<EditArticleInputViewModel>(articleId);
@@ -104,7 +105,7 @@
             return this.View(model);
         }
 
-        [Authorize(Roles="Admin")]
+        [Authorize(Roles = GlobalConstants.AdministratorRoleName)]
         [HttpPost]
         public async Task<IActionResult> EditArticle(EditArticleInputViewModel input)
         {
