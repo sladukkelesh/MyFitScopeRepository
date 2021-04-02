@@ -1,5 +1,6 @@
 ﻿namespace MyFitScope.Services.Data
 {
+    using System;
     using System.Collections.Generic;
     using System.Threading.Tasks;
 
@@ -13,6 +14,10 @@
 
         Task<string> RemoveExerciseFromWorkoutDayAsync(string exerciseId, string workoutDayId);
 
-        IEnumerable<WorkoutDaysExercisesOutputModel> GetByExerciseId(string exerciseId);
+        Task EditExercisePropertiesAsync(string currentExerciseId, string currentWorkoutDayId, int sets, int reps, double weights, int hours, int minutes, int seconds);
+
+        IEnumerable<WorkoutDaysExercisesOutputModel> GetExerciseConnectionsById(string exerciseId);
+
+        EditExercisePropertiesInputModel GetExerciseInWorkoutDayById(string exerciseId, string workoutDayId);
     }
 }

@@ -1,0 +1,54 @@
+﻿
+@using MyFitScope.Web.ViewModels.WorkoutDaysExercises
+@model EditExercisePropertiesInputModel
+@{
+    this.ViewData["Title"] = "Edit Exercise Properties";
+}
+
+<section class="container col-md-8">
+    <h2 class="mb-0 p-3 text-center text-white bg-dark r-top-corners">Edit Exercise Properties</h2>
+    <form method="post" class="form-group bg-light p-4 mt-0 r-bottom-corners" asp-controller="WorkoutDaysExercises" asp-action="Edit">
+        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+        <div class="mb-3">
+            <label asp-for="Sets"></label>
+            <input type="number" asp-for="Sets" class="form-control" min="0" value="@Model.Sets" />
+            <span asp-validation-for="Sets" class="text-danger"></span>
+        </div>
+        <div class="mb-3">
+            <label asp-for="Reps"></label>
+            <input type="number" asp-for="Reps" class="form-control" min="0" value="@Model.Reps" />
+            <span asp-validation-for="Reps" class="text-danger"></span>
+        </div>
+        <div class="mb-3">
+            <label asp-for="Weights"></label>
+            <input type="number" asp-for="Weights" class="form-control" min="0" value="@Model.Weights" />
+            <span asp-validation-for="Weights" class="text-danger"></span>
+        </div>
+        <fieldset>
+            <legend>Time Interval:</legend>
+            <div class="mb-3">
+                <label asp-for="Hours"></label>
+                <input type="number" asp-for="Hours" class="form-control" min="0" max="59" value="@Model.Hours" />
+                <span asp-validation-for="Hours" class="text-danger"></span>
+            </div>
+            <div class="mb-3">
+                <label asp-for="Minutes"></label>
+                <input type="number" asp-for="Minutes" class="form-control" min="0" max="59" value="@Model.Minutes" />
+                <span asp-validation-for="Minutes" class="text-danger"></span>
+            </div>
+            <div class="mb-3">
+                <label asp-for="Seconds"></label>
+                <input type="number" asp-for="Seconds" class="form-control" min="0" max="59" value="@Model.Seconds" />
+                <span asp-validation-for="Seconds" class="text-danger"></span>
+            </div>
+        </fieldset> 
+
+        <input type="hidden" name="ExerciseId" value="@Model.ExerciseId" />
+        <input type="hidden" name="WorkoutDayId" value="@Model.WorkoutDayId" />
+
+        <div class="text-center">
+            <button type="submit" class="btn btn-primary">Edit</button>
+            <a class="btn btn-info ml-3" asp-controller="WorkoutDays" asp-action="Edit" asp-route-workoutDayId="@Model.WorkoutDayId">Cancel</a>
+        </div>
+    </form>
+</section>

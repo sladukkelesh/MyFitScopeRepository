@@ -16,6 +16,11 @@
     {
         public async Task SeedAsync(ApplicationDbContext dbContext, IServiceProvider serviceProvider)
         {
+            if (dbContext.Workouts.Any())
+            {
+                return;
+            }
+
             var userManager = serviceProvider.GetRequiredService<UserManager<ApplicationUser>>();
             var admin = (await userManager.GetUsersInRoleAsync(GlobalConstants.AdministratorRoleName)).FirstOrDefault();
 
@@ -74,6 +79,7 @@
                 {
                     WorkoutDay = workoutday,
                     ExerciseId = exercises[i].Id,
+                    Position = i + 1,
                 };
 
                 dbContext.WorkoutDaysExercises.Add(workoutDayExercise);

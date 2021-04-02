@@ -46,12 +46,34 @@
             return this.RedirectToAction("Edit", "WorkoutDays", new { workoutDayId = workoutDayIdResult });
         }
 
+        [Authorize]
         public async Task<IActionResult> SwapExercisePosition(string currentExerciseId, string targetExerciseId, string workoutDayId)
         {
             // maybe we have to check if current and target exercises actually exists???
             await this.workoutDayExerciseService.SwapExercisesAsync(currentExerciseId, targetExerciseId, workoutDayId);
 
             return this.RedirectToAction("Edit", "WorkoutDays", new { workoutDayId = workoutDayId });
+        }
+
+        public IActionResult Edit(string exerciseId, string workoutDayId)
+        {
+            var model = this.workoutDayExerciseService.GetExerciseInWorkoutDayById(exerciseId, workoutDayId);
+
+            return this.View(model);
+        }
+
+        [Authorize]
+        [HttpPost]
+        public async Task<IActionResult> Edit(EditExercisePropertiesInputModel model)
+        {
+            if (!this.ModelState.IsValid)
+            {
+                return this.View(model);
+            }
+
+            await this.workoutDayExerciseService.EditExercisePropertiesAsync(model.ExerciseId, model.WorkoutDayId, model.Sets, model.Reps, model.Weights, model.Hours, model.Minutes, model.Seconds);
+
+            return this.RedirectToAction("Edit", "WorkoutDays", new { workoutDayId = model.WorkoutDayId });
         }
 
         private string WorkoutDayAlreadyContainsExercise(string workoutDayId, string exerciseId)

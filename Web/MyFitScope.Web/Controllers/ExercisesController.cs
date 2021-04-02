@@ -138,9 +138,9 @@
         [Authorize]
         public async Task<IActionResult> DeleteExercise(string exerciseId)
         {
-            if (this.workoutDaysExercisesService.GetByExerciseId(exerciseId).Count() > 0)
+            if (this.workoutDaysExercisesService.GetExerciseConnectionsById(exerciseId).Count() > 0)
             {
-                var exerciseConnections = this.workoutDaysExercisesService.GetByExerciseId(exerciseId);
+                var exerciseConnections = this.workoutDaysExercisesService.GetExerciseConnectionsById(exerciseId);
 
                 foreach (var connection in exerciseConnections)
                 {

@@ -76,46 +76,34 @@
                         }
 
                         <div id="@("collapse" + i)" class="@collapseValue" aria-labelledby="@("heading"+ i)" data-parent="#accordionExample">
-                            <div class="card-body bg-dark">
-                                <div>
+                            <div class="exercises-row">
 
+                                @{
+                                    var exercises = day.Exercises.OrderBy(e => e.Position).ToList();
+                                }
 
+                                @if (exercises.Count != 0)
+                                {
 
-                                    @if (day.Exercises.Count != 0)
+                                    for (int j = 0; j < exercises.Count; j++)
                                     {
-                                        <table class="table table-striped">
+                                        var exercise = exercises[j];
 
-                                            <thead>
-                                                <tr class="bg-light">
-                                                    <th scope="col">#</th>
-                                                    <th scope="col">Muscle</th>
-                                                    <th scope="col">Exercise</th>
-                                                </tr>
-                                            </thead>
-                                            <tbody>
-
-                                                @{
-                                                    var exercises = day.Exercises.OrderBy(e => e.Position).ToList();
-                                                }
-
-                                                @for (var j = 0; j < exercises.Count; j++)
-                                                {
-                                                    var exercise = exercises[j];
-
-                                                    <tr class="bg-light">
-                                                        <th scope="row">@exercise.Position</th>
-                                                        <td>@exercise.MuscleGroupTitle</td>
-                                                        <td><a asp-controller="Exercises" asp-action="Details" asp-route-id="@exercise.ExerciseId">@exercise.ExerciseName</a></td>
-                                                    </tr>
-                                                }
-                                            </tbody>
-                                        </table>
+                                        <div class="exercise-container">
+                                            <img class="exercise-image" src="@exercise.ThumbnailUrl" />
+                                            <div class="exercise-properties">
+                                                <h6><a asp-controller="Exercises" asp-action="Details" asp-route-id="@exercise.ExerciseId">@exercise.ExerciseName</a></h6>
+                                            </div>
+                                            <p class="exercise-position">@(exercise.Position < 10 ? "0" + exercise.Position + "." : exercise.Position + ".")</p>
+                                        </div>
                                     }
-                                    else
-                                    {
-                                        <p class="text-center text-white">No exercises added for this day!</p>
-                                    }
-                                </div>
+
+                                }
+                                else
+                                {
+                                    <p class="text-center text-white">No exercises added for this day!</p>
+                                }
+
                             </div>
                         </div>
                     </div>

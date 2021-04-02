@@ -174,11 +174,106 @@ div.content-cardio {
     background-color: rgba(0, 0, 0, 0.7);
     padding: 18px;
 }
-/* User Avatar styles
+
+/* Exercises List inside Workout Accordion styles
 -------------------------------------------------- */
-#uploadAvatarPhotoForm {
-    display: none;
+
+div.exercises-row {
+    padding: 10px;
 }
+
+    div.exercises-row div.exercise-container {
+        width: 320px;
+        display: inline-block;
+        position: relative;
+        margin: 10px;
+        background-color: yellow;
+        border-radius: 10px;
+
+    }
+
+        div.exercises-row div.exercise-container img.exercise-image {
+            width: 100%;
+            border-top-left-radius: 10px;
+            border-top-right-radius: 10px;
+        }
+
+        div.exercises-row div.exercise-container div.exercise-properties {
+            height: auto;
+            padding: 10px;
+            text-align: center;
+            background-color: lightblue;
+            border-bottom-left-radius: 10px;
+            border-bottom-right-radius: 10px;
+        }
+
+            div.exercises-row div.exercise-container div.exercise-properties ul {
+                padding: 0;
+                margin: 0;
+                border-top: 1px solid black;
+                border-bottom: 1px solid black;
+            }
+
+                div.exercises-row div.exercise-container div.exercise-properties ul li {
+                    display: inline-block;
+                    font-weight: bold;
+                    list-style: none;
+                    position: relative;
+                    margin: 3px 0 3px 0;
+                    padding: 3px 18px 3px 18px;
+                }
+
+                div.exercises-row div.exercise-container div.exercise-properties ul li:hover {
+                    color: grey;
+                    background-color: lightgray;
+                }
+
+                    div.exercises-row div.exercise-container p.exercise-position {
+                        color: white;
+                        margin: 0;
+                        padding: 5px;
+                        background-color: black;
+                        top: 0;
+                        left: 0;
+                        position: absolute;
+                        border-top-left-radius: 10px;
+                        border-bottom-right-radius: 10px;
+                    }
+
+                    div.exercises-row div.exercise-container div.exercise-properties ul ul {
+                        padding: 0;
+                        margin: 0;
+                        border: none;
+                    }
+
+                    div.exercises-row div.exercise-container div.exercise-properties ul ul {
+                        display: none;
+                    }
+
+                    div.exercises-row div.exercise-container div.exercise-properties ul li:hover ul  {
+                        display: block;
+                        margin: 0;
+                        padding: 5px;
+                        background-color: lightgray;
+                        border-radius: 10px;
+                        position: absolute;
+                        z-index: 2;
+                    }
+
+                        div.exercises-row div.exercise-container div.exercise-properties ul li:hover ul li {
+                            padding: 0 10px;
+                            margin: 0;
+                        }
+                    
+
+
+
+
+                        /* User Avatar styles
+-------------------------------------------------- */
+                        #uploadAvatarPhotoForm {
+                            display: none;
+                        }
 
 /* Current Workout styles
 -------------------------------------------------- */

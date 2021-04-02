@@ -9,11 +9,11 @@
 <section>
     <article class="bg-light p-4 rcorners">
 
-        @if(TempData["error"] != null)
+        @if (TempData["error"] != null)
         {
-        <div class="alert alert-danger" role="alert">
-            <i class="fas fa-exclamation-triangle mr-2"></i>@TempData["error"]!
-        </div>
+            <div class="alert alert-danger" role="alert">
+                <i class="fas fa-exclamation-triangle mr-2"></i>@TempData["error"]!
+            </div>
         }
 
         <header class="text-center">
@@ -21,8 +21,12 @@
         </header>
 
         <div class="m-3">
-            <a class="btn btn-primary" asp-controller="Workouts" asp-action="CurrentWorkout"><i class="fas fa-arrow-left"></i> Back to Current Workouot</a></div>
+            <a class="btn btn-primary" asp-controller="Workouts" asp-action="CurrentWorkout"><i class="fas fa-arrow-left"></i> Back to Current Workouot</a>
+        </div>
+
         <div>
+            <p>Exercises:</p>
+            <hr />
 
             @if (Model.Exercises.Count == 0)
             {
@@ -35,53 +39,53 @@
             }
             else
             {
-                <table class="table table-striped">
+                <div class="exercises-row">
 
-                    <thead>
-                        <tr>
-                            <th scope="col">#</th>
-                            <th scope="col">Muscle</th>
-                            <th scope="col">Exercise</th>
-                            <th scope="col">Remove</th>
-                            <th scope="col">Swap</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        @{ 
-                            var exercises = Model.Exercises.OrderBy(e => e.Position).ToList();
-                        }
+                    @{
+                        var exercises = Model.Exercises.OrderBy(e => e.Position).ToList();
+                    }
 
-                        @for (var i = 0; i <exercises.Count; i++)
+                    @if (exercises.Count != 0)
+                    {
+
+                        for (int i = 0; i < exercises.Count; i++)
                         {
                             var exercise = exercises[i];
 
-                            <tr>
-                                <th scope="row">@exercise.Position</th>
-                                <td>@exercise.MuscleGroupTitle</td>
-                                <td><a asp-controller="Exercises" asp-action="Details" asp-route-id="@exercise.ExerciseId">@exercise.ExerciseName</a></td>
-                                <td><a class="btn btn-danger btn-sm" asp-controller="WorkoutDaysExercises" asp-action="RemoveExercise" asp-route-exerciseId="@exercise.ExerciseId" asp-route-workoutDayId="@exercise.WorkoutDayId">Remove</a></td>
-                                <td>
-                                    <div class="dropdown">
-                                        <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                            Swap with...
-                                        </button>
-                                        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                                            @for (int j = 0; j < exercises.Count; j++)
-                                            {
-                                                if (j + 1 == exercise.Position)
+                            <div class="exercise-container">
+                                <img class="exercise-image" src="@exercise.ThumbnailUrl" />
+                                <div class="exercise-properties">
+                                    <h5><a asp-controller="Exercises" asp-action="Details" asp-route-id="@exercise.ExerciseId">@exercise.ExerciseName</a></h5>
+                                    <ul>
+                                        <li>
+                                            Swap with <i class="fas fa-caret-down"></i>
+                                            <ul>
+                                                @for (int j = 0; j < exercises.Count; j++)
                                                 {
-                                                    continue;
-                                                }
+                                                    if (j + 1 == exercise.Position)
+                                                    {
+                                                        continue;
+                                                    }
 
-                                                <a class="dropdown-item" asp-controller="WorkoutDaysExercises" asp-action="SwapExercisePosition" asp-route-currentExerciseId="@exercise.ExerciseId" asp-route-targetExerciseId="@exercises[j].ExerciseId" asp-route-workoutDayId="@Model.Id">@exercises[j].Position</a>
-                                            }
-                                        </div>
-                                    </div>
-                                </td>
-                            </tr>
+                                                    <li><a class="dropdown-item" asp-controller="WorkoutDaysExercises" asp-action="SwapExercisePosition" asp-route-currentExerciseId="@exercise.ExerciseId" asp-route-targetExerciseId="@exercises[j].ExerciseId" asp-route-workoutDayId="@Model.Id">@exercises[j].Position</a></li>
+                                                }
+                                            </ul>
+                                        </li>
+                                        <li><a asp-controller="WorkoutDaysExercises" asp-action="Edit" asp-route-exerciseId="@exercise.ExerciseId" asp-route-workoutDayId="@exercise.WorkoutDayId">Edit</a></li>
+                                        <li><a href="#">Remove</a></li>
+                                    </ul>
+                                </div>
+                                <p class="exercise-position">@(exercise.Position < 10 ? "0" + exercise.Position + "." : exercise.Position + ".")</p>
+                            </div>
                         }
-                    </tbody>
-                </table>
+
+                    }
+                    else
+                    {
+                        <p class="text-center text-white">No exercises added for this day!</p>
+                    }
+
+                </div>
             }
 
             <div id="exerciseManager" class="bg-secondary exercise-menu-main-div">

@@ -25,7 +25,6 @@
         {
             get
             {
-
                 return this.WeekDayName + (this.MuscleGroupsNames != string.Empty ? " - " + this.MuscleGroupsNames : string.Empty);
             }
         }

@@ -16,6 +16,11 @@
     {
         public async Task SeedAsync(ApplicationDbContext dbContext, IServiceProvider serviceProvider)
         {
+            if (dbContext.Exercises.Any())
+            {
+                return;
+            }
+
             var userManager = serviceProvider.GetRequiredService<UserManager<ApplicationUser>>();
 
             var admin = (await userManager.GetUsersInRoleAsync(GlobalConstants.AdministratorRoleName)).FirstOrDefault();

@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using MyFitScope.Data;
 
 namespace MyFitScope.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20210401173859_Change_WorkoutDayExercise_Property_TimeInterval_From_DateTime_To_TimeSpan")]
+    partial class Change_WorkoutDayExercise_Property_TimeInterval_From_DateTime_To_TimeSpan
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -649,7 +651,7 @@ namespace MyFitScope.Data.Migrations
                     b.Property<int>("Sets")
                         .HasColumnType("int");
 
-                    b.Property<TimeSpan>("TimeInterval")
+                    b.Property<TimeSpan?>("TimeInterval")
                         .HasColumnType("time");
 
                     b.Property<double>("Weights")

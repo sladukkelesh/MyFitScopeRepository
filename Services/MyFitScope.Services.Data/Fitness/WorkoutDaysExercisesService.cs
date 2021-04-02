@@ -53,6 +53,26 @@
             await this.workoutDayExerciseRepository.SaveChangesAsync();
         }
 
+        public async Task EditExercisePropertiesAsync(string currentExerciseId, string currentWorkoutDayId, int sets, int reps, double weights, int hours, int minutes, int seconds)
+        {
+            var workoutDayExercise = this.workoutDayExerciseRepository.All()
+                                         .Where(we => we.ExerciseId == currentExerciseId && we.WorkoutDayId == currentWorkoutDayId)
+                                         .FirstOrDefault();
+
+            if (workoutDayExercise == null)
+            {
+                throw new ArgumentNullException(
+                    string.Format(InvalidExerciseConnectionIdErrorMessage, currentExerciseId, currentWorkoutDayId));
+            }
+
+            workoutDayExercise.Sets = sets;
+            workoutDayExercise.Reps = reps;
+            workoutDayExercise.Weights = weights;
+            workoutDayExercise.TimeInterval = new TimeSpan(hours, minutes, seconds);
+
+            await this.workoutDayExerciseRepository.SaveChangesAsync();
+        }
+
         public async Task<string> RemoveExerciseFromWorkoutDayAsync(string exerciseId, string workoutDayId)
         {
             var targetToDelete = this.workoutDayExerciseRepository.All()
@@ -73,11 +93,31 @@
             return targetToDelete.WorkoutDayId;
         }
 
-        public IEnumerable<WorkoutDaysExercisesOutputModel> GetByExerciseId(string exerciseId)
-            => this.workoutDayExerciseRepository.All()
-                                                .Where(we => we.ExerciseId == exerciseId)
-                                                .To<WorkoutDaysExercisesOutputModel>()
-                                                .ToList();
+        public IEnumerable<WorkoutDaysExercisesOutputModel> GetExerciseConnectionsById(string exerciseId)
+           => this.workoutDayExerciseRepository.All()
+                                               .Where(we => we.ExerciseId == exerciseId)
+                                               .To<WorkoutDaysExercisesOutputModel>()
+                                               .ToList();
+
+        public EditExercisePropertiesInputModel GetExerciseInWorkoutDayById(string exerciseId, string workoutDayId)
+        {
+            var workoutDayExercise = this.workoutDayExerciseRepository.All()
+                                                .Where(we => we.ExerciseId == exerciseId && we.WorkoutDayId == workoutDayId)
+                                                .Select(we => new EditExercisePropertiesInputModel
+                                                {
+                                                    ExerciseId = we.ExerciseId,
+                                                    WorkoutDayId = we.WorkoutDayId,
+                                                    Sets = we.Sets,
+                                                    Reps = we.Reps,
+                                                    Weights = we.Weights,
+                                                    Hours = we.TimeInterval.Hours,
+                                                    Minutes = we.TimeInterval.Minutes,
+                                                    Seconds = we.TimeInterval.Seconds,
+                                                })
+                                                .FirstOrDefault();
+
+            return workoutDayExercise;
+        }
 
         private int GenerateExercisePosition(string workoutDayId)
             => this.workoutDayExerciseRepository.All()

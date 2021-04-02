@@ -40,7 +40,7 @@
         public const string ResponseContent = "All the Lorem Ipsum generators on the Internet tend to repeat predefined chunks as necessary";
 
         public const int ExercisesEntitiesCount = 11; // Count depends from "MuscleGroup" Enum Values - one Exercise for each mucle group!
-        public const string ExerciseVideoUrl = "https://www.youtube.com/watch?v=XNTj8RZVcrE&t=66s";
+        public const string ExerciseVideoUrl = "https://www.youtube.com/watch?v=_M2Etme-tfE";
         public const string ExerciseDescription = "It is a long established fact that a reader will be distracted " +
                                                     "by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that " +
                                                     "it has a more-or-less normal distribution of letters, as opposed to using 'Content here, content here', " +
