@@ -92,7 +92,7 @@
                                         <div class="exercise-container">
                                             <img class="exercise-image" src="@exercise.ThumbnailUrl" />
                                             <div class="exercise-properties">
-                                                <h6><a asp-controller="Exercises" asp-action="Details" asp-route-id="@exercise.ExerciseId">@exercise.ExerciseName</a></h6>
+                                                <h5><a asp-controller="Exercises" asp-action="Details" asp-route-id="@exercise.ExerciseId">@exercise.ExerciseName</a></h5>
                                             </div>
                                             <p class="exercise-position">@(exercise.Position < 10 ? "0" + exercise.Position + "." : exercise.Position + ".")</p>
                                         </div>

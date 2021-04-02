@@ -21,7 +21,7 @@
         </div>
         <div class="mb-3">
             <label asp-for="Weights"></label>
-            <input type="number" asp-for="Weights" class="form-control" min="0" value="@Model.Weights" />
+            <input type="number" asp-for="Weights" class="form-control" min="0" step="0.1" value="@Model.Weights" />
             <span asp-validation-for="Weights" class="text-danger"></span>
         </div>
         <fieldset>

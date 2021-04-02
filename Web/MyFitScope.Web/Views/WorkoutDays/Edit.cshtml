@@ -74,6 +74,12 @@
                                         <li><a asp-controller="WorkoutDaysExercises" asp-action="Edit" asp-route-exerciseId="@exercise.ExerciseId" asp-route-workoutDayId="@exercise.WorkoutDayId">Edit</a></li>
                                         <li><a href="#">Remove</a></li>
                                     </ul>
+                                    <ul class="exercise-properties-list">
+                                        <li>Sets: @exercise.Sets</li>
+                                        <li>Reps: @exercise.Reps</li>
+                                        <li>Weights: @exercise.Weights</li>
+                                        <li>Time Inteval: @exercise.TimeIntervalValue</li>
+                                    </ul>
                                 </div>
                                 <p class="exercise-position">@(exercise.Position < 10 ? "0" + exercise.Position + "." : exercise.Position + ".")</p>
                             </div>

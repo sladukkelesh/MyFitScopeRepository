@@ -31,6 +31,30 @@
 
         public int Position { get; set; }
 
+        public int Sets { get; set; }
+
+        public int Reps { get; set; }
+
+        public double Weights { get; set; }
+
+        public int Hours { get; set; }
+
+        public int Minutes { get; set; }
+
+        public int Seconds { get; set; }
+
+        public string TimeIntervalValue
+        {
+            get
+            {
+                return string.Format(
+                    "{0}:{1}:{2}",
+                    this.Hours < 10 ? "0" + this.Hours : this.Hours,
+                    this.Minutes < 10 ? "0" + this.Minutes : this.Minutes,
+                    this.Seconds < 10 ? "0" + this.Seconds : this.Seconds);
+            }
+        }
+
         public MuscleGroup ExerciseMuscleGroup { get; set; }
 
         public string MuscleGroupTitle

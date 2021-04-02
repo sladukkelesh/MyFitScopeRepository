@@ -207,11 +207,18 @@ div.exercises-row {
             border-bottom-right-radius: 10px;
         }
 
+            div.exercises-row div.exercise-container div.exercise-properties ul.exercise-properties-list {
+
+            }
+
             div.exercises-row div.exercise-container div.exercise-properties ul {
                 padding: 0;
                 margin: 0;
                 border-top: 1px solid black;
-                border-bottom: 1px solid black;
+            }
+
+            div.exercises-row div.exercise-container div.exercise-properties ul.exercise-properties-list {
+                padding: 3px 0 0 0;
             }
 
                 div.exercises-row div.exercise-container div.exercise-properties ul li {
@@ -221,6 +228,13 @@ div.exercises-row {
                     position: relative;
                     margin: 3px 0 3px 0;
                     padding: 3px 18px 3px 18px;
+                }
+
+                div.exercises-row div.exercise-container div.exercise-properties ul.exercise-properties-list li {
+                    font-size: 15px;
+                    font-weight: normal;
+                    padding: 0 2px 0 2px;
+                    margin: 0;
                 }
 
                 div.exercises-row div.exercise-container div.exercise-properties ul li:hover {
@@ -241,13 +255,10 @@ div.exercises-row {
                     }
 
                     div.exercises-row div.exercise-container div.exercise-properties ul ul {
+                        display: none;
                         padding: 0;
                         margin: 0;
                         border: none;
-                    }
-
-                    div.exercises-row div.exercise-container div.exercise-properties ul ul {
-                        display: none;
                     }
 
                     div.exercises-row div.exercise-container div.exercise-properties ul li:hover ul  {
