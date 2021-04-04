@@ -49,22 +49,30 @@
     {
         var articles = Model.Articles.ToList();
 
-            @foreach (var article in articles)
-            {
-                <!-- Article Card -->
-                <div class="card mb-4 rcorners">
+        @foreach (var article in articles)
+        {
+            <!-- Article Card -->
+            <div class="card mb-4 rcorners">
+                @if (article.ImageUrl != null)
+                {
                     <img src="@article.ImageUrl" class="card-img-top r-top-corners" alt="@article.Title">
-                    <div class="card-body bg-dark text-white">
-                        <h2 class="card-title pb-2 border-bottom border-light">@article.Title</h2>
-                        <p>Category: @article.CategoryTitle</p>
-                        <p class="card-text indent-text">@article.ShortContent</p>
-                        <a asp-controller="Articles" asp-action="Details" asp-route-articleId="@article.Id" class="btn btn-primary">Read More &rarr;</a>
-                    </div>
-                    <div class="card-footer text-muted">
-                        Posted on <time datetime="@article.CreatedOn.ToString("O")"></time> by @article.UserUserName
-                    </div>
+                }
+                else
+                {
+                    <img src="/Images/article_default_image.jpg" class="card-img-top r-top-corners" alt="@article.Title">
+                }
+
+                <div class="card-body bg-dark text-white">
+                    <h2 class="card-title pb-2 border-bottom border-light">@article.Title</h2>
+                    <p>Category: @article.CategoryTitle</p>
+                    <p class="card-text indent-text">@article.ShortContent</p>
+                    <a asp-controller="Articles" asp-action="Details" asp-route-articleId="@article.Id" class="btn btn-primary">Read More &rarr;</a>
                 </div>
-            }
+                <div class="card-footer text-muted">
+                    Posted on <time datetime="@article.CreatedOn.ToString("O")"></time> by @article.UserUserName
+                </div>
+            </div>
+        }
 
 
 

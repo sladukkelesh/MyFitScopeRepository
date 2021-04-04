@@ -36,11 +36,18 @@
         </li>
 
     </ul>
-    
+
     <hr>
 
     <!-- Preview Image -->
-    <img class="img-fluid rounded article-details-image" src="@Model.ImageUrl" alt="Article Image">
+    @if (Model.ImageUrl != null)
+    {
+        <img src="@Model.ImageUrl" class="img-fluid rounded article-details-image" alt="Article Image">
+    }
+    else
+    {
+        <img src="/Images/article_default_image.jpg" class="img-fluid rounded article-details-image" alt="Article Image">
+    }
 
     <hr>
 
@@ -190,7 +197,7 @@
             // apend form to main parrent div element
             parentDivElement.insertBefore(responseForm, parentDivElement.firstChild);
         }
-        
+
         function SendVote(votedObject, commentId, isUpVote) {
             let targetElement = event.target;
 
@@ -215,7 +222,7 @@
                     upVoteSpan.textContent = data.upVotes;
                     downVoteSpan.textContent = data.downVotes;
                 }
-            });         
+            });
         }
         function ToggleResponses(id) {
             var x = document.getElementById(id);
