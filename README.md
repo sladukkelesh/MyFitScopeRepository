@@ -10,7 +10,6 @@ video links from YouTube) and track their Progress (creating records with physic
 <h2>Built with</h2>
 <ul>
   <li>ASP.NET CORE 3.1 MVC</li>
-  <li></li>
   <li>ASP.NET CORE view components</li>
   <li>ASP.NET Core areas</li>
   <li>MSSQL Server</li>
