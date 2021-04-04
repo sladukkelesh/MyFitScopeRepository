@@ -3,8 +3,10 @@
     using System;
     using System.Collections.Generic;
     using System.ComponentModel.DataAnnotations;
+
     using MyFitScope.Data.Common.Models;
     using MyFitScope.Data.Models.FitnessModels.Enums;
+    using MyFitScope.Data.Models.ValidationAttributes;
 
     public class Exercise : BaseDeletableModel<string>
     {
@@ -25,7 +27,7 @@
         [MaxLength(50)]
         public string CreatorName { get; set; }
 
-        [RegularExpression(@"^(http(s)?:\/\/)?((w){3}.)?youtu(be|.be)?(\.com)?\/.+")]
+        [YouTubeUrlValidation]
         public string VideoUrl { get; set; }
 
         [Required]

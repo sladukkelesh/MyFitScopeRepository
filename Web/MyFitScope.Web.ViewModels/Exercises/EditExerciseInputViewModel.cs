@@ -4,8 +4,8 @@
 
     using MyFitScope.Data.Models.FitnessModels;
     using MyFitScope.Data.Models.FitnessModels.Enums;
+    using MyFitScope.Data.Models.ValidationAttributes;
     using MyFitScope.Services.Mapping;
-    using MyFitScope.Web.Infrastructure.ValidationAttributes;
 
     public class EditExerciseInputViewModel : IMapFrom<Exercise>
     {

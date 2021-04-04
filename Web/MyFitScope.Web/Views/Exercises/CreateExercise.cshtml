@@ -35,7 +35,7 @@
             <select asp-for="MuscleGroup" asp-items="@Html.GetEnumSelectList<MuscleGroup>()" class="form-control"></select>
         </div>
         <div class="mb-3">
-            <label asp-for="VideoUrl">Video Url (optional)</label>
+            <label asp-for="VideoUrl">Video Url (optional):</label>
             <input type="text" asp-for="VideoUrl" class="form-control" placeholder="Enter YouTube video Url..." />
             <span asp-validation-for="VideoUrl" class="text-danger"></span>
         </div>

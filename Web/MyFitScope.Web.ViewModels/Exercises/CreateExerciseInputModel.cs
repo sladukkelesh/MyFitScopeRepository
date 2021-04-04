@@ -3,7 +3,7 @@
     using System.ComponentModel.DataAnnotations;
 
     using MyFitScope.Data.Models.FitnessModels.Enums;
-    using MyFitScope.Web.Infrastructure.ValidationAttributes;
+    using MyFitScope.Data.Models.ValidationAttributes;
 
     public class CreateExerciseInputModel
     {
