@@ -10,8 +10,8 @@
     <div class="row">
         <!-- Sidebar -->
         <div class="col-md-3">
-            <div class="card" style="width: 247px;">
-                @*@{
+            <div class="card col-sm-12">
+                @{
                     var loggedInUser = await UserManager.GetUserAsync(User);
                 }
 
@@ -21,8 +21,8 @@
                 }
                 else
                 {
-                    <img src="https://capenetworks.com/static/images/testimonials/user-icon.svg" class="card-img-top" alt="default user photo" />
-                }*@
+                    <img src="/Images/user-icon-image.png" class="card-img-top" alt="default user photo" />
+                }
 
                 <div class="card-body bg-dark">
                     <button class="btn btn-info btn-sm btn-block" onclick="ToggleAddWorkoutDayInputForm('#uploadAvatarPhotoForm')">Change Photo</button>
