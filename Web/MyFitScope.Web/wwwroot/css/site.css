@@ -4,16 +4,18 @@ for details on configuring this project to bundle and minify static web assets. 
 header nav {
     background-color: #242527 !important;
 }
+    header nav ul li a, header nav ul li button {
+        border-radius: 10px !important;
+    }
 
     header nav ul li a {
         color: white !important;
-        padding-left: 25px !important;
-        padding-right: 25px !important;
-        border-radius: 10px;
+        padding-left: 20px !important;
+        padding-right: 20px !important;
         margin: 5px 5px;
     }
 
-        header nav ul li a:not(.nav-link-active):hover {
+        header nav ul li a:not(.nav-link-active):hover, header nav ul li button:hover {
             background-color: rgb(87, 85, 85) !important;
         }
 
@@ -280,11 +282,11 @@ div.exercises-row {
 
 
 
-                        /* User Avatar styles
+/* User Avatar styles
 -------------------------------------------------- */
-                        #uploadAvatarPhotoForm {
-                            display: none;
-                        }
+#uploadAvatarPhotoForm {
+    display: none;
+}
 
 /* Current Workout styles
 -------------------------------------------------- */
@@ -315,21 +317,12 @@ div.exercises-row {
     width: 200px;
 }
 
-
-
-
-
-
-
-
-
 .single-blog {
     box-shadow: 0 0 20px 1px rgba(0, 0, 0, 0.2);
     padding: 10px;
     margin-top: 30px;
     background-color: #fff;
     border-radius: 10px;
-
 }
 
 .single-blog img {
