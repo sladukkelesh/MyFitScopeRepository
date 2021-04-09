@@ -27,9 +27,9 @@
 
                 var newUser = new ApplicationUser()
                 {
-                    CreatedOn = DateTime.Now,
-                    UserName = $"{userName}@gmail.bg",
-                    Email = $"{userName}@gmail.bg",
+                    CreatedOn = DateTime.UtcNow,
+                    UserName = $"{userName}@gmail.com",
+                    Email = $"{userName}@gmail.com",
                 };
 
                 var result = await userManager.CreateAsync(newUser, $"{userName}pass");

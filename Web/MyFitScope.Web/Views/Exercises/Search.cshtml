@@ -1,22 +1,21 @@
 ﻿@using MyFitScope.Common
 @using MyFitScope.Web.ViewModels.Exercises
-@model ExerciseListingViewModel
+@model SearchExercisesViewModel
 
 @{
     this.ViewData["Title"] = "Exercises";
 }
 
+
 <section class="container">
     <div class="row">
         <div class="col-md-8 bg-white rcorners p-3">
-
             <h1 class="text-center">@Model.PageTitle</h1>
             <hr />
 
             @if (Model.Exercises.Count != 0)
             {
                 var exercises = Model.Exercises.ToList();
-
 
                 <!-- Exercises List-->
                 foreach (var exercise in exercises)
@@ -44,7 +43,7 @@
                         }
 
                         <li class="@("page-item" + previousActive)">
-                            <a class="page-link" asp-controller="Exercises" asp-action="ExercisesListing" asp-route-exercisesCategory="@Model.ExercisesCategory" asp-route-pageIndex="@(Model.Exercises.PageIndex - 1)">Previous</a>
+                            <a class="page-link" asp-controller="Exercises" asp-action="ExercisesListing" asp-route-exerciseCategory="@Model.KeyWord" asp-route-pageIndex="@(Model.Exercises.PageIndex - 1)">Previous</a>
                         </li>
 
                         @for (var i = 1; i <= Model.Exercises.TotalPages; i++)
@@ -52,27 +51,19 @@
                             var currentActive = Model.Exercises.PageIndex == i ? " active" : string.Empty;
 
                             <li class="@("page-item" + currentActive)">
-                                <a class="page-link" asp-controller="Exercises" asp-action="ExercisesListing" asp-route-exercisesCategory="@Model.ExercisesCategory" asp-route-pageIndex="@i">@i</a>
+                                <a class="page-link" asp-controller="Exercises" asp-action="ExercisesListing" asp-route-exerciseCategory="@Model.KeyWord" asp-route-pageIndex="@i">@i</a>
                             </li>
                         }
 
                         <li class="@("page-item" + nextActive)">
-                            <a class="page-link" asp-controller="Exercises" asp-action="ExercisesListing" asp-route-exercisesCategory="@Model.ExercisesCategory" asp-route-pageIndex="@(Model.Exercises.PageIndex + 1)">Next</a>
+                            <a class="page-link" asp-controller="Exercises" asp-action="ExercisesListing" asp-route-exerciseCategory="@Model.KeyWord" asp-route-pageIndex="@(Model.Exercises.PageIndex + 1)">Next</a>
                         </li>
                     </ul>
                 </nav>
             }
             else
             {
-                @if (Model.ExercisesCategory == "Custom" && User.IsInRole(GlobalConstants.UserRoleName))
-                {
-                   <p>You have no Custom Exercises. You can create one <a asp-controller="Exercises" asp-action="CreateExercise">here</a>.</p>
-                }
-                else
-                {
-                    <p>@Model.NoResultsMessage</p>
-                }
-
+                <p>@Model.NoResultsMessage</p>
             }
         </div>
         <div class="col-md-4">
@@ -91,5 +82,6 @@
                 </div>
             </div>
         </div>
-    </div>      
+    </div>
 </section>
+

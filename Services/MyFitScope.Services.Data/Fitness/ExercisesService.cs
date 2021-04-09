@@ -33,7 +33,6 @@
                 MuscleGroup = muscleGroup,
                 Description = description,
                 CreatorName = creatorName,
-
             };
 
             if (isAdmin)
@@ -105,13 +104,13 @@
             return exercise;
         }
 
-        public async Task<PaginatedList<ExerciseViewModel>> GetExercisesByCategoryAsync(bool isAdmin, string userName, string exerciseCategoryInput, int? pageIndex = null)
+        public async Task<PaginatedList<ExerciseViewModel>> GetExercisesByCategoryAsync(bool isAdmin, string userName, string exercisesCategory, int? pageIndex = null)
         {
             var result = this.exercisesRepository.All();
 
-            if (exerciseCategoryInput != null && exerciseCategoryInput != "All")
+            if (exercisesCategory != "All")
             {
-                if (exerciseCategoryInput == "Custom")
+                if (exercisesCategory == "Custom")
                 {
                     if (isAdmin)
                     {
@@ -123,12 +122,11 @@
                         // select only the custom exercises for the current User:
                         result = result.Where(e => e.IsCustom == true && e.CreatorName == userName);
                     }
-
                 }
                 else
                 {
                     // select exercises by chosen category:
-                    result = result.Where(e => e.MuscleGroup == (MuscleGroup)Enum.Parse(typeof(MuscleGroup), exerciseCategoryInput) && e.IsCustom == false);
+                    result = result.Where(e => e.MuscleGroup == (MuscleGroup)Enum.Parse(typeof(MuscleGroup), exercisesCategory) && e.IsCustom == false);
                 }
             }
             else

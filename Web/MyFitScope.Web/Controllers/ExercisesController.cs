@@ -8,6 +8,8 @@
     using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Identity;
     using Microsoft.AspNetCore.Mvc;
+
+    using MyFitScope.Common;
     using MyFitScope.Data.Models;
     using MyFitScope.Data.Models.FitnessModels.Enums;
     using MyFitScope.Services.Data;
@@ -15,6 +17,15 @@
 
     public class ExercisesController : BaseController
     {
+        private const string SearchPageTitle = "Search results for \"{0}\":";
+        private const string SearchPageNoResultsMessage = "No results found for \"{0}\"...";
+
+        private const string ListingPageTitleAll = "All Exercises";
+        private const string ListingPageTitleAdminCustom = "Users custom created Exercises";
+        private const string ListingPageTitleUserCustom = "{0}'s custom created Exercises";
+        private const string ListingPageTitleCategory = "Exercises of category \"{0}\"";
+        private const string ListingPageNoResultsMessage = "Sorry, we don't have any exercises in this category at this moment...";
+
         private readonly IExercisesService exercisesService;
         private readonly UserManager<ApplicationUser> userManager;
         private readonly IWorkoutDaysExercisesService workoutDaysExercisesService;
@@ -49,41 +60,40 @@
             }
 
             var creatorName = this.User.Identity.Name;
-            var isAdmin = this.User.IsInRole("Admin");
+            var isAdmin = this.User.IsInRole(GlobalConstants.AdministratorRoleName);
 
             await this.exercisesService.CreateExerciseAsync(input.Name, input.VideoUrl, input.MuscleGroup, input.Description, creatorName, isAdmin);
 
             return this.RedirectToAction(nameof(this.ExercisesListing), new { exerciseCategory = isAdmin ? "All" : "Custom" });
         }
 
-        public async Task<IActionResult> ExercisesListing(string exerciseCategory, int? pageIndex = null)
+        public async Task<IActionResult> ExercisesListing(string exercisesCategory, int? pageIndex = null)
         {
-            if (exerciseCategory == null)
-            {
-                exerciseCategory = "All";
-            }
-            else
-            {
-                exerciseCategory = new HtmlSanitizer().Sanitize(exerciseCategory);
-            }
-
             var userName = this.User.Identity.Name;
-            var isAdmin = this.User.IsInRole("Admin");
+            var isAdmin = this.User.IsInRole(GlobalConstants.AdministratorRoleName);
 
-            var model = new ExerciseListingViewModel();
+            var model = new ExerciseListingViewModel
+            {
+                Exercises = await this.exercisesService.GetExercisesByCategoryAsync(isAdmin, userName, exercisesCategory, pageIndex),
+                ExercisesCategory = exercisesCategory,
+                PageTitle = this.GetExercisesListingPageTitle(exercisesCategory),
+                NoResultsMessage = ListingPageNoResultsMessage,
+            };
 
-            if (Enum.GetNames(typeof(MuscleGroup)).Any(ac => ac == exerciseCategory) || exerciseCategory == "All" || exerciseCategory == "Custom")
+            return this.View(model);
+        }
+
+        public async Task<IActionResult> Search(string keyWord, int? pageIndex = null)
+        {
+            keyWord = new HtmlSanitizer().Sanitize(keyWord);
+
+            var model = new SearchExercisesViewModel
             {
-                // If we come from "Exercises Nav Menu":
-                model.Exercises = await this.exercisesService.GetExercisesByCategoryAsync(isAdmin, userName, exerciseCategory, pageIndex);
-                model.ExerciseCategory = "listing=" + exerciseCategory;
-            }
-            else
-            {
-                // If we come from "Search Bar":
-                model.Exercises = await this.exercisesService.GetExercisesByKeyWordAsync(exerciseCategory, pageIndex);
-                model.ExerciseCategory = "search=" + exerciseCategory;
-            }
+                Exercises = await this.exercisesService.GetExercisesByKeyWordAsync(keyWord, pageIndex),
+                KeyWord = keyWord,
+                PageTitle = string.Format(SearchPageTitle, keyWord),
+                NoResultsMessage = string.Format(SearchPageNoResultsMessage, keyWord),
+            };
 
             return this.View(model);
         }
@@ -173,6 +183,35 @@
             await this.exercisesService.EditExerciseAsync(input.Id, input.Name, input.VideoUrl, input.MuscleGroup, input.Description);
 
             return this.RedirectToAction(nameof(this.Details), new { id = input.Id });
+        }
+
+        private string GetExercisesListingPageTitle(string exercisesCategory)
+        {
+            var result = string.Empty;
+
+            if (exercisesCategory == "All")
+            {
+                result = ListingPageTitleAll;
+            }
+
+            if (exercisesCategory == "Custom")
+            {
+                if (this.User.IsInRole(GlobalConstants.AdministratorRoleName))
+                {
+                    result = ListingPageTitleAdminCustom;
+                }
+                else
+                {
+                    result = string.Format(ListingPageTitleUserCustom, this.User.Identity.Name);
+                }
+            }
+
+            if (exercisesCategory != "All" && exercisesCategory != "Custom")
+            {
+                result = string.Format(ListingPageTitleCategory, exercisesCategory);
+            }
+
+            return result;
         }
     }
 }

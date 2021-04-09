@@ -51,12 +51,12 @@
                         <li class="nav-item dropdown">
                             <a class="nav-link dropdown-toggle nav-bar-title-anchor" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Exercises</a>
                             <div class="dropdown-menu">
-                                <vc:dropdown-links url="/Exercises/ExercisesListing?exerciseCategory=" enum-name=@GlobalConstants.ExerciseCategoryTypeName></vc:dropdown-links>
+                                <vc:dropdown-links url="/Exercises/ExercisesListing?exercisesCategory=" enum-name=@GlobalConstants.ExerciseCategoryTypeName></vc:dropdown-links>
                                 <div class="dropdown-divider"></div>
-                                <a class="nav-link" asp-area="" asp-controller="Exercises" asp-action="ExercisesListing" asp-route-exerciseCategory="All">All</a>
+                                <a class="nav-link" asp-area="" asp-controller="Exercises" asp-action="ExercisesListing" asp-route-exercisesCategory="All">All</a>
                                 @if (User.Identity.IsAuthenticated)
                                 {
-                                    <a class="nav-link" asp-area="" asp-controller="Exercises" asp-action="ExercisesListing" asp-route-exerciseCategory="Custom">Custom</a>
+                                    <a class="nav-link" asp-area="" asp-controller="Exercises" asp-action="ExercisesListing" asp-route-exercisesCategory="Custom">Custom</a>
                                 }
                             </div>
                         </li>
