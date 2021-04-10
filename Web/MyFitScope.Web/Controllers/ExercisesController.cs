@@ -17,9 +17,6 @@
 
     public class ExercisesController : BaseController
     {
-        private const string SearchPageTitle = "Search results for \"{0}\":";
-        private const string SearchPageNoResultsMessage = "No results found for \"{0}\"...";
-
         private const string ListingPageTitleAll = "All Exercises";
         private const string ListingPageTitleAdminCustom = "Users custom created Exercises";
         private const string ListingPageTitleUserCustom = "{0}'s custom created Exercises";
@@ -91,8 +88,8 @@
             {
                 Exercises = await this.exercisesService.GetExercisesByKeyWordAsync(keyWord, pageIndex),
                 KeyWord = keyWord,
-                PageTitle = string.Format(SearchPageTitle, keyWord),
-                NoResultsMessage = string.Format(SearchPageNoResultsMessage, keyWord),
+                PageTitle = string.Format(GlobalConstants.SearchPageTitle, keyWord),
+                NoResultsMessage = string.Format(GlobalConstants.SearchPageNoResultsMessage, keyWord),
             };
 
             return this.View(model);

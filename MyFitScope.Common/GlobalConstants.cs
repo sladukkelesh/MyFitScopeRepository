@@ -87,5 +87,9 @@
 
         // Progress Constants:
         public const int ProgressTableHeaderColumnRowsCount = 9;
+
+        // Search Page Constants:
+        public const string SearchPageTitle = "Search results for \"{0}\":";
+        public const string SearchPageNoResultsMessage = "No results found for \"{0}\"...";
     }
 }

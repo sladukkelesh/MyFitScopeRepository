@@ -103,30 +103,34 @@
             return workout;
         }
 
-        public async Task<PaginatedList<WorkoutViewModel>> GetWorkoutsByCategoryAsync(bool isAdmin, string userName, string workoutCategory, int? pageIndex = null)
+        public async Task<PaginatedList<WorkoutViewModel>> GetWorkoutsByCategoryAsync(bool isAdmin, string userName, string workoutsCategory, int? pageIndex = null)
         {
             var workouts = this.workoutsRepository.All();
 
-            if (workoutCategory != null && workoutCategory != "All")
+            if (workoutsCategory != "All")
             {
-                if (workoutCategory == "Custom")
+                if (workoutsCategory == "Custom")
                 {
                     if (isAdmin)
                     {
+                        // if User is in role "Admin", select all custom workouts:
                         workouts = workouts.Where(w => w.IsCustom == true);
                     }
                     else
                     {
+                        // select only the custom workouts for the current User:
                         workouts = workouts.Where(w => w.IsCustom == true && w.CreatorName == userName);
                     }
                 }
                 else
                 {
-                    workouts = workouts.Where(w => w.WorkoutType == (WorkoutType)Enum.Parse(typeof(WorkoutType), workoutCategory) && w.IsCustom == false);
+                    // select workouts by chosen category:
+                    workouts = workouts.Where(w => w.WorkoutType == (WorkoutType)Enum.Parse(typeof(WorkoutType), workoutsCategory) && w.IsCustom == false);
                 }
             }
             else
             {
+                // select all workouts wich are not custom created:
                 workouts = workouts.Where(w => w.IsCustom == false);
             }
 

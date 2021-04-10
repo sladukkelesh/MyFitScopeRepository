@@ -38,12 +38,12 @@
                         <li class="nav-item dropdown">
                             <a class="nav-link dropdown-toggle nav-bar-title-anchor" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Workouts</a>
                             <div class="dropdown-menu">
-                                <vc:dropdown-links url="/Workouts/WorkoutsListing?workoutCategory=" enum-name=@GlobalConstants.WorkoutCategoryTypeName></vc:dropdown-links>
+                                <vc:dropdown-links url="/Workouts/WorkoutsListing?workoutsCategory=" enum-name=@GlobalConstants.WorkoutCategoryTypeName></vc:dropdown-links>
                                 <div class="dropdown-divider"></div>
-                                <a class="nav-link" asp-area="" asp-controller="Workouts" asp-action="WorkoutsListing" asp-route-workoutCategory="All">All</a>
+                                <a class="nav-link" asp-area="" asp-controller="Workouts" asp-action="WorkoutsListing" asp-route-workoutsCategory="All">All</a>
                                 @if (User.Identity.IsAuthenticated)
                                 {
-                                    <a class="nav-link" asp-area="" asp-controller="Workouts" asp-action="WorkoutsListing" asp-route-workoutCategory="Custom">Custom</a>
+                                    <a class="nav-link" asp-area="" asp-controller="Workouts" asp-action="WorkoutsListing" asp-route-workoutsCategory="Custom">Custom</a>
                                 }
                             </div>
                         </li>

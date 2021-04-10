@@ -8,14 +8,19 @@
     using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Identity;
     using Microsoft.AspNetCore.Mvc;
-
+    using MyFitScope.Common;
     using MyFitScope.Data.Models;
-    using MyFitScope.Data.Models.FitnessModels.Enums;
     using MyFitScope.Services.Data;
     using MyFitScope.Web.ViewModels.Workouts;
 
     public class WorkoutsController : BaseController
     {
+        private const string ListingPageTitleAll = "All Workouts";
+        private const string ListingPageTitleAdminCustom = "Users custom created Workouts";
+        private const string ListingPageTitleUserCustom = "{0}'s custom created Workouts";
+        private const string ListingPageTitleCategory = "Workouts of category \"{0}\"";
+        private const string ListingPageNoResultsMessage = "Sorry, we don't have any workouts in this category at this moment...";
+
         private readonly IWorkoutsService workoutsService;
         private readonly UserManager<ApplicationUser> userManager;
 
@@ -66,32 +71,33 @@
             return this.View(model);
         }
 
-        public async Task<IActionResult> WorkoutsListing(string workoutCategory, int? pageIndex = null)
+        public async Task<IActionResult> WorkoutsListing(string workoutsCategory, int? pageIndex = null)
         {
-            if (workoutCategory == null)
-            {
-                workoutCategory = "All";
-            }
-            else
-            {
-                workoutCategory = new HtmlSanitizer().Sanitize(workoutCategory);
-            }
-
             var userName = this.User.Identity.Name;
-            var isAdmin = this.User.IsInRole("Admin");
+            var isAdmin = this.User.IsInRole(GlobalConstants.AdministratorRoleName);
 
-            var model = new WorkoutsListingViewModel();
+            var model = new WorkoutsListingViewModel
+            {
+                Workouts = await this.workoutsService.GetWorkoutsByCategoryAsync(isAdmin, userName, workoutsCategory, pageIndex),
+                WorkoutsCategory = workoutsCategory,
+                PageTitle = this.GetWorkoutsListingPageTitle(workoutsCategory),
+                NoResultsMessage = ListingPageNoResultsMessage,
+            };
 
-            if (Enum.GetNames(typeof(WorkoutType)).Any(ac => ac == workoutCategory) || workoutCategory == "All" || workoutCategory == "Custom")
+            return this.View(model);
+        }
+
+        public async Task<IActionResult> Search(string keyWord, int? pageIndex = null)
+        {
+            keyWord = new HtmlSanitizer().Sanitize(keyWord);
+
+            var model = new SearchWorkoutsViewModel
             {
-                model.Workouts = await this.workoutsService.GetWorkoutsByCategoryAsync(isAdmin, userName, workoutCategory, pageIndex);
-                model.WorkoutCategory = "listing=" + workoutCategory;
-            }
-            else
-            {
-                model.Workouts = await this.workoutsService.GetWorkoutsByKeyWordAsync(workoutCategory, pageIndex);
-                model.WorkoutCategory = "search=" + workoutCategory;
-            }
+                Workouts = await this.workoutsService.GetWorkoutsByKeyWordAsync(keyWord, pageIndex),
+                KeyWord = keyWord,
+                PageTitle = string.Format(GlobalConstants.SearchPageTitle, keyWord),
+                NoResultsMessage = string.Format(GlobalConstants.SearchPageNoResultsMessage, keyWord),
+            };
 
             return this.View(model);
         }
@@ -145,9 +151,39 @@
             return this.RedirectToAction(nameof(this.CurrentWorkout));
         }
 
+        // TODO --> this method is unnecessary!!! You have this.User!!!!!!!!
         private async Task<ApplicationUser> GetLoggedInUserAsync()
         {
             return await this.userManager.FindByIdAsync(this.userManager.GetUserId(this.User));
+        }
+
+        private string GetWorkoutsListingPageTitle(string workoutsCategory)
+        {
+            var result = string.Empty;
+
+            if (workoutsCategory == "All")
+            {
+                result = ListingPageTitleAll;
+            }
+
+            if (workoutsCategory == "Custom")
+            {
+                if (this.User.IsInRole(GlobalConstants.AdministratorRoleName))
+                {
+                    result = ListingPageTitleAdminCustom;
+                }
+                else
+                {
+                    result = string.Format(ListingPageTitleUserCustom, this.User.Identity.Name);
+                }
+            }
+
+            if (workoutsCategory != "All" && workoutsCategory != "Custom")
+            {
+                result = string.Format(ListingPageTitleCategory, workoutsCategory);
+            }
+
+            return result;
         }
     }
 }

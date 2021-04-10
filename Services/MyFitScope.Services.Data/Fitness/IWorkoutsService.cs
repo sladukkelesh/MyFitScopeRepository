@@ -12,7 +12,7 @@
     {
         Task CreateWorkoutAsync(string name, Difficulty difficulty, WorkoutType workoutType, string description, ApplicationUser user);
 
-        Task<PaginatedList<WorkoutViewModel>> GetWorkoutsByCategoryAsync(bool isAdmin, string userName, string workoutCategory, int? pageIndex);
+        Task<PaginatedList<WorkoutViewModel>> GetWorkoutsByCategoryAsync(bool isAdmin, string userName, string workoutsCategory, int? pageIndex);
 
         T GetWorkoutById<T>(string workoutId);
 
