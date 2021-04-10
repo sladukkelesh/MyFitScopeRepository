@@ -43,7 +43,7 @@
                 CreatorName = user.UserName,
             };
 
-            if (await this.userManager.IsInRoleAsync(user, "Admin"))
+            if (await this.userManager.IsInRoleAsync(user, GlobalConstants.AdministratorRoleName))
             {
                 workout.IsCustom = false;
             }

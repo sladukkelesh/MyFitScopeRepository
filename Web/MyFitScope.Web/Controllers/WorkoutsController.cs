@@ -2,6 +2,7 @@
 {
     using System;
     using System.Linq;
+    using System.Security.Claims;
     using System.Threading.Tasks;
 
     using Ganss.XSS;
@@ -54,7 +55,7 @@
                 return this.View(input);
             }
 
-            var loggedInUser = await this.GetLoggedInUserAsync();
+            var loggedInUser = this.GetLoggedInUserAsync();
 
             await this.workoutsService.CreateWorkoutAsync(input.Name, input.Difficulty, input.WorkoutType, input.Description, loggedInUser);
 
@@ -151,7 +152,6 @@
             return this.RedirectToAction(nameof(this.CurrentWorkout));
         }
 
-        // TODO --> this method is unnecessary!!! You have this.User!!!!!!!!
         private async Task<ApplicationUser> GetLoggedInUserAsync()
         {
             return await this.userManager.FindByIdAsync(this.userManager.GetUserId(this.User));
