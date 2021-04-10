@@ -205,7 +205,7 @@
 
             if (exercisesCategory != "All" && exercisesCategory != "Custom")
             {
-                result = string.Format(ListingPageTitleCategory, exercisesCategory);
+                result = string.Format(ListingPageTitleCategory, exercisesCategory.Replace("_", " "));
             }
 
             return result;

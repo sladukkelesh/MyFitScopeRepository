@@ -1,13 +1,12 @@
 ﻿namespace MyFitScope.Web.ViewModels.Articles
 {
-    using Ganss.XSS;
     using MyFitScope.Web.Infrastructure;
 
-    public class ArticlesLIstingViewModel
+    public class SearchArticlesViewModel
     {
         public PaginatedList<ArticleViewModel> Articles { get; set; }
 
-        public string ArticlesCategory { get; set; }
+        public string KeyWord { get; set; }
 
         public string PageTitle { get; set; }
 

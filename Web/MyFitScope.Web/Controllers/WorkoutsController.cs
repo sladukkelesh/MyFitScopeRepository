@@ -180,7 +180,7 @@
 
             if (workoutsCategory != "All" && workoutsCategory != "Custom")
             {
-                result = string.Format(ListingPageTitleCategory, workoutsCategory);
+                result = string.Format(ListingPageTitleCategory, workoutsCategory.Replace("_", " "));
             }
 
             return result;

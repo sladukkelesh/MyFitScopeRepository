@@ -1,7 +1,5 @@
 ﻿namespace MyFitScope.Web.Controllers
 {
-    using System;
-    using System.Linq;
     using System.Threading.Tasks;
 
     using Ganss.XSS;
@@ -11,13 +9,16 @@
 
     using MyFitScope.Common;
     using MyFitScope.Data.Models;
-    using MyFitScope.Data.Models.BlogModels.Enums;
     using MyFitScope.Services.Data;
     using MyFitScope.Web.ViewModels.Articles;
 
     [Area("Blog")]
     public class ArticlesController : BaseController
     {
+        private const string ListingPageTitleAll = "All Articles";
+        private const string ListingPageTitleCategory = "Articles of category \"{0}\"";
+        private const string ListingPageNoResultsMessage = "Sorry, we don't have any articles in this category at this moment...";
+
         private readonly IArticlesService articlesService;
         private readonly UserManager<ApplicationUser> userManager;
 
@@ -27,29 +28,30 @@
             this.userManager = userManager;
         }
 
-        public async Task<IActionResult> ArticlesListing(string articleCategory, int? pageIndex = null)
+        public async Task<IActionResult> ArticlesListing(string articlesCategory, int? pageIndex = null)
         {
-            if (articleCategory == null)
+            var model = new ArticlesLIstingViewModel
             {
-                articleCategory = "All";
-            }
-            else
-            {
-                articleCategory = new HtmlSanitizer().Sanitize(articleCategory);
-            }
+                Articles = await this.articlesService.GetArticlesByCategoryAsync(articlesCategory, pageIndex),
+                ArticlesCategory = articlesCategory,
+                PageTitle = articlesCategory == "All" ? ListingPageTitleAll : string.Format(ListingPageTitleCategory, articlesCategory.Replace("_", " ")),
+                NoResultsMessage = ListingPageNoResultsMessage,
+            };
 
-            var model = new ArticlesLIstingViewModel();
+            return this.View(model);
+        }
 
-            if (Enum.GetNames(typeof(ArticleCategory)).Any(ac => ac == articleCategory) || articleCategory == "All")
+        public async Task<IActionResult> Search(string keyWord, int? pageIndex = null)
+        {
+            keyWord = new HtmlSanitizer().Sanitize(keyWord);
+
+            var model = new SearchArticlesViewModel
             {
-                model.Articles = await this.articlesService.GetArticlesByCategoryAsync(articleCategory, pageIndex);
-                model.ArticleCategory = "listing=" + articleCategory;
-            }
-            else
-            {
-                model.Articles = await this.articlesService.GetArticlesByKeyWordAsync(articleCategory, pageIndex);
-                model.ArticleCategory = "search=" + articleCategory;
-            }
+                Articles = await this.articlesService.GetArticlesByKeyWordAsync(keyWord, pageIndex),
+                KeyWord = keyWord,
+                PageTitle = string.Format(GlobalConstants.SearchPageTitle, keyWord),
+                NoResultsMessage = string.Format(GlobalConstants.SearchPageNoResultsMessage, keyWord),
+            };
 
             return this.View(model);
         }

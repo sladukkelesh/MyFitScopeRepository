@@ -59,7 +59,7 @@
                         }
 
                         <li class="@("page-item" + previousActive)">
-                            <a class="page-link" asp-controller="Workouts" asp-action="WorkoutsListing" asp-route-articleCategory="@Model.WorkoutsCategory" asp-route-pageIndex="@(Model.Workouts.PageIndex - 1)">Previous</a>
+                            <a class="page-link" asp-controller="Workouts" asp-action="WorkoutsListing" asp-route-workoutsCategory="@Model.WorkoutsCategory" asp-route-pageIndex="@(Model.Workouts.PageIndex - 1)">Previous</a>
                         </li>
 
                         @for (var i = 1; i <= Model.Workouts.TotalPages; i++)
@@ -67,13 +67,13 @@
                             var currentActive = Model.Workouts.PageIndex == i ? " active" : string.Empty;
 
                             <li class="@("page-item" + currentActive)">
-                                <a class="page-link" asp-controller="Workouts" asp-action="WorkoutsListing" asp-route-articleCategory="@Model.WorkoutsCategory" asp-route-pageIndex="@i">@i</a>
+                                <a class="page-link" asp-controller="Workouts" asp-action="WorkoutsListing" asp-route-workoutsCategory="@Model.WorkoutsCategory" asp-route-pageIndex="@i">@i</a>
                             </li>
 
                         }
 
                         <li class="@("page-item" + nextActive)">
-                            <a class="page-link" asp-controller="Workouts" asp-action="WorkoutsListing" asp-route-articleCategory="@Model.WorkoutsCategory" asp-route-pageIndex="@(Model.Workouts.PageIndex + 1)">Next</a>
+                            <a class="page-link" asp-controller="Workouts" asp-action="WorkoutsListing" asp-route-workoutsCategory="@Model.WorkoutsCategory" asp-route-pageIndex="@(Model.Workouts.PageIndex + 1)">Next</a>
                         </li>
                     </ul>
                 </nav>

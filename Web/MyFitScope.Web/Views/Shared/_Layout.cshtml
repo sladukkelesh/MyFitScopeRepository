@@ -64,9 +64,9 @@
                         <li class="nav-item dropdown">
                             <a class="nav-link dropdown-toggle nav-bar-title-anchor" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Blog</a>
                             <div class="dropdown-menu">
-                                <vc:dropdown-links url="/Blog/Articles/ArticlesListing?articleCategory=" enum-name=@GlobalConstants.ArticleCategoryTypeName></vc:dropdown-links>
+                                <vc:dropdown-links url="/Blog/Articles/ArticlesListing?articlesCategory=" enum-name=@GlobalConstants.ArticleCategoryTypeName></vc:dropdown-links>
                                 <div class="dropdown-divider"></div>
-                                <a class="nav-link" asp-area="Blog" asp-controller="Articles" asp-action="ArticlesListing" asp-route-articleCategory="All">All</a>
+                                <a class="nav-link" asp-area="Blog" asp-controller="Articles" asp-action="ArticlesListing" asp-route-articlesCategory="All">All</a>
 
                                 @if (this.User.IsInRole(GlobalConstants.AdministratorRoleName))
                                 {
