@@ -15,12 +15,15 @@ header nav {
         margin: 5px 5px;
     }
 
-        header nav ul li a:not(.nav-link-active):hover, header nav ul li button:hover {
+        header nav ul li a:not(.nav-link-active):hover, header nav ul li button:hover, ul.sidebar-nav-menu li a:not(.sidebar-nav-link-active):hover {
             background-color: rgb(87, 85, 85) !important;
         }
 
-.nav-link-active {
+.nav-link-active, .sidebar-nav-link-active {
     background-color: #0275d8 !important;
+}
+
+.nav-link-active {
     border-radius: 8px;
 }
 
@@ -51,6 +54,7 @@ a.navbar-brand {
     font-size: 30px
 }
 
+
 /* Sticky footer styles
 -------------------------------------------------- */
 html {
@@ -78,6 +82,7 @@ button.accept-policy {
     line-height: inherit;
 }
 
+
 /* Sticky footer styles
 -------------------------------------------------- */
 html {
@@ -102,6 +107,7 @@ body {
     background-color: #242527 !important;
 }
 
+
 /* Index Page styles
 -------------------------------------------------- */
 #logo {
@@ -115,6 +121,7 @@ body {
 .secondary-headings a {
     text-decoration: none;
 }
+
 
 /* home loggedIn page styles
 -------------------------------------------------- */
@@ -132,7 +139,9 @@ section.home-loggedIn-page {
     #homeLoggedInPageContent p {
         font-size: 20px;
     }
-    /* Workout styles
+
+
+/* Workout styles
 -------------------------------------------------- */
 div.backgrounds-gym {
     background-image: url('https://res.cloudinary.com/myfitscope-cloud/image/upload/v1588015635/static_files/fit-index-background_ogawuc.jpg');
@@ -366,11 +375,6 @@ div.exercises-row {
     text-decoration: none;
     color: #fff;
 }
-
-
-
-
-
 
     /* Exercise styles
 -------------------------------------------------- */

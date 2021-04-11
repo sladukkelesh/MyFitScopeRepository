@@ -29,13 +29,20 @@ function ToggleAddWorkoutDayInputForm(toggleElement) {
 // Set "nav-link-active" to current active links from navbar menu:
 $(document).ready(function () {
     let currentLocation = location.href;
-    let navBarUl = (document.getElementsByClassName("navbar-nav"));
+    let navBarUl = (document.querySelectorAll(".navbar-nav, .nav"));
+
+    console.log(navBarUl);
 
     // "Login" and "Register" are not in the same ".navbar-nav" element as other navbar links!
     for (let i = 0; i < navBarUl.length; i++) {
         let links = navBarUl[i].querySelectorAll("a");
 
-        SetActiveClassToElement(currentLocation, links, "nav-link-active");
+        if (navBarUl[i].classList.contains("sidebar-nav-menu")) {
+            console.log("I am in");
+            SetActiveClassToElement(currentLocation, links, "sidebar-nav-link-active");
+        } else {
+            SetActiveClassToElement(currentLocation, links, "nav-link-active");
+        }
     }
 });
 
