@@ -6,7 +6,7 @@
     using System.Threading.Tasks;
 
     using Microsoft.AspNetCore.Identity;
-    using MyFitScope.Data.Common.Repositories;
+    using MyFitScope.Common;
     using MyFitScope.Data.Models;
     using MyFitScope.Web.ViewModels.Administration.Administration;
 
@@ -57,7 +57,7 @@
                 model.UserId = user.Id;
                 model.UserName = user.UserName;
 
-                if (await this.IsInRoleAsync(user, roleName))
+                if (await this.userManager.IsInRoleAsync(user, roleName))
                 {
                     model.IsSelected = true;
                 }
@@ -95,17 +95,14 @@
                 if (user.IsSelected && !(await this.userManager.IsInRoleAsync(userObj, role.Name)))
                 {
                     await this.userManager.AddToRoleAsync(userObj, role.Name);
+                    await this.userManager.RemoveFromRoleAsync(userObj, role.Name == GlobalConstants.AdministratorRoleName ? GlobalConstants.UserRoleName : GlobalConstants.AdministratorRoleName);
                 }
                 else if (!user.IsSelected && (await this.userManager.IsInRoleAsync(userObj, role.Name)))
                 {
                     await this.userManager.RemoveFromRoleAsync(userObj, role.Name);
+                    await this.userManager.AddToRoleAsync(userObj, role.Name == GlobalConstants.AdministratorRoleName ? GlobalConstants.UserRoleName : GlobalConstants.AdministratorRoleName);
                 }
             }
-        }
-
-        private async Task<bool> IsInRoleAsync(ApplicationUser user, string roleName)
-        {
-            return await this.userManager.IsInRoleAsync(user, roleName);
         }
     }
 }
