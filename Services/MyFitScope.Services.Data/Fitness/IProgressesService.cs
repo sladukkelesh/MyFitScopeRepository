@@ -10,7 +10,7 @@
     {
         Task CreateStatisticAsync(string userId, double weight, double? biceps, double? chest, double? stomach, double? hips, double? thigh, double? calf);
 
-        Task<PaginatedList<StatisticOutputViewModel>> GetAllStatisticsAsync(int? pageIndex = null);
+        Task<PaginatedList<StatisticOutputViewModel>> GetAllStatisticsAsync(string userId, int? pageIndex = null);
 
         Task DeleteStatisticAsync(string statisticId);
 

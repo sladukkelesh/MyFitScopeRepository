@@ -24,9 +24,11 @@
         [Authorize]
         public async Task<IActionResult> Statistics(int? pageIndex = null)
         {
+            var userId = this.userManager.GetUserId(this.User);
+
             var model = new StatisticsListingViewModel
             {
-                Statistics = await this.progressesService.GetAllStatisticsAsync(pageIndex),
+                Statistics = await this.progressesService.GetAllStatisticsAsync(userId, pageIndex),
             };
 
             return this.View(model);

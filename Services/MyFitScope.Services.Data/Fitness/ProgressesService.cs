@@ -1,11 +1,9 @@
 ﻿namespace MyFitScope.Services.Data
 {
     using System;
-    using System.Collections.Generic;
     using System.Linq;
     using System.Threading.Tasks;
 
-    using Microsoft.AspNetCore.Http;
     using MyFitScope.Common;
     using MyFitScope.Data.Common.Repositories;
     using MyFitScope.Data.Models.FitnessModels;
@@ -57,10 +55,11 @@
             await this.progressesRepository.SaveChangesAsync();
         }
 
-        public async Task<PaginatedList<StatisticOutputViewModel>> GetAllStatisticsAsync(int? pageIndex = null)
+        public async Task<PaginatedList<StatisticOutputViewModel>> GetAllStatisticsAsync(string userId, int? pageIndex = null)
         {
             var result = this.progressesRepository.All()
-                   .OrderByDescending(p => p.CreatedOn);
+                             .Where(p => p.UserId == userId)
+                             .OrderBy(p => p.CreatedOn);
 
             return await PaginatedList<StatisticOutputViewModel>.CreateAsync(result.To<StatisticOutputViewModel>(), pageIndex ?? GlobalConstants.PaginationDefaultPageIndex, GlobalConstants.PaginationPageSize);
         }

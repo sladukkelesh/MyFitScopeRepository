@@ -55,7 +55,7 @@
                 return this.View(input);
             }
 
-            var loggedInUser = this.GetLoggedInUserAsync();
+            var loggedInUser = await this.GetLoggedInUserAsync();
 
             await this.workoutsService.CreateWorkoutAsync(input.Name, input.Difficulty, input.WorkoutType, input.Description, loggedInUser);
 
