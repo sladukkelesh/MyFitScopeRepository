@@ -2,6 +2,7 @@
 {
     using Microsoft.EntityFrameworkCore;
     using Microsoft.EntityFrameworkCore.Metadata.Builders;
+
     using MyFitScope.Data.Models;
 
     public class ApplicationUserConfiguration : IEntityTypeConfiguration<ApplicationUser>
@@ -27,6 +28,12 @@
                 .WithOne()
                 .HasForeignKey(e => e.UserId)
                 .IsRequired()
+                .OnDelete(DeleteBehavior.Restrict);
+
+            appUser
+                .HasOne(apu => apu.Workout)
+                .WithMany(w => w.Users)
+                .HasForeignKey(apu => apu.WorkoutId)
                 .OnDelete(DeleteBehavior.Restrict);
         }
     }

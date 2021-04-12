@@ -5,7 +5,9 @@ namespace MyFitScope.Data.Models
     using System.Collections.Generic;
 
     using Microsoft.AspNetCore.Identity;
+
     using MyFitScope.Data.Common.Models;
+    using MyFitScope.Data.Models.BlogModels;
     using MyFitScope.Data.Models.FitnessModels;
 
     public class ApplicationUser : IdentityUser, IAuditInfo, IDeletableEntity

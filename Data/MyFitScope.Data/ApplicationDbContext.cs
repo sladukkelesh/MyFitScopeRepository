@@ -71,11 +71,6 @@
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
-            builder.Entity<WorkoutDayExercise>(e =>
-            {
-                e.HasKey(e => new { e.WorkoutDayId, e.ExerciseId });
-            });
-
             // Needed for Identity models configuration
             base.OnModelCreating(builder);
 
